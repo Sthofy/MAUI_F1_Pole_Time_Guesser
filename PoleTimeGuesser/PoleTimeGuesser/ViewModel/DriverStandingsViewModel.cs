@@ -6,7 +6,7 @@ namespace PoleTimeGuesser.ViewModel
     public partial class DriverStandingsViewModel : BaseViewModel
     {
         IF1DataGetterService _f1DataGetterService;
-        public ObservableCollection<DriverStandingsModel> driverStandigsModels { get; } = new();
+        public ObservableCollection<DriverStandingsModel> driverStandingsModels { get; } = new();
 
         public DriverStandingsViewModel(IF1DataGetterService f1DataGetterService)
         {
@@ -24,13 +24,13 @@ namespace PoleTimeGuesser.ViewModel
             {
                 IsBusy = true;
                 var driversStandigs = await _f1DataGetterService.GetDriverStandings();
-                if (driverStandigsModels.Count != 0)
-                    driverStandigsModels.Clear();
+                if (driverStandingsModels.Count != 0)
+                    driverStandingsModels.Clear();
 
                 foreach (var item in driversStandigs)
                 {
                     Console.WriteLine(item);
-                    driverStandigsModels.Add(item);
+                    driverStandingsModels.Add(item);
                 }
 
             }
