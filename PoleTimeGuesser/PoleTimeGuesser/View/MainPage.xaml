@@ -1,41 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PoleTimeGuesser.MainPage">
+             x:Class="PoleTimeGuesser.View.MainPage"
+             xmlns:model="clr-namespace:PoleTimeGuesser.Model"
+             xmlns:viewModel="clr-namespace:PoleTimeGuesser.ViewModel"
+             x:DataType="viewModel:DriverStandingsViewModel"
+             Title="{Binding Title}">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+    <Grid ColumnDefinitions="*,*"
+          ColumnSpacing="5"
+          RowDefinitions="*,Auto"
+          RowSpacing="0">
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
+        <CollectionView Grid.ColumnSpan="2"
+                        ItemsSource="{Binding driverStandigsModels}"
+                        SelectionMode="None">
 
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:DriverStandingsModel">
+                    <Grid Padding="10">
+                        <Frame HeightRequest="125"
+                               Padding="0"
+                               Style="{StaticResource CardView}">
+                            <Grid Padding="0"
+                                  ColumnDefinitions="125,*">
+                                <VerticalStackLayout Grid.Column="0"
+                                                     Padding="10"
+                                                     VerticalOptions="Center">
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+                                    <Label Text="{Binding Driver.givenName}"
+                                               Style="{StaticResource LargeLabel}"/>
+                                    <Label Text="{Binding Driver.familyName}"
+                                               Style="{StaticResource MediumLabel}"/>
+                                    <Label Text="{Binding Constructors[0].name}"
+                                           Style="{StaticResource SmallLabel}"/>
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1"
+                                                     Padding="10"
+                                                     VerticalOptions="Center">
+                                    <HorizontalStackLayout>
+                                        <Label Text="Position: "
+                                               Style="{StaticResource LargeLabel}"/>
+                                        <Label Text="{Binding position}"
+                                               Style="{StaticResource LargeLabel}"/>
+                                        
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout>
+                                        <Label Text="Points: "
+                                               Style="{StaticResource LargeLabel}"/>
+                                        <Label Text="{Binding points}"
+                                               Style="{StaticResource LargeLabel}"/>
+                                    </HorizontalStackLayout>
 
-        </VerticalStackLayout>
-    </ScrollView>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+        <Button Text="Get Driver Standigs"
+            Command="{Binding GetDriverStandigsCommand}"
+            IsEnabled="{Binding IsNotBusy}"
+            Grid.Row="1"             
+            Margin="8"
+            Style="{StaticResource ButtonOutline}"/>
+    </Grid>
 
 </ContentPage>

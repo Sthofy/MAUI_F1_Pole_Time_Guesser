@@ -50,11 +50,8 @@
 
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Model\" />
-	  <Folder Include="ViewModel\" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	  <PackageReference Include="System.Text.Json" Version="6.0.6" />
 	</ItemGroup>
 
 </Project>
