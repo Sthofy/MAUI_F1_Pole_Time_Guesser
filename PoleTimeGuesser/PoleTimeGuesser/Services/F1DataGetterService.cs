@@ -27,6 +27,15 @@ namespace PoleTimeGuesser.Services
                     var res = json["MRData"]["StandingsTable"]["StandingsLists"].First["DriverStandings"].ToString();
                     driverStadingModel = JsonConvert.DeserializeObject<List<DriverStandingsModel>>(res);
 
+                    foreach (var item in driverStadingModel)
+                    {
+                        item.Driver.Image = new DriverImageModel
+                        {
+                            Front = $"{item.Driver.driverId}_front.png",
+                            Side = $"{item.Driver.driverId}.png"
+                        };
+                    }
+
                     return driverStadingModel;
                 }
                 else

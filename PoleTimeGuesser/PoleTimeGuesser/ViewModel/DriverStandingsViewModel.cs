@@ -1,5 +1,6 @@
 ﻿using PoleTimeGuesser.Model;
 using PoleTimeGuesser.Services;
+using PoleTimeGuesser.View;
 
 namespace PoleTimeGuesser.ViewModel
 {
@@ -29,7 +30,6 @@ namespace PoleTimeGuesser.ViewModel
 
                 foreach (var item in driversStandigs)
                 {
-                    Console.WriteLine(item);
                     driverStandingsModels.Add(item);
                 }
 
@@ -42,6 +42,19 @@ namespace PoleTimeGuesser.ViewModel
             {
                 IsBusy = false;
             }
+        }
+
+        [RelayCommand]
+        async Task GoToDriverDetailsAsync(DriverStandingsModel driverstandings)
+        {
+            if (driverstandings is null)
+                return;
+
+            await Shell.Current.GoToAsync($"{nameof(DriverDetailsView)}", true,
+                new Dictionary<string, object>
+                {
+                    { "Driver" , driverstandings.Driver }
+                });
         }
     }
 }

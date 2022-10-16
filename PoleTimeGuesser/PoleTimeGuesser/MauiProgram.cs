@@ -1,9 +1,4 @@
-﻿using PoleTimeGuesser.Model;
-using PoleTimeGuesser.Services;
-using PoleTimeGuesser.View;
-using PoleTimeGuesser.ViewModel;
-
-namespace PoleTimeGuesser;
+﻿namespace PoleTimeGuesser;
 
 public static class MauiProgram
 {
@@ -18,9 +13,11 @@ public static class MauiProgram
 			});
 
 		builder.Services.AddSingleton<IF1DataGetterService, F1DataGetterService>()
-			.AddSingleton<DriverStandingsViewModel>();
+			.AddSingleton<DriverStandingsViewModel>()
+			.AddTransient<DriverDetailsViewModel>();
 
-		builder.Services.AddSingleton<MainPage>();
+		builder.Services.AddSingleton<MainPage>()
+			.AddSingleton<DriverDetailsView>();
 
 		return builder.Build();
 	}

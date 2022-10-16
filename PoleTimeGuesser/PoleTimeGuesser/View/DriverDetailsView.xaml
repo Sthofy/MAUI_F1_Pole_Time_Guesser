@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PoleTimeGuesser.View.DriverDetailsView"
+             xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
+             x:DataType="viewmodel:DriverDetailsViewModel"
+             Title="Driver Information">
+
+    <Grid RowDefinitions="200,*">
+
+        <Frame Style="{StaticResource CardView}"
+               Margin="5"
+               HeightRequest="150">
+            <Grid ColumnDefinitions="*,*">
+                <StackLayout Padding="10" Spacing="5">
+                    <Label Text="{Binding Driver.givenName}"
+                           Style="{StaticResource MediumLabel}"/>
+                    <Label Text="{Binding Driver.familyName}"
+                           Style="{StaticResource LargeLabel}"/>
+                    <Label Text="{Binding Driver.permanentNumber}"/>
+                </StackLayout>
+                <Image Source="{Binding Driver.Image.Side}"
+                       Grid.Column="2"
+                       WidthRequest="150"
+                       HeightRequest="150"/>
+            </Grid>
+
+        </Frame>
+        <TabbedPage>
+            
+        </TabbedPage>
+    </Grid>
+
+</ContentPage>
