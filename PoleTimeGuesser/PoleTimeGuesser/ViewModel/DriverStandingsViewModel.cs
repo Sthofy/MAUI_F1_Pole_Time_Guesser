@@ -1,21 +1,23 @@
-﻿using PoleTimeGuesser.Model;
-using PoleTimeGuesser.Services;
-using PoleTimeGuesser.View;
-
-namespace PoleTimeGuesser.ViewModel
+﻿namespace PoleTimeGuesser.ViewModel
 {
     public partial class DriverStandingsViewModel : BaseViewModel
     {
-        IF1DataGetterService _f1DataGetterService;
+        public Task Init { get; }
         public ObservableCollection<DriverStandingsModel> driverStandingsModels { get; } = new();
+        F1DataGetterService f1DataGetterService = new F1DataGetterService();
 
-        public DriverStandingsViewModel(IF1DataGetterService f1DataGetterService)
+        public DriverStandingsViewModel()
         {
             Title = "Driver Standings";
-            _f1DataGetterService = f1DataGetterService;
+            Init = Initialize();
+
         }
 
-        [RelayCommand]
+        private async Task Initialize()
+        {
+            await GetDriverStandigsAsync();
+        }
+
         async Task GetDriverStandigsAsync()
         {
             if (IsBusy)
@@ -24,7 +26,7 @@ namespace PoleTimeGuesser.ViewModel
             try
             {
                 IsBusy = true;
-                var driversStandigs = await _f1DataGetterService.GetDriverStandings();
+                var driversStandigs = await f1DataGetterService.GetDriverStandings();
                 if (driverStandingsModels.Count != 0)
                     driverStandingsModels.Clear();
 

@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using PoleTimeGuesser.Model;
 
 namespace PoleTimeGuesser.Services
 {
-    public class F1DataGetterService : IF1DataGetterService
+    public class F1DataGetterService
     {
         private readonly string _year = DateTime.Now.Year.ToString();
         readonly HttpClient _httpClient;

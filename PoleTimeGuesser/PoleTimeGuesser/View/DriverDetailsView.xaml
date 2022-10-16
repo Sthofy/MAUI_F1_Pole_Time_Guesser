@@ -24,11 +24,7 @@
                        WidthRequest="150"
                        HeightRequest="150"/>
             </Grid>
-
         </Frame>
-        <TabbedPage>
-            
-        </TabbedPage>
     </Grid>
 
 </ContentPage>

@@ -12,7 +12,7 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 			});
 
-		builder.Services.AddSingleton<IF1DataGetterService, F1DataGetterService>()
+		builder.Services.AddSingleton<F1DataGetterService>()
 			.AddSingleton<DriverStandingsViewModel>()
 			.AddTransient<DriverDetailsViewModel>();
 

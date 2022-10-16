@@ -2,6 +2,7 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:PoleTimeGuesser"
+             xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
              x:Class="PoleTimeGuesser.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -72,6 +73,8 @@
                 <Setter Property="CornerRadius" Value="10"/>
                 <Setter Property="IsClippedToBounds" Value="True"/>
             </Style>
+
+            <viewmodel:ViewModelLocator x:Key="ViewModelLocator"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
