@@ -8,6 +8,7 @@ namespace PoleTimeGuesser.Services
         private readonly string _year = DateTime.Now.Year.ToString();
         readonly HttpClient _httpClient;
         List<DriverStandingsModel> driverStadingModel = new();
+        List<ScheduleModel> scheduleModels = new();
 
         public F1DataGetterService()
         {
@@ -36,6 +37,35 @@ namespace PoleTimeGuesser.Services
                     }
 
                     return driverStadingModel;
+                }
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return null;
+            }
+        }
+
+        public async Task<List<ScheduleModel>> GetSchedule()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("https://ergast.com/api/f1/current.json");
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    var json = JObject.Parse(result);
+                    var res = json["MRData"]["RaceTable"]["Races"].ToString();
+                    scheduleModels = JsonConvert.DeserializeObject<List<ScheduleModel>>(res);
+
+                    foreach (var item in scheduleModels)
+                    {
+                        item.Circuit.Image = $"{item.Circuit.CircuitId}_circuit.png";
+                    }
+
+                    return scheduleModels;
                 }
                 else
                     return null;
