@@ -2,10 +2,12 @@
 
 namespace PoleTimeGuesser.ViewModel
 {
-    public class ScheduleViewModel : BaseViewModel
+    public partial class ScheduleViewModel : BaseViewModel
     {
-        public Task Init { get; }
+        [ObservableProperty]
+        bool isRefresing;
 
+        public Task Init { get; }      
         public ObservableCollection<ScheduleModel> scheduleModels { get; } = new();
         F1DataGetterService f1DataGetterService = new F1DataGetterService();
 
@@ -20,6 +22,7 @@ namespace PoleTimeGuesser.ViewModel
             await GetScheduleAsync();
         }
 
+        [RelayCommand]
         private async Task GetScheduleAsync()
         {
             if (IsBusy)
@@ -45,14 +48,21 @@ namespace PoleTimeGuesser.ViewModel
             finally
             {
                 IsBusy = false;
+                IsRefresing = false;
             }
         }
 
         [RelayCommand]
-        private async void ShowCircuitPopupAsync()
+        async Task GoToCircuitDetailsAsync(ScheduleModel schedule)
         {
-            await Shell.Current.Navigation.PushModalAsync(new CircuitPopup());
-        }
+            if (schedule is null)
+                return;
 
+            await Shell.Current.GoToAsync($"{nameof(CircuitDetailsView)}", true,
+                new Dictionary<string, object>
+                {
+                    { "Circuit" , schedule }
+                });
+        }
     }
 }

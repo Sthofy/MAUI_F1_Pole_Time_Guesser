@@ -4,7 +4,8 @@
              x:Class="PoleTimeGuesser.View.DriverDetailsView"
              xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
              x:DataType="viewmodel:DriverDetailsViewModel"
-             Title="Driver Information">
+             BindingContext="{Binding DriverDetailsView, Source={StaticResource ViewModelLocator}}"
+             Title="{Binding Title}">
 
     <Grid RowDefinitions="200,*">
 

@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui;
-
-namespace PoleTimeGuesser;
+﻿namespace PoleTimeGuesser;
 
 public static class MauiProgram
 {
@@ -18,11 +16,13 @@ public static class MauiProgram
         builder.Services.AddSingleton<F1DataGetterService>()
             .AddSingleton<DriverStandingsViewModel>()
             .AddTransient<DriverDetailsViewModel>()
-            .AddSingleton<ScheduleViewModel>();
+            .AddSingleton<ScheduleViewModel>()
+            .AddTransient<CircuitDetailsViewModel>();
 
         builder.Services.AddSingleton<MainPage>()
             .AddSingleton<DriverDetailsView>()
-            .AddSingleton<ScheduleView>();
+            .AddSingleton<ScheduleView>()
+            .AddTransient<CircuitDetailsView>();
 
         return builder.Build();
     }

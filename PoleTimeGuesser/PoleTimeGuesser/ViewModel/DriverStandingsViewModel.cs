@@ -2,6 +2,9 @@
 {
     public partial class DriverStandingsViewModel : BaseViewModel
     {
+        [ObservableProperty]
+        bool isRefreshing;
+
         public Task Init { get; }
         public ObservableCollection<DriverStandingsModel> driverStandingsModels { get; } = new();
         F1DataGetterService f1DataGetterService = new F1DataGetterService();
@@ -18,6 +21,7 @@
             await GetDriverStandigsAsync();
         }
 
+        [RelayCommand]
         async Task GetDriverStandigsAsync()
         {
             if (IsBusy)
@@ -43,6 +47,7 @@
             finally
             {
                 IsBusy = false;
+                IsRefreshing = false;
             }
         }
 

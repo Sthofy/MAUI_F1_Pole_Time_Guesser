@@ -2,10 +2,9 @@ namespace PoleTimeGuesser.View;
 
 public partial class DriverDetailsView : ContentPage
 {
-    public DriverDetailsView(DriverDetailsViewModel viewModel)
+    public DriverDetailsView()
     {
         InitializeComponent();
-        BindingContext = viewModel;
     }
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)

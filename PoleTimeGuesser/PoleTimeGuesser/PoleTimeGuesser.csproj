@@ -51,12 +51,16 @@
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="1.3.0" />
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+	  <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	  <PackageReference Include="Syncfusion.Maui.TabView" Version="20.3.49" />
 	  <PackageReference Include="System.Text.Json" Version="6.0.6" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="View\CircuitDetailsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\CircuitPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

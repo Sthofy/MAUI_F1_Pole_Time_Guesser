@@ -9,5 +9,6 @@ global using PoleTimeGuesser.ViewModel;
 global using PoleTimeGuesser.Model;
 global using PoleTimeGuesser.Services;
 global using PoleTimeGuesser.View;
+global using PoleTimeGuesser.Helpers;
 global using CommunityToolkit.Maui;
 global using CommunityToolkit.Maui.Views;

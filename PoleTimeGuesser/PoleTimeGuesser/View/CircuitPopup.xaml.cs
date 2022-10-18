@@ -2,7 +2,7 @@ namespace PoleTimeGuesser.View;
 
 public partial class CircuitPopup : Popup
 {
-    public CircuitPopup()
+    public CircuitPopup(F1DataGetterService f1DataGetterService)
     {
         InitializeComponent();
     }

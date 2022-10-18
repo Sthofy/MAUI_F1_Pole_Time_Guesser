@@ -8,27 +8,67 @@
              BindingContext="{Binding ScheduleView, Source={StaticResource ViewModelLocator}}"
              Title="{Binding Title}">
 
-    <CollectionView ItemsSource="{Binding scheduleModels}"
+    <Grid>
+        <RefreshView Command="{Binding GetScheduleCommand}"
+                 IsRefreshing="{Binding IsRefresing}">
+            <CollectionView ItemsSource="{Binding scheduleModels}"
                     SelectionMode="None">
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="model:ScheduleModel">
-                <Grid Padding="5">
-                    <Frame HeightRequest="150"
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:ScheduleModel">
+                        <Grid Padding="5">
+                            <Frame HeightRequest="80"
                            Padding="10"
                            Style="{StaticResource CardView}">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer CommandParameter="{Binding .}"
-                                                  Command="{Binding Source={RelativeSource
-                                                  AncestorLevel={x:Type viewmodel:ScheduleViewModel}},Path=}"/>
-                        </Frame.GestureRecognizers>
-    
-                        <Grid ColumnDefinitions="*,*">
-                            <Image Source="{Binding Circuit.Image}"
-                                   Aspect="AspectFit"/>
+
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ScheduleViewModel}}
+                                                            ,Path=GoToCircuitDetailsCommand}"/>
+                                </Frame.GestureRecognizers>
+
+                                <Grid ColumnDefinitions="35,60,2*,*"
+                              ColumnSpacing="10">
+                                    <Label Text="{Binding Round}"
+                                   Style="{StaticResource LargeLabel}"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"/>
+
+                                    <Image Source="{Binding Circuit.Location.Image}"
+                                   Aspect="AspectFill"
+                                   WidthRequest="60"
+                                   HeightRequest="60"
+                                   Grid.Column="1"/>
+
+                                    <VerticalStackLayout Grid.Column="2">
+
+                                        <HorizontalStackLayout Spacing="5">
+                                            <Label Text="{Binding Circuit.Location.Country}"
+                                           Style="{StaticResource MediumLabel}"/>
+                                            <Label Text="{Binding Circuit.Location.Locality}"
+                                           Style="{StaticResource SmallLabel}"
+                                           Margin="5,3,0,0"/>
+                                        </HorizontalStackLayout>
+                                        <Label Text="{Binding Circuit.CircuitName}"/>
+
+                                    </VerticalStackLayout>
+
+                                    <Label Grid.Column="3"
+                                   Text="{Binding Date}"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+
+                                </Grid>
+                            </Frame>
                         </Grid>
-                    </Frame>
-                </Grid>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"/>
+    </Grid>
+
 </ContentPage>

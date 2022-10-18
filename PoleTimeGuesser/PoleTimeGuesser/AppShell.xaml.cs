@@ -7,5 +7,6 @@ public partial class AppShell : Shell
         InitializeComponent();
 
         Routing.RegisterRoute(nameof(DriverDetailsView), typeof(DriverDetailsView));
+        Routing.RegisterRoute(nameof(CircuitDetailsView), typeof(CircuitDetailsView));
     }
 }

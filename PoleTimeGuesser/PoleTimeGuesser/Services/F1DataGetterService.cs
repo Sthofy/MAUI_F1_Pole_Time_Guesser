@@ -62,6 +62,8 @@ namespace PoleTimeGuesser.Services
 
                     foreach (var item in scheduleModels)
                     {
+                        string country = item.Circuit.Location.Country.Equals("Saudi Arabia") ? "saudi_arabia" : item.Circuit.Location.Country.ToLower();
+                        item.Circuit.Location.Image = $"{country}.png";
                         item.Circuit.Image = $"{item.Circuit.CircuitId}_circuit.png";
                     }
 
