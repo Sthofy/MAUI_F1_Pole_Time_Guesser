@@ -1,8 +1,8 @@
 ﻿namespace PoleTimeGuesser.Helpers
 {
-    public static class Converter
+    public class DataConverter
     {
-        public static string ConvertTeamName(string team)
+        public string ConvertTeamName(string team)
         {
             switch (team)
             {
@@ -31,7 +31,7 @@
             }
         }
 
-        public static string convertdrivername(string driver)
+        public string ConvertDrivername(string driver)
         {
             switch (driver)
             {

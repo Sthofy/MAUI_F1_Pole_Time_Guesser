@@ -20,7 +20,7 @@ public static class MauiProgram
             .AddTransient<CircuitDetailsViewModel>();
 
         builder.Services.AddSingleton<MainPage>()
-            .AddSingleton<DriverDetailsView>()
+            .AddTransient<DriverDetailsView>()
             .AddSingleton<ScheduleView>()
             .AddTransient<CircuitDetailsView>();
 
