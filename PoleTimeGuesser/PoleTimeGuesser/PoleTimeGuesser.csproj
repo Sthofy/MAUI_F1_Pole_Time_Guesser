@@ -70,6 +70,9 @@
 	  <MauiXaml Update="View\DriverStandingsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\LoginView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\ScheduleView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

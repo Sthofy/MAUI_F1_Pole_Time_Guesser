@@ -37,13 +37,13 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    <!--<ShellContent
-        Shell.NavBarIsVisible="True"
-        Title="Home"
-        ContentTemplate="{DataTemplate view:MainPage}"
-        Route="MainPage" />-->
+    <ShellContent
+        Shell.NavBarIsVisible="False"
+        Title="Login"
+        ContentTemplate="{DataTemplate view:LoginView}"
+        Route="LoginView" />
 
-    <TabBar>
+    <TabBar Route="main">
         <Tab Title="Home" Icon="home_black.svg">
             <ShellContent Shell.NavBarIsVisible="True" ContentTemplate="{DataTemplate view:MainPage}" Route="MainPage" />
         </Tab>

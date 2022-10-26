@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PoleTimeGuesser.View.LoginView"
+             xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
+             Title="Login"
+             Background="#13232f">
+    <Grid>
+        <VerticalStackLayout Margin="30" VerticalOptions="Center">
+            <Label FontSize="45"
+                   HorizontalOptions="Center"
+                   Text="F1 Guess"
+                   TextColor="White"/>
+            <Label FontSize="28"
+                   HorizontalOptions="Center"
+                   Text="The Pole Time"
+                   TextColor="IndianRed"/>
+
+            <Frame Margin="0,45,0,0"
+                   Padding="10,0,10,0"
+                   BorderColor="Transparent">
+                <Entry Placeholder="Username"
+                       ReturnType="Go"
+                       Text="{Binding Username}"
+                       TextColor="Black"/>
+            </Frame>
+
+            <Frame Margin="0,45,0,0"
+                   Padding="10,0,10,0"
+                   BorderColor="Transparent">
+                <Entry Placeholder="Password"
+                       IsPassword="True"
+                       ReturnType="Go"
+                       Text="{Binding Password}"
+                       TextColor="Black"/>
+            </Frame>
+
+            <Label Text="Frogot password?"
+                   TextColor="#1e90ff"
+                   Margin="0,10,0,0"/>
+
+            <Button Margin="0,30,0,0"
+                    BackgroundColor="#f0932b"
+                    Command="{Binding LoginCommand}"
+                    Text="Login"
+                    TextColor="White"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
