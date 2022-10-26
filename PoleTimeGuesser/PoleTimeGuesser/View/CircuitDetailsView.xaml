@@ -5,28 +5,86 @@
              xmlns:model="clr-namespace:PoleTimeGuesser.Model"
              xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
              x:DataType="viewmodel:CircuitDetailsViewModel"
-             BindingContext="{Binding CircuitDetailsView, Source={StaticResource ViewModelLocator}}"
-             Title="{Binding Title}">
+             Title="Circuit Informaitons">
 
-    <Grid RowDefinitions="100,*">
-        <VerticalStackLayout Spacing="5">
-            <Grid ColumnDefinitions="*,*">
-                <VerticalStackLayout Grid.Column="0">
-                    <Label Text="{Binding Circuit.Circuit.Location.Country}"
+    <Grid>
+        <RefreshView Command="{Binding GetCircuitInfoCommand}"
+                     IsRefreshing="{Binding IsRefreshing}">
+            <ScrollView >
+                <Grid RowDefinitions="Auto,Auto,Auto"
+              RowSpacing="10"
+              Padding="5">
+                    <Frame Style="{StaticResource CardView}"
+                           HeightRequest="400">
+                        <Grid ColumnDefinitions="*,*"
+                      RowDefinitions="auto,auto">
+                            <StackLayout Padding="10" Spacing="5"
+                                 Grid.ColumnSpan="2"
+                                 VerticalOptions="CenterAndExpand"
+                                 HorizontalOptions="CenterAndExpand">
+                                <Label Text="{Binding Circuit.RaceName}"
                            Style="{StaticResource MediumLabel}"/>
-                    <Label Text="{Binding Circuit.Circuit.Location.Locality}"
-                           Style="{StaticResource MediumLabel}"/>
-                </VerticalStackLayout>
+                                <Label Text="{Binding Circuit.Date}"
+                           Style="{StaticResource LargeLabel}"/>
+                                <Label Text="{Binding Circuit.Circuit.CircuitName}"/>
+                            </StackLayout>
+                            <Image Source="{Binding Circuit.Circuit.Image}"
+                           Grid.Column="0"
+                           Grid.Row="1"
+                           Grid.ColumnSpan="2"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           WidthRequest="400"
+                           HeightRequest="300"/>
+                        </Grid>
+                    </Frame>
 
-                <Image Grid.Column="1"
-                       Source="{Binding Circuit.Circuit.Location.Image}"/>
+                    <Frame Style="{StaticResource CardView}"
+                   Grid.Row="1"
+                   HeightRequest="185">
+                        <Grid ColumnDefinitions="*,*">
+                            <StackLayout Padding="10">
+                                <Label Text="Circuit Statistics: "/>
+                                <HorizontalStackLayout Padding="5,10,0,0" Spacing="5">
+                                    <Label Text="First Grand Prix:"/>
+                                    <Label Text="{Binding CircuitInfo.FristGrandPrix}"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Padding="5,3,0,0" Spacing="5">
+                                    <Label Text="Number of Laps:"/>
+                                    <Label Text="{Binding CircuitInfo.Laps}"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Padding="5,3,0,0" Spacing="5">
+                                    <Label Text="Circuit Lenght:"/>
+                                    <Label Text="{Binding CircuitInfo.Length}"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Padding="5,3,0,0" Spacing="5">
+                                    <Label Text="Race Distance:"/>
+                                    <Label Text="{Binding CircuitInfo.RaceDistance}"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Padding="5,3,0,0" Spacing="5">
+                                    <Label Text="Race Lap Record:"/>
+                                    <Label Text="{Binding CircuitInfo.Lapredcord}"/>
+                                </HorizontalStackLayout>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
 
-            </Grid>
-            <Label Text="{Binding Circuit.Circuit.CircuitName}"
-                   Style="{StaticResource LargeLabel}"/>
-        </VerticalStackLayout>
-        <VerticalStackLayout Grid.Row="1">
-            
-        </VerticalStackLayout>
+                    <Frame Grid.Row="2"
+                   Style="{StaticResource CardView}"
+                   Padding="10">
+                        <StackLayout>
+                            <Label Text="Biography: "
+                       Margin="0,0,0,5"/>
+                            <Label Text="{Binding CircuitInfo.Info}"/>
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </RefreshView>
+
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"/>
     </Grid>
 </ContentPage>

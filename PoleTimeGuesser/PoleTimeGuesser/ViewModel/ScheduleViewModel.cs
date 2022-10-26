@@ -7,7 +7,7 @@ namespace PoleTimeGuesser.ViewModel
         [ObservableProperty]
         bool isRefresing;
 
-        public Task Init { get; }      
+        public Task Init { get; }
         public ObservableCollection<ScheduleModel> scheduleModels { get; } = new();
         F1DataGetterService f1DataGetterService = new F1DataGetterService();
 
@@ -58,10 +58,12 @@ namespace PoleTimeGuesser.ViewModel
             if (schedule is null)
                 return;
 
+            
+
             await Shell.Current.GoToAsync($"{nameof(CircuitDetailsView)}", true,
                 new Dictionary<string, object>
                 {
-                    { "Circuit" , schedule }
+                    { "Circuit" , schedule },
                 });
         }
     }

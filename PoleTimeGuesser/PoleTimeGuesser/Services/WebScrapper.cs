@@ -4,10 +4,12 @@ namespace PoleTimeGuesser.Services
 {
     public class WebScrapper
     {
-        string DriverUrl = "https://www.formula1.com/en/drivers/";
+        string F1SiteUrl = "https://www.formula1.com/en";
+
         HttpClient _httpClient = new HttpClient();
         HtmlDocument doc = new HtmlDocument();
         DriverInfoModel driverInfo = new DriverInfoModel();
+        CircuitInfoModel _circuitInfo = new CircuitInfoModel();
         DataConverter converter = new DataConverter();
 
         async Task<string> CallUrl(string url)
@@ -28,7 +30,7 @@ namespace PoleTimeGuesser.Services
         {
             try
             {
-                string url = $"{DriverUrl}{converter.ConvertDrivername(driver)}";
+                string url = $"{F1SiteUrl}{converter.ConvertDrivername(driver)}";
                 var response = await CallUrl(url);
                 doc.LoadHtml(response);
                 var table = doc.DocumentNode.SelectNodes("//td[@class='stat-value']");
@@ -64,6 +66,42 @@ namespace PoleTimeGuesser.Services
                 return null;
             }
 
+        }
+
+        public async Task<CircuitInfoModel> GetCircuitInfoAsync(string circuit)
+        {
+            try
+            {
+                var response = await CallUrl($"{F1SiteUrl}{converter.ConvertCircuitName(circuit)}");
+                doc.LoadHtml(response);
+                var table = doc.DocumentNode.SelectNodes("//p[@class='f1-bold--stat']");
+                var description = doc.DocumentNode.SelectNodes("//fieldset[@class='f1-border--three-right f1-border--single f1-border-color--gray3']/p");
+
+                List<string> data = new List<string>();
+                foreach (var item in table)
+                {
+                    data.Add(item.InnerText);
+                }
+
+                _circuitInfo.FristGrandPrix = data[0];
+                _circuitInfo.Laps = data[1];
+                _circuitInfo.Length = data[2];
+                _circuitInfo.RaceDistance = data[3];
+                _circuitInfo.Lapredcord = data[4];
+                _circuitInfo.Info = "";
+
+                foreach (var item in description)
+                {
+                    _circuitInfo.Info += item.InnerText;
+                }
+
+                return _circuitInfo;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
         }
     }
 }

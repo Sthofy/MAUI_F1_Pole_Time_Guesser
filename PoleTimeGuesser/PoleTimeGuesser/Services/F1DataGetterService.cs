@@ -9,6 +9,7 @@ namespace PoleTimeGuesser.Services
         readonly HttpClient _httpClient;
         List<DriverStandingsModel> driverStadingModel = new();
         List<ScheduleModel> scheduleModels = new();
+        DriverInfoModel driverInfoModel = new();
 
         public F1DataGetterService()
         {
@@ -68,6 +69,29 @@ namespace PoleTimeGuesser.Services
                     }
 
                     return scheduleModels;
+                }
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return null;
+            }
+        }
+
+        public async Task<DriverInfoModel> GetDriverInfo(string id)
+        {
+
+            try
+            {
+                var response = await _httpClient.GetAsync($"https://f1infoapi.azurewebsites.net/api/driverinfo/{id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    var driverInfoModel = JsonConvert.DeserializeObject<DriverInfoModel>(result);
+
+                    return driverInfoModel;
                 }
                 else
                     return null;
