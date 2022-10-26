@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-
-namespace PoleTimeGuesser.Services
+﻿namespace PoleTimeGuesser.Services
 {
     public class F1DataGetterService
     {
@@ -9,7 +6,6 @@ namespace PoleTimeGuesser.Services
         readonly HttpClient _httpClient;
         List<DriverStandingsModel> driverStadingModel = new();
         List<ScheduleModel> scheduleModels = new();
-        DriverInfoModel driverInfoModel = new();
 
         public F1DataGetterService()
         {
@@ -85,13 +81,35 @@ namespace PoleTimeGuesser.Services
 
             try
             {
-                var response = await _httpClient.GetAsync($"https://f1infoapi.azurewebsites.net/api/driverinfo/{id}");
+                var response = await _httpClient.GetAsync($"https://f1infoapi.azurewebsites.net/DriverInfo/{id}");
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
                     var driverInfoModel = JsonConvert.DeserializeObject<DriverInfoModel>(result);
 
                     return driverInfoModel;
+                }
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return null;
+            }
+        }
+
+        public async Task<CircuitInfoModel> GetCicuitInfoAsync(string id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"https://f1infoapi.azurewebsites.net/CircuitInfo/{id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    var circuitInfoModel = JsonConvert.DeserializeObject<CircuitInfoModel>(result);
+
+                    return circuitInfoModel;
                 }
                 else
                     return null;

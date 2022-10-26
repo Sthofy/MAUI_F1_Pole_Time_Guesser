@@ -15,7 +15,7 @@
               RowSpacing="10"
               Padding="5">
                     <Frame Style="{StaticResource CardView}"
-                           HeightRequest="400">
+                           HeightRequest="350">
                         <Grid ColumnDefinitions="*,*"
                       RowDefinitions="auto,auto">
                             <StackLayout Padding="10" Spacing="5"
@@ -29,13 +29,13 @@
                                 <Label Text="{Binding Circuit.Circuit.CircuitName}"/>
                             </StackLayout>
                             <Image Source="{Binding Circuit.Circuit.Image}"
-                           Grid.Column="0"
-                           Grid.Row="1"
-                           Grid.ColumnSpan="2"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"
-                           WidthRequest="400"
-                           HeightRequest="300"/>
+                                   Grid.Column="0"
+                                   Grid.Row="1"
+                                   Grid.ColumnSpan="2"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"
+                                   WidthRequest="370"
+                                   HeightRequest="270"/>
                         </Grid>
                     </Frame>
 

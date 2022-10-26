@@ -4,95 +4,101 @@
              x:Class="PoleTimeGuesser.View.DriverDetailsView"
              xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
              x:DataType="viewmodel:DriverDetailsViewModel"
-             BindingContext="{Binding DriverDetailsView, Source={StaticResource ViewModelLocator}}"
              Title="Driver Infomations">
 
-    <ScrollView >
-        <Grid RowDefinitions="Auto,Auto,Auto"
+    <Grid>
+        <ScrollView >
+            <Grid RowDefinitions="Auto,Auto,Auto"
               RowSpacing="10"
               Padding="5">
-            <Frame Style="{StaticResource CardView}"
+                <Frame Style="{StaticResource CardView}"
                            HeightRequest="150">
-                <Grid ColumnDefinitions="*,*">
-                    <StackLayout Padding="10" Spacing="5">
-                        <Label Text="{Binding Driver.givenName}"
+                    <Grid ColumnDefinitions="*,*">
+                        <StackLayout Padding="10" Spacing="5">
+                            <Label Text="{Binding Driver.givenName}"
                            Style="{StaticResource MediumLabel}"/>
-                        <Label Text="{Binding Driver.familyName}"
+                            <Label Text="{Binding Driver.familyName}"
                            Style="{StaticResource LargeLabel}"/>
-                        <Label Text="{Binding Driver.permanentNumber}"/>
-                    </StackLayout>
-                    <Image Source="{Binding Driver.Image.Side}"
+                            <Label Text="{Binding Driver.permanentNumber}"/>
+                        </StackLayout>
+                        <Image Source="{Binding Driver.Image.Side}"
                                    Grid.Column="1"
                                    WidthRequest="150"
                                    HeightRequest="150"/>
-                </Grid>
-            </Frame>
+                    </Grid>
+                </Frame>
 
-            <Frame Style="{StaticResource CardView}"
+                <Frame Style="{StaticResource CardView}"
                    Grid.Row="1"
                    HeightRequest="185">
-                <Grid ColumnDefinitions="*,*">
-                    <StackLayout Padding="10">
-                        <Label Text="Basic Informations: "/>
-                        <StackLayout Padding="5,10,0,0" Spacing="5">
-                            <Label Text="Nationality:"/>
-                            <Label Text="{Binding Driver.nationality}"
+                    <Grid ColumnDefinitions="*,*">
+                        <StackLayout Padding="10">
+                            <Label Text="Basic Informations: "/>
+                            <StackLayout Padding="5,10,0,0" Spacing="5">
+                                <Label Text="Nationality:"/>
+                                <Label Text="{Binding Driver.nationality}"
                                    Padding="30,0,0,0"/>
-                        </StackLayout>
-                        <StackLayout Padding="5,3,0,0" Spacing="5">
-                            <Label Text="Date of Birth:"/>
-                            <Label Text="{Binding Driver.dateOfBirth}"
+                            </StackLayout>
+                            <StackLayout Padding="5,3,0,0" Spacing="5">
+                                <Label Text="Date of Birth:"/>
+                                <Label Text="{Binding Driver.dateOfBirth}"
                                    Padding="30,0,0,0"/>
-                        </StackLayout>
-                        <StackLayout Padding="5,3,0,0" Spacing="5">
-                            <Label Text="Place of Birth:"/>
-                            <Label Text="{Binding DriverInfo.BirthPlace}"
+                            </StackLayout>
+                            <StackLayout Padding="5,3,0,0" Spacing="5">
+                                <Label Text="Place of Birth:"/>
+                                <Label Text="{Binding DriverInfo.BirthPlace}"
                                    Padding="30,0,0,0"/>
+                            </StackLayout>
                         </StackLayout>
-                    </StackLayout>
-                    <StackLayout Grid.Column="1"
+                        <StackLayout Grid.Column="1"
                                  Padding="10">
-                        <Label Text="Carrer Informations: "/>
-                        <HorizontalStackLayout Padding="5,10,0,0" Spacing="5">
-                            <Label Text="Highest Race Finish:"/>
-                            <Label Text="{Binding DriverInfo.HighestFinish}"/>
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout Padding="5,3,0,0" Spacing="5">
-                            <Label Text="Highest Grid Position:"/>
-                            <Label Text="{Binding DriverInfo.HighestPositoion}"/>
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout Padding="5,3,0,0" Spacing="5">
-                            <Label Text="Podiums:"/>
-                            <Label Text="{Binding DriverInfo.Podiums}"/>
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout Padding="5,3,0,0" Spacing="5">
-                            <Label Text="Grand Prix Entered:"/>
-                            <Label Text="{Binding DriverInfo.RaceEnterded}"/>
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout Padding="5,3,0,0" Spacing="5">
-                            <Label Text="Points:"/>
-                            <Label Text="{Binding DriverInfo.Points}"/>
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout Padding="5,3,0,0" Spacing="5">
-                            <Label Text="World Champinships:"/>
-                            <Label Text="{Binding DriverInfo.WorldChamps}"/>
-                        </HorizontalStackLayout>
+                            <Label Text="Carrer Informations: "/>
+                            <HorizontalStackLayout Padding="5,10,0,0" Spacing="5">
+                                <Label Text="Highest Race Finish:"/>
+                                <Label Text="{Binding DriverInfo.HighestFinish}"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Padding="5,3,0,0" Spacing="5">
+                                <Label Text="Highest Grid Position:"/>
+                                <Label Text="{Binding DriverInfo.HighestPositoion}"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Padding="5,3,0,0" Spacing="5">
+                                <Label Text="Podiums:"/>
+                                <Label Text="{Binding DriverInfo.Podiums}"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Padding="5,3,0,0" Spacing="5">
+                                <Label Text="Grand Prix Entered:"/>
+                                <Label Text="{Binding DriverInfo.RaceEnterded}"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Padding="5,3,0,0" Spacing="5">
+                                <Label Text="Points:"/>
+                                <Label Text="{Binding DriverInfo.Points}"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Padding="5,3,0,0" Spacing="5">
+                                <Label Text="World Champinships:"/>
+                                <Label Text="{Binding DriverInfo.WorldChamps}"/>
+                            </HorizontalStackLayout>
 
-                    </StackLayout>
-                </Grid>
-            </Frame>
-            
-            <Frame Grid.Row="2"
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+
+                <Frame Grid.Row="2"
                    Style="{StaticResource CardView}"
                    Padding="10">
-                <StackLayout>
-                    <Label Text="Biography: "
+                    <StackLayout>
+                        <Label Text="Biography: "
                        Margin="0,0,0,5"/>
-                    <Label Text="{Binding DriverInfo.Bio}"/>
-                </StackLayout>
-            </Frame>
+                        <Label Text="{Binding DriverInfo.Bio}"/>
+                    </StackLayout>
+                </Frame>
 
-        </Grid>
-    </ScrollView>
+            </Grid>
+        </ScrollView>
+        
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"/>
+    </Grid>
 
 </ContentPage>

@@ -12,7 +12,7 @@
         [ObservableProperty]
         CircuitInfoModel circuitInfo;
 
-        WebScrapper _scrapper = new WebScrapper();
+        F1DataGetterService f1DataGetterService = new F1DataGetterService();
 
         public void Initailize()
         {
@@ -29,7 +29,7 @@
         [RelayCommand]
         private async Task GetCircuitInfo()
         {
-            CircuitInfo = await _scrapper.GetCircuitInfoAsync(Circuit.Circuit.CircuitId);
+            CircuitInfo = await f1DataGetterService.GetCicuitInfoAsync(Circuit.Circuit.CircuitId);
         }
     }
 }

@@ -48,10 +48,10 @@
             <ShellContent Shell.NavBarIsVisible="True" ContentTemplate="{DataTemplate view:MainPage}" Route="MainPage" />
         </Tab>
         <Tab Title="Schedule" Icon="event_black.svg">
-            <ShellContent Shell.NavBarIsVisible="True" ContentTemplate="{DataTemplate view:ScheduleView}" Route="ScheduleView"/>
+            <ShellContent Shell.NavBarIsVisible="False" ContentTemplate="{DataTemplate view:ScheduleView}" Route="ScheduleView"/>
         </Tab>
         <Tab Title="Drivers" Icon="helmet_black.svg">
-            <ShellContent Shell.NavBarIsVisible="True" ContentTemplate="{DataTemplate view:DriverStandingsView}" Route="DriverStandingsView"/>
+            <ShellContent Shell.NavBarIsVisible="False" ContentTemplate="{DataTemplate view:DriverStandingsView}" Route="DriverStandingsView"/>
         </Tab>
         <Tab Title="Teams">
             <!-- <ShellContent ContentTemplate="{DataTemplate tabViews:TeamsView}" /> -->

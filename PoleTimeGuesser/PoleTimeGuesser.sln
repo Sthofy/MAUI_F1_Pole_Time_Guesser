@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoleTimeGuesser", "PoleTimeGuesser\PoleTimeGuesser.csproj", "{F7962B56-31E0-49EA-95CC-E46BF9DFBADE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InformationAPI", "InformationAPI\InformationAPI.csproj", "{A2E287AB-98A1-4332-B7EE-B66C76F5A098}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "F1GuessAPI", "F1GuessAPI\F1GuessAPI.csproj", "{DCE06C6B-BBCD-49E8-AA44-3676A58A010F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,10 @@ Global
 		{F7962B56-31E0-49EA-95CC-E46BF9DFBADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7962B56-31E0-49EA-95CC-E46BF9DFBADE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F7962B56-31E0-49EA-95CC-E46BF9DFBADE}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{A2E287AB-98A1-4332-B7EE-B66C76F5A098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2E287AB-98A1-4332-B7EE-B66C76F5A098}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2E287AB-98A1-4332-B7EE-B66C76F5A098}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2E287AB-98A1-4332-B7EE-B66C76F5A098}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCE06C6B-BBCD-49E8-AA44-3676A58A010F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCE06C6B-BBCD-49E8-AA44-3676A58A010F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCE06C6B-BBCD-49E8-AA44-3676A58A010F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCE06C6B-BBCD-49E8-AA44-3676A58A010F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

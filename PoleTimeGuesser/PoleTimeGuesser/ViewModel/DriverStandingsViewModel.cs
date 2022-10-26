@@ -8,7 +8,6 @@
         public Task Init { get; }
         public ObservableCollection<DriverStandingsModel> driverStandingsModels { get; } = new();
         F1DataGetterService f1DataGetterService = new F1DataGetterService();
-        WebScrapper _scrapper = new WebScrapper();
 
         public DriverStandingsViewModel()
         {
@@ -57,15 +56,10 @@
             if (driverstandings is null)
                 return;
 
-            DriverInfoModel driverinfo = new DriverInfoModel();
-            driverinfo = await _scrapper.GetDriverInfo(driverstandings.Driver.driverId);
-            //var driverinfo = await f1DataGetterService.GetDriverInfo(driverstandings.Driver.driverId);
-
             await Shell.Current.GoToAsync($"{nameof(DriverDetailsView)}", true,
                 new Dictionary<string, object>
                 {
-                    { "Driver" , driverstandings.Driver },
-                    { "DriverInfoModel" , driverinfo }
+                    { "Driver" , driverstandings.Driver }
                 });
         }
     }

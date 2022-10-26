@@ -58,8 +58,6 @@ namespace PoleTimeGuesser.ViewModel
             if (schedule is null)
                 return;
 
-            
-
             await Shell.Current.GoToAsync($"{nameof(CircuitDetailsView)}", true,
                 new Dictionary<string, object>
                 {
