@@ -56,8 +56,10 @@
         {
             if (driverstandings is null)
                 return;
+
             DriverInfoModel driverinfo = new DriverInfoModel();
             driverinfo = await _scrapper.GetDriverInfo(driverstandings.Driver.driverId);
+            //var driverinfo = await f1DataGetterService.GetDriverInfo(driverstandings.Driver.driverId);
 
             await Shell.Current.GoToAsync($"{nameof(DriverDetailsView)}", true,
                 new Dictionary<string, object>
