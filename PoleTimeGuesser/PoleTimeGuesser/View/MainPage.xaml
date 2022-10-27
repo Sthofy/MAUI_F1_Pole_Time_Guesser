@@ -5,7 +5,73 @@
              xmlns:model="clr-namespace:PoleTimeGuesser.Model"
              xmlns:viewModel="clr-namespace:PoleTimeGuesser.ViewModel"
              x:DataType="viewModel:DriverStandingsViewModel"
-             Title="{Binding Title}">
-    
-    
+             Title="Welcome Logged in User">
+
+    <Grid>
+        <ScrollView>
+            <RefreshView>
+                <Grid>
+                    <VerticalStackLayout>
+                        <Frame Style="{StaticResource CardView}"
+                       Margin="5"
+                       WidthRequest="300"
+                       HeightRequest="300">
+
+                            <Label Text="Felhasználók Score board"/>
+
+                        </Frame>
+                        <Frame Style="{StaticResource CardView}"
+                       Margin="5"
+                       WidthRequest="300"
+                       HeightRequest="300">
+
+                            <Label Text="Felhasználók Score board"/>
+
+                        </Frame>
+                        <Frame Style="{StaticResource CardView}"
+                       Margin="5"
+                       WidthRequest="300"
+                       HeightRequest="100">
+
+                            <Label Text="Upcoming event!"/>
+
+                        </Frame>
+                        <ScrollView Orientation="Horizontal"
+                                    HorizontalScrollBarVisibility="Never">
+                            <HorizontalStackLayout>
+                                <Frame Style="{StaticResource CardView}"
+                               Margin="5"
+                               WidthRequest="300"
+                               HeightRequest="100">
+
+                                    <Label Text="Ranglista első 3!"/>
+
+                                </Frame>
+                                <Frame Style="{StaticResource CardView}"
+                               Margin="5"
+                               WidthRequest="300"
+                               HeightRequest="100">
+
+                                    <Label Text="Ranglista első 3!"/>
+
+                                </Frame>
+                                <Frame Style="{StaticResource CardView}"
+                               Margin="5"
+                               WidthRequest="300"
+                               HeightRequest="100">
+
+                                    <Label Text="Ranglista első 3!"/>
+
+                                </Frame>
+                            </HorizontalStackLayout>
+                        </ScrollView>
+                    </VerticalStackLayout>
+                </Grid>
+            </RefreshView>
+        </ScrollView>
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"/>
+    </Grid>
 </ContentPage>
