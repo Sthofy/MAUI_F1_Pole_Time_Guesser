@@ -43,6 +43,12 @@
         ContentTemplate="{DataTemplate view:LoginView}"
         Route="LoginView" />
 
+    <ShellContent
+        Shell.NavBarIsVisible="False"
+        Title="Registration"
+        ContentTemplate="{DataTemplate view:RegisterView}"
+        Route="RegisterPage" />
+
     <TabBar Route="main">
         <Tab Title="Home" Icon="home_black.svg">
             <ShellContent Shell.NavBarIsVisible="True" ContentTemplate="{DataTemplate view:MainPage}" Route="MainPage" />

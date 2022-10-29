@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static JetBrains.Annotations.Async;
-
-namespace PoleTimeGuesser.ViewModel
+﻿namespace PoleTimeGuesser.ViewModel
 {
     public partial class LoginViewModel : BaseViewModel
     {
         [ObservableProperty]
-        string username;
+        string _username;
 
         [ObservableProperty]
-        string password;
+        string _password;
+        [ObservableProperty]
+        bool _isProcessing;
 
-        public LoginViewModel()
+        ServiceManager _serviceManager;
+
+        public LoginViewModel(ServiceManager serviceManager)
         {
-            Username = "Sthofy";
-            Password = "12345.";
+            IsProcessing = false;
+            _serviceManager = serviceManager;
         }
 
         [RelayCommand]
@@ -29,7 +26,52 @@ namespace PoleTimeGuesser.ViewModel
             //    {
             //        { "Circuit" , schedule },
             //    });
-            await Shell.Current.GoToAsync("///main");
+
+
+            //await Shell.Current.GoToAsync("///main");
+
+            if (IsProcessing) return;
+
+            IsProcessing = true;
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
+                    throw new Exception("Usernaem or Password field is empty!");
+
+                var requset = new AuthenticateRequest
+                {
+                    Username = Username,
+                    Password = Password,
+                };
+
+                var response = await _serviceManager.Authenticate(requset);
+                if(response.StatusCode==200)
+                {
+                    await AppShell.Current.DisplayAlert("F1Guess", "Login sucessful!\n" +
+                        $"Username: {response.Username}\n" +
+                        $"Email: {response.Email}\n"+
+                        $"AvatarSourceName: {response.AvatarSourceName}", "OK");
+                }
+                else
+                {
+                    await AppShell.Current.DisplayAlert("F1Guess", response.StatusMessage, "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await AppShell.Current.DisplayAlert("F1Guess", ex.Message, "OK");
+            }
+            finally
+            {
+
+            }
+        }
+
+        [RelayCommand]
+        async Task GoToRegisterPage()
+        {
+            await Shell.Current.GoToAsync("///RegisterPage");
         }
     }
 }

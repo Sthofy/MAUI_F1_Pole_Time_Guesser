@@ -18,13 +18,17 @@ public static class MauiProgram
             .AddTransient<DriverDetailsViewModel>()
             .AddSingleton<ScheduleViewModel>()
             .AddTransient<CircuitDetailsViewModel>()
-            .AddSingleton<LoginViewModel>();
+            .AddSingleton<LoginViewModel>()
+            .AddSingleton<RegisterViewModel>();
 
         builder.Services.AddSingleton<MainPage>()
             .AddTransient<DriverDetailsView>()
             .AddSingleton<ScheduleView>()
             .AddTransient<CircuitDetailsView>()
-            .AddSingleton<LoginView>();
+            .AddSingleton<LoginView>()
+            .AddSingleton<RegisterView>();
+
+        builder.Services.AddSingleton<ServiceManager>();
 
         return builder.Build();
     }

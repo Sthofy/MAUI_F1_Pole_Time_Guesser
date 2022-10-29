@@ -12,3 +12,7 @@ global using CommunityToolkit.Maui;
 global using CommunityToolkit.Maui.Views;
 global using Newtonsoft.Json.Linq;
 global using Newtonsoft.Json;
+global using PoleTimeGuesser.Helpers;
+global using PoleTimeGuesser.Services.Registration;
+global using PoleTimeGuesser.Services.Authenticate;
+global using System.Text;
