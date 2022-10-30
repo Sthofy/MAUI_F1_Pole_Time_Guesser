@@ -1,24 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PoleTimeGuesser.View.MainPage"
+             x:Class="PoleTimeGuesser.View.MainView"
              xmlns:model="clr-namespace:PoleTimeGuesser.Model"
              xmlns:viewModel="clr-namespace:PoleTimeGuesser.ViewModel"
-             x:DataType="viewModel:DriverStandingsViewModel"
-             Title="Welcome Logged in User">
+             Title="{Binding SharedData.Username}"
+             Background="#13232f">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Settings"
+                     IconImageSource="settings_tyre.png"
+                     Command="{Binding GoToSettingsPageCommand}"/>
+    </ContentPage.ToolbarItems>
 
-    <Grid>
+    <Grid Padding="10">
         <ScrollView>
             <RefreshView>
                 <Grid>
                     <VerticalStackLayout>
                         <Frame Style="{StaticResource CardView}"
-                       Margin="5"
-                       WidthRequest="300"
-                       HeightRequest="300">
+                               Margin="5"
+                               HeightRequest="200">
+                            <Grid ColumnDefinitions="150,*"
+                                  RowDefinitions="150,*">
+                                <Frame WidthRequest="128"
+                                       HeightRequest="128"
+                                       CornerRadius="64"
+                                       BorderColor="Transparent"
+                                       BackgroundColor="Aqua">
+                                    <Image WidthRequest="128"
+                                           HeightRequest="128"
+                                           Source="{Binding SharedData.AvatarSourceName}"
+                                           Aspect="AspectFill"/>
+                                </Frame>
+                                <Label Grid.Row="1"
+                                       Text="{Binding SharedData.Username}"
+                                       HorizontalOptions="Center"
+                                       FontSize="30"/>
 
-                            <Label Text="Felhasználók Score board"/>
-
+                            </Grid>
                         </Frame>
                         <Frame Style="{StaticResource CardView}"
                        Margin="5"

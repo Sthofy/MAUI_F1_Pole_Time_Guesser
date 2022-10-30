@@ -79,7 +79,8 @@
                 <Label
                     Margin="5,0,0,0"
                     Text="Register now"
-                    TextColor="#1e90ff">
+                    TextColor="#1e90ff"
+                    >
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer CommandParameter="{Binding .}"
                                                       Command="{Binding Source={RelativeSource 

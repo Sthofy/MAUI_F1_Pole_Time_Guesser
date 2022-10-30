@@ -1,5 +1,7 @@
 ﻿namespace PoleTimeGuesser.ViewModel
 {
+    [QueryProperty("Username", "Username")]
+    [QueryProperty("Password", "Password")]
     public partial class LoginViewModel : BaseViewModel
     {
         [ObservableProperty]
@@ -11,25 +13,20 @@
         bool _isProcessing;
 
         ServiceManager _serviceManager;
+        ISharedData _sharedData;
 
-        public LoginViewModel(ServiceManager serviceManager)
+        public LoginViewModel(ServiceManager serviceManager, ISharedData sharedData)
         {
+            Username = "Sthofy";
+            Password = "Pwd12345.";
             IsProcessing = false;
             _serviceManager = serviceManager;
+            _sharedData = sharedData;
         }
 
         [RelayCommand]
         async Task Login()
         {
-            //await Shell.Current.GoToAsync($"{nameof(CircuitDetailsView)}", true,
-            //    new Dictionary<string, object>
-            //    {
-            //        { "Circuit" , schedule },
-            //    });
-
-
-            //await Shell.Current.GoToAsync("///main");
-
             if (IsProcessing) return;
 
             IsProcessing = true;
@@ -46,12 +43,12 @@
                 };
 
                 var response = await _serviceManager.Authenticate(requset);
-                if(response.StatusCode==200)
+                if (response.StatusCode == 200)
                 {
-                    await AppShell.Current.DisplayAlert("F1Guess", "Login sucessful!\n" +
-                        $"Username: {response.Username}\n" +
-                        $"Email: {response.Email}\n"+
-                        $"AvatarSourceName: {response.AvatarSourceName}", "OK");
+                    _sharedData.Username = response.Username;
+                    _sharedData.AvatarSourceName = response.AvatarSourceName;
+                    _sharedData.Email = response.Email;
+                    await Shell.Current.GoToAsync("///main");
                 }
                 else
                 {
@@ -64,7 +61,7 @@
             }
             finally
             {
-
+                IsProcessing = false;
             }
         }
 

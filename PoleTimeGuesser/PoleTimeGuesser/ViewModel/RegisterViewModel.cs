@@ -49,7 +49,14 @@ namespace PoleTimeGuesser.ViewModel
                 var response = await _serviceManager.Registration(request);
 
                 if (response.StatusCode == 200)
-                    await Shell.Current.GoToAsync("///LoginView");
+                {
+                    await Shell.Current.GoToAsync($"{nameof(LoginView)}", true,
+                        new Dictionary<string, object>
+                        {
+                            { "Username" , Username },
+                            { "Password" , Password },
+                        });
+                }
                 else
                     await AppShell.Current.DisplayAlert("F1Guess", response.StatusMessage, "OK");
             }

@@ -47,24 +47,23 @@
         Shell.NavBarIsVisible="False"
         Title="Registration"
         ContentTemplate="{DataTemplate view:RegisterView}"
-        Route="RegisterPage" />
+        Route="RegisterPage"/>
 
-    <TabBar Route="main">
+    <TabBar Shell.NavBarIsVisible="False" Route="main">
         <Tab Title="Home" Icon="home_black.svg">
-            <ShellContent Shell.NavBarIsVisible="True" ContentTemplate="{DataTemplate view:MainPage}" Route="MainPage" />
+            <ShellContent Shell.NavBarIsVisible="True" ContentTemplate="{DataTemplate view:MainView}" Route="MainView" />
         </Tab>
         <Tab Title="Schedule" Icon="event_black.svg">
-            <ShellContent Shell.NavBarIsVisible="False" ContentTemplate="{DataTemplate view:ScheduleView}" Route="ScheduleView"/>
+            <ShellContent ContentTemplate="{DataTemplate view:ScheduleView}" Route="ScheduleView"/>
         </Tab>
         <Tab Title="Drivers" Icon="helmet_black.svg">
-            <ShellContent Shell.NavBarIsVisible="False" ContentTemplate="{DataTemplate view:DriverStandingsView}" Route="DriverStandingsView"/>
+            <ShellContent ContentTemplate="{DataTemplate view:DriverStandingsView}" Route="DriverStandingsView"/>
         </Tab>
-        <Tab Title="Teams">
-            <!-- <ShellContent ContentTemplate="{DataTemplate tabViews:TeamsView}" /> -->
-        </Tab>
+        <!--<Tab Title="Settings" Icon="settings_tyre.png">
+            <ShellContent ContentTemplate="{DataTemplate view:SettingsView}" />
+        </Tab>-->
         <Tab Title="History">
             <!-- <ShellContent ContentTemplate="{DataTemplate tabViews:HistoryView}" /> -->
         </Tab>
     </TabBar>
-
 </Shell>

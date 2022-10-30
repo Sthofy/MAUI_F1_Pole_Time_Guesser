@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PoleTimeGuesser.View.SettingsView"
+             xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
+             Title="Settings"
+             Background="#13232f"
+             Shell.NavBarIsVisible="True">
+    <Grid>
+        <VerticalStackLayout Margin="20">
+            <Grid RowDefinitions="auto,*">
+                <Frame>
+                    <VerticalStackLayout Spacing="10">
+                        <Image WidthRequest="128"
+                           HeightRequest="128"
+                           Aspect="AspectFill"
+                           Source="{Binding SharedData.AvatarSourceName}"/>
+
+                        <Label Text="{Binding SharedData.Username}"
+                               FontSize="40"
+                               HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+
+            <Frame Padding="10,0,10,0"
+                   Margin="0,20,0,0">
+                <Entry Placeholder="New Username"
+                       ReturnType="Go"
+                       TextColor="Black"/>
+            </Frame>
+            <Frame Padding="10,0,10,0"
+                   Margin="0,20,0,0">
+                <Entry Placeholder="New Email"
+                       ReturnType="Go"
+                       TextColor="Black"/>
+            </Frame>
+            <Frame Padding="10,0,10,0"
+                   Margin="0,20,0,0">
+                <Entry Placeholder="New Password"
+                       ReturnType="Go"
+                       TextColor="Black"/>
+            </Frame>
+            <Button Margin="0,30,0,0"
+                    BackgroundColor="#f0932b"
+                    Text="Save Changes"
+                    TextColor="White"/>
+            
+            <Button Margin="0,30,0,0"
+                    BackgroundColor="Red"
+                    Text="Log out"
+                    TextColor="White"
+                    Command="{Binding LogOutCommand}"/>
+        </VerticalStackLayout>
+
+        <ActivityIndicator
+            HeightRequest="60"
+            IsRunning="{Binding IsProcessing}"
+            WidthRequest="60" />
+    </Grid>
+</ContentPage>
