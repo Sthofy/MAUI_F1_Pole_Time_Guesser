@@ -1,10 +1,10 @@
-﻿namespace F1GuessAPI.Models
+﻿namespace F1GuessAPI.Controllers.UpdateUser
 {
-    public class UserModel
+    public class UpdateUserRequest
     {
         public int Id { get; set; }
         public string Username { get; set; } = null!;
+        public string Password { get; set; } = null!;
         public string Email { get; set; } = null!;
-        public string AvatarSourceName { get; set; } = null!;
     }
 }

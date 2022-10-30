@@ -22,7 +22,6 @@ namespace F1GuessAPI.Functions.User
                 Email = email,
                 Password = GeneratePawword(password, salt),
                 StoredSalt = salt,
-                AvatarSourceName = "",
             };
 
             _context.TblUsers.Add(entity);
@@ -51,10 +50,48 @@ namespace F1GuessAPI.Functions.User
 
                 return new UserModel
                 {
+                    Id = entity.Id,
                     Username = entity.Username,
                     Email = entity.Email,
                     AvatarSourceName = entity.AvatarSourceName,
                 };
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<UserModel> Update(int id, string username, string email, string password)
+        {
+            try
+            {
+                var entity = _context.TblUsers.SingleOrDefault(x => x.Id == id);
+                if (entity is null) return null;
+
+                if (username.Trim() != "")
+                    entity.Username = username;
+                if (email.Trim() != "")
+                    entity.Email = email;
+                if (password.Trim() != "")
+                {
+                    byte[] salt = GenerateSalt();
+                    entity.StoredSalt = salt;
+                    entity.Password = GeneratePawword(password, salt);
+                }
+
+                _context.TblUsers.Update(entity);
+                var response = await _context.SaveChangesAsync();
+
+                UserModel result = new UserModel
+                {
+                    Id = entity.Id,
+                    Username = entity.Username,
+                    Email = entity.Email,
+                    AvatarSourceName = entity.AvatarSourceName,
+                };
+
+                return result;
             }
             catch (Exception ex)
             {
