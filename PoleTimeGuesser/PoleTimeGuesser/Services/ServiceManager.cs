@@ -1,4 +1,6 @@
-﻿namespace PoleTimeGuesser.Services
+﻿using PoleTimeGuesser.Services.UpdateUser;
+
+namespace PoleTimeGuesser.Services
 {
     public class ServiceManager
     {
@@ -13,7 +15,7 @@
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Post;
-            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/Registration/Registration");
+            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/Registration");
 
             if (request is not null)
             {
@@ -48,7 +50,7 @@
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Post;
-            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/Authenticate/Authenticate");
+            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/Authenticate");
 
             if (request is not null)
             {
@@ -75,6 +77,40 @@
             catch (Exception ex)
             {
                 var result = new AuthenticateResponse
+                {
+                    StatusCode = 500,
+                    StatusMessage = ex.Message
+                };
+                return result;
+            }
+        }
+
+        public async Task<UpdateResponse> UpdateUser(UpdateRequest request)
+        {
+            var httpRequestMessage = new HttpRequestMessage();
+            httpRequestMessage.Method = HttpMethod.Put;
+            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/UpdateUser");
+
+            if (request is not null)
+            {
+                string jsonContent = JsonConvert.SerializeObject(request);
+                var httpContent = new StringContent(jsonContent, encoding: Encoding.UTF8, "application/json");
+                httpRequestMessage.Content = httpContent;
+            }
+
+            try
+            {
+                var response = await _devSslHelper.HttpClient.SendAsync(httpRequestMessage);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                var result = JsonConvert.DeserializeObject<UpdateResponse>(responseContent);
+                result.StatusCode = (int)response.StatusCode;
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                var result = new UpdateResponse
                 {
                     StatusCode = 500,
                     StatusMessage = ex.Message

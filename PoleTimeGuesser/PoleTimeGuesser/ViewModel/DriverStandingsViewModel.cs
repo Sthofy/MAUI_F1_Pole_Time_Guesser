@@ -13,7 +13,6 @@
         {
             Title = "Driver Standings";
             Init = Initialize();
-
         }
 
         private async Task Initialize()

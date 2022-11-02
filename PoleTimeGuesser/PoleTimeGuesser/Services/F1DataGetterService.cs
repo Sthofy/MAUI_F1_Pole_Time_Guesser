@@ -2,7 +2,7 @@
 {
     public class F1DataGetterService
     {
-        private readonly string _year = DateTime.Now.Year.ToString();
+        private DateTime _date = DateTime.Now;
         readonly HttpClient _httpClient;
         List<DriverStandingsModel> driverStadingModel = new();
         List<ScheduleModel> scheduleModels = new();
@@ -113,6 +113,53 @@
                 }
                 else
                     return null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return null;
+            }
+        }
+
+        public async Task<ScheduleModel> GetUpComingEvent()
+        {
+            try
+            {
+                var shedules = await GetSchedule();
+                ScheduleModel output = new ScheduleModel();
+
+                foreach (var item in shedules)
+                {
+                    if (DateTime.Parse(item.Date).CompareTo(_date) == 1)
+                    {
+                        output = item;
+                        break;
+                    }
+                    else output = null;
+                }
+
+                return output;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return null;
+            }
+        }
+
+        public async Task<List<DriverStandingsModel>> GetTopDrivers()
+        {
+            try
+            {
+                var drivers = await GetDriverStandings();
+                List<DriverStandingsModel> output = new List<DriverStandingsModel>();
+
+                for (int i = 0; i < 3; ++i)
+                {
+                    output.Add(drivers[i]);
+                }
+
+                return output;
             }
             catch (Exception ex)
             {

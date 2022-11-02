@@ -8,86 +8,143 @@
              Background="#13232f">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Settings"
-                     IconImageSource="settings_tyre.png"
+                     IconImageSource="settings.png"
                      Command="{Binding GoToSettingsPageCommand}"/>
     </ContentPage.ToolbarItems>
 
     <Grid Padding="10">
         <ScrollView>
-            <RefreshView>
-                <Grid>
-                    <VerticalStackLayout>
-                        <Frame Style="{StaticResource CardView}"
+            <Grid>
+                <VerticalStackLayout>
+                    <Frame Style="{StaticResource CardView}"
                                Margin="5"
                                HeightRequest="200">
-                            <Grid ColumnDefinitions="150,*"
+                        <Grid ColumnDefinitions="150,*"
                                   RowDefinitions="150,*">
-                                <Frame WidthRequest="128"
+                            <Frame WidthRequest="128"
                                        HeightRequest="128"
                                        CornerRadius="64"
                                        BorderColor="Transparent"
                                        BackgroundColor="Aqua">
-                                    <Image WidthRequest="128"
+                                <Image WidthRequest="128"
                                            HeightRequest="128"
                                            Source="{Binding SharedData.AvatarSourceName}"
                                            Aspect="AspectFill"/>
-                                </Frame>
-                                <Label Grid.Row="1"
+                            </Frame>
+                            <Label Grid.Row="1"
                                        Text="{Binding SharedData.Username}"
                                        HorizontalOptions="Center"
                                        FontSize="30"/>
 
+                        </Grid>
+                    </Frame>
+
+                    <Frame Style="{StaticResource CardView}"
+                               Margin="5"
+                               HeightRequest="300">
+
+                        <Label Text="Felhasználók Score board"/>
+
+                    </Frame>
+
+                    <Frame Style="{StaticResource CardView}"
+                               Margin="5"
+                               HeightRequest="100"
+                               Padding="5"
+                               BackgroundColor="IndianRed"
+                               BorderColor="Transparent">
+
+                        <Grid RowDefinitions="auto,*"
+                                  RowSpacing="5">
+                            <Label Text="Upcoming Event"
+                                       HorizontalTextAlignment="Center"
+                                       Style="{StaticResource MediumLabel}"/>
+                            <Grid Grid.Row="1"
+                                      ColumnDefinitions="65,2*,*"
+                                      ColumnSpacing="10">
+                                <Frame HeightRequest="64"
+                                           WidthRequest="64"
+                                           CornerRadius="32"
+                                           BorderColor="Transparent">
+                                    <Image Source="{Binding UpcomingEvent.Circuit.Location.Image}"
+                                               WidthRequest="100"
+                                               HeightRequest="100"
+                                               Aspect="AspectFill"/>
+                                </Frame>
+                                <VerticalStackLayout Grid.Column="1"
+                                                         VerticalOptions="Center">
+                                    <Label Text="{Binding UpcomingEvent.Circuit.Location.Country}"
+                                               Style="{StaticResource MediumLabel}"/>
+                                    <Label Text="{Binding UpcomingEvent.Circuit.Location.Locality}"
+                                               Style="{StaticResource SmallLabel}"/>
+                                    <Label Text="{Binding UpcomingEvent.Circuit.CircuitName}"
+                                               Style="{StaticResource SmallLabel}"/>
+                                </VerticalStackLayout>
+                                <Label Text="{Binding UpcomingEvent.Date}"
+                                           Grid.Column="2"
+                                           VerticalTextAlignment="Center"/>
                             </Grid>
-                        </Frame>
-                        <Frame Style="{StaticResource CardView}"
-                       Margin="5"
-                       WidthRequest="300"
-                       HeightRequest="300">
+                        </Grid>
+                    </Frame>
 
-                            <Label Text="Felhasználók Score board"/>
-
-                        </Frame>
-                        <Frame Style="{StaticResource CardView}"
-                       Margin="5"
-                       WidthRequest="300"
-                       HeightRequest="100">
-
-                            <Label Text="Upcoming event!"/>
-
-                        </Frame>
-                        <ScrollView Orientation="Horizontal"
+                    <ScrollView Orientation="Horizontal"
                                     HorizontalScrollBarVisibility="Never">
-                            <HorizontalStackLayout>
-                                <Frame Style="{StaticResource CardView}"
-                               Margin="5"
-                               WidthRequest="300"
-                               HeightRequest="100">
+                        <HorizontalStackLayout BindableLayout.ItemsSource="{Binding TopDrivers}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="model:DriverStandingsModel">
+                                    <Frame Style="{StaticResource CardView}"
+                                               Margin="5"
+                                               WidthRequest="350"
+                                               HeightRequest="80">
+                                        <Grid ColumnDefinitions="20,60,3*,2*"
+                                                  ColumnSpacing="10">
+                                            <Label Text="{Binding position}"
+                                                       Style="{StaticResource LargeLabel}"
+                                                       VerticalOptions="Center"
+                                                       HorizontalOptions="Center"/>
+                                            <Frame CornerRadius="30"
+                                                       WidthRequest="60"
+                                                       HeightRequest="60"
+                                                       Grid.Column="1">
+                                                <Image Source="{Binding Driver.Image.Front}"
+                                                           HeightRequest="60"
+                                                           WidthRequest="60"
+                                                           Aspect="AspectFill"/>
+                                            </Frame>
 
-                                    <Label Text="Ranglista első 3!"/>
+                                            <VerticalStackLayout VerticalOptions="Center"
+                                                                     Grid.Column="2">
+                                                <HorizontalStackLayout Spacing="5">
+                                                    <Label Text="{Binding Driver.givenName}"
+                                                               Style="{StaticResource MediumLabel}"/>
+                                                    <Label Text="{Binding Driver.familyName}"
+                                                               Style="{StaticResource MediumLabel}"/>
+                                                </HorizontalStackLayout>
 
-                                </Frame>
-                                <Frame Style="{StaticResource CardView}"
-                               Margin="5"
-                               WidthRequest="300"
-                               HeightRequest="100">
+                                                <Label Text="{Binding Constructors[0].name}"
+                                                           Style="{StaticResource SmallLabel}"/>
 
-                                    <Label Text="Ranglista első 3!"/>
+                                            </VerticalStackLayout>
 
-                                </Frame>
-                                <Frame Style="{StaticResource CardView}"
-                               Margin="5"
-                               WidthRequest="300"
-                               HeightRequest="100">
-
-                                    <Label Text="Ranglista első 3!"/>
-
-                                </Frame>
-                            </HorizontalStackLayout>
-                        </ScrollView>
-                    </VerticalStackLayout>
-                </Grid>
-            </RefreshView>
+                                            <HorizontalStackLayout VerticalOptions="Center"
+                                                                       HorizontalOptions="Center"
+                                                                       Spacing="5"
+                                                                       Grid.Column="3">
+                                                <Label Text="{Binding points}"
+                                                           Style="{StaticResource MediumLabel}"/>
+                                                <Label Text="Pts"
+                                                           Style="{StaticResource MediumLabel}"/>
+                                            </HorizontalStackLayout>
+                                        </Grid>
+                                    </Frame>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </HorizontalStackLayout>
+                    </ScrollView>
+                </VerticalStackLayout>
+            </Grid>
         </ScrollView>
+
         <ActivityIndicator IsVisible="{Binding IsBusy}"
                            IsRunning="{Binding IsBusy}"
                            HorizontalOptions="FillAndExpand"

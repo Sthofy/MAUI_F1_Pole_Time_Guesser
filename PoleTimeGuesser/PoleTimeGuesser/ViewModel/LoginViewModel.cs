@@ -34,7 +34,7 @@
             try
             {
                 if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
-                    throw new Exception("Usernaem or Password field is empty!");
+                    throw new Exception("Username or Password field is empty!");
 
                 var requset = new AuthenticateRequest
                 {
@@ -45,6 +45,7 @@
                 var response = await _serviceManager.Authenticate(requset);
                 if (response.StatusCode == 200)
                 {
+                    _sharedData.Id = response.Id;
                     _sharedData.Username = response.Username;
                     _sharedData.AvatarSourceName = response.AvatarSourceName;
                     _sharedData.Email = response.Email;

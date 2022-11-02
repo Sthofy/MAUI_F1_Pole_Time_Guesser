@@ -16,7 +16,7 @@
         <RefreshView Command="{Binding GetDriverStandigsCommand}"
                      IsRefreshing="{Binding IsRefreshing}"
                      Grid.ColumnSpan="2">
-            
+
             <CollectionView ItemsSource="{Binding driverStandingsModels}"
                             SelectionMode="None">
 
@@ -83,7 +83,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
-        
+
         <ActivityIndicator IsVisible="{Binding IsBusy}"
                            IsRunning="{Binding IsBusy}"
                            HorizontalOptions="FillAndExpand"
