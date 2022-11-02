@@ -26,24 +26,28 @@
             <Frame Padding="10,0,10,0"
                    Margin="0,20,0,0">
                 <Entry Placeholder="New Username"
+                       Text="{Binding NewUsername}"
                        ReturnType="Go"
                        TextColor="Black"/>
             </Frame>
             <Frame Padding="10,0,10,0"
                    Margin="0,20,0,0">
                 <Entry Placeholder="New Email"
+                       Text="{Binding NewEmail}"
                        ReturnType="Go"
                        TextColor="Black"/>
             </Frame>
             <Frame Padding="10,0,10,0"
                    Margin="0,20,0,0">
                 <Entry Placeholder="New Password"
+                       Text="{Binding NewPassword}"
                        ReturnType="Go"
                        TextColor="Black"/>
             </Frame>
             <Button Margin="0,30,0,0"
                     BackgroundColor="#f0932b"
                     Text="Save Changes"
+                    Command="{Binding UpdateUserCommand}"
                     TextColor="White"/>
             
             <Button Margin="0,30,0,0"

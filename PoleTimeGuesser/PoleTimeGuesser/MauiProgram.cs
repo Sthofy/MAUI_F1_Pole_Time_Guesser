@@ -21,15 +21,18 @@ public static class MauiProgram
             .AddSingleton<LoginViewModel>()
             .AddSingleton<RegisterViewModel>()
             .AddSingleton<MainViewModel>()
-            .AddSingleton<SettingsViewModel>();
+            .AddSingleton<SettingsViewModel>()
+            .AddSingleton<GamesViewModel>()
+            .AddSingleton<QuizViewModel>();
 
-        builder.Services.AddSingleton<MainView>()
+        builder.Services.AddTransient<MainView>()
             .AddTransient<DriverDetailsView>()
-            .AddSingleton<ScheduleView>()
             .AddTransient<CircuitDetailsView>()
             .AddSingleton<LoginView>()
-            .AddSingleton<RegisterView>()
-            .AddSingleton<SettingsView>();
+            .AddTransient<RegisterView>()
+            .AddSingleton<SettingsView>()
+            .AddSingleton<GamesView>()
+            .AddSingleton<QuizView>();
 
         builder.Services.AddSingleton<ServiceManager>()
             .AddSingleton<ISharedData,SharedData>();

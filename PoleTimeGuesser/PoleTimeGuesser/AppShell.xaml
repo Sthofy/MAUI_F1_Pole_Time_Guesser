@@ -59,11 +59,8 @@
         <Tab Title="Drivers" Icon="helmet_black.svg">
             <ShellContent ContentTemplate="{DataTemplate view:DriverStandingsView}" Route="DriverStandingsView"/>
         </Tab>
-        <!--<Tab Title="Settings" Icon="settings_tyre.png">
-            <ShellContent ContentTemplate="{DataTemplate view:SettingsView}" />
-        </Tab>-->
-        <Tab Title="History">
-            <!-- <ShellContent ContentTemplate="{DataTemplate tabViews:HistoryView}" /> -->
+        <Tab Title="Games" Icon="game.png">
+            <ShellContent ContentTemplate="{DataTemplate view:GamesView}" />
         </Tab>
     </TabBar>
 </Shell>

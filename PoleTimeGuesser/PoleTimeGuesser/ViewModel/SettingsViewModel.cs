@@ -1,4 +1,7 @@
-﻿namespace PoleTimeGuesser.ViewModel
+﻿using PoleTimeGuesser.Services.UpdateUser;
+using System.ComponentModel.DataAnnotations;
+
+namespace PoleTimeGuesser.ViewModel
 {
     public partial class SettingsViewModel : ObservableObject
     {
@@ -6,10 +9,17 @@
         ISharedData _sharedData;
         [ObservableProperty]
         bool isProcessing;
+        [ObservableProperty]
+        string _newUsername;
+        [ObservableProperty]
+        string _newEmail;
+        [ObservableProperty]
+        string _newPassword;
         ServiceManager _serviceManager;
 
         public SettingsViewModel(ISharedData sharedData, ServiceManager serviceManager)
         {
+            NewUsername = NewPassword = NewEmail = "";
             IsProcessing = false;
             _sharedData = sharedData;
             _serviceManager = serviceManager;
@@ -22,7 +32,24 @@
             IsProcessing = true;
             try
             {
-                // TODO : Finish the logic
+                if (!new EmailAddressAttribute().IsValid(_newEmail) && !string.IsNullOrEmpty(_newEmail))
+                    throw new Exception("Wrong email!");
+
+                var request = new UpdateRequest
+                {
+                    Id = _sharedData.Id,
+                    Username = _newUsername,
+                    Password = _newPassword,
+                    Email = _newEmail,
+                };
+
+                var response = await _serviceManager.UpdateUser(request);
+
+                if (response.StatusCode == 200)
+                {
+                    _sharedData.Username = response.Username;
+                    await AppShell.Current.DisplayAlert("F1Guess", "Succesfull!", "OK");
+                }
             }
             catch (Exception ex)
             {
@@ -37,12 +64,13 @@
         [RelayCommand]
         async Task LogOut()
         {
-            Debug.WriteLine(_sharedData.Email);
             _sharedData.Email = "";
             _sharedData.Username = "";
             _sharedData.AvatarSourceName = "";
-            Debug.WriteLine(_sharedData.Email);
-            await Shell.Current.GoToAsync(nameof(LoginView));
+            Application.Current.MainPage = new AppShell();
+            await Shell.Current.GoToAsync("///LoginView");
+
+            // TODO: Még nem tökéletes a kilépés. Megooldani hogy minden oldal újra töltsön.
         }
     }
 }

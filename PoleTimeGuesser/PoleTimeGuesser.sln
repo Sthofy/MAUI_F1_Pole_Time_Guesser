@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoleTimeGuesser", "PoleTimeGuesser\PoleTimeGuesser.csproj", "{F7962B56-31E0-49EA-95CC-E46BF9DFBADE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "F1GuessAPI", "F1GuessAPI\F1GuessAPI.csproj", "{DCE06C6B-BBCD-49E8-AA44-3676A58A010F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "F1GuessAPI", "F1GuessAPI\F1GuessAPI.csproj", "{DCE06C6B-BBCD-49E8-AA44-3676A58A010F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
