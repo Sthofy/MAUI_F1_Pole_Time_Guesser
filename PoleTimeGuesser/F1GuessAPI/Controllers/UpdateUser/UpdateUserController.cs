@@ -10,11 +10,11 @@
             _userFunctions = userFunctions;
         }
 
-        [HttpPut("UpdateUser")]
-        public IActionResult UpdateUser(UpdateUserRequest request)
+        [HttpPut]
+        public IActionResult UserUpdate(UpdateUserRequest request)
         {
             var response = _userFunctions.Update(request.Id, request.Username, request.Email, request.Password).Result;
-            if (response == null)
+            if (response is null)
                 return BadRequest(new { StatusMessage = "Something went wrong!" });
 
             return Ok(response);

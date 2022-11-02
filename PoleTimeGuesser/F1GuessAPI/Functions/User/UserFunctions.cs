@@ -25,14 +25,14 @@ namespace F1GuessAPI.Functions.User
             };
 
             _context.TblUsers.Add(entity);
-            var response = await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-            var result = new UserModel
+            var response = new UserModel
             {
-                Username = username
+                Username = entity.Username,
             };
 
-            return result;
+            return response;
         }
 
         public UserModel? Authenticate(string username, string password)
@@ -56,7 +56,7 @@ namespace F1GuessAPI.Functions.User
                     AvatarSourceName = entity.AvatarSourceName,
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -67,7 +67,7 @@ namespace F1GuessAPI.Functions.User
             try
             {
                 var entity = _context.TblUsers.SingleOrDefault(x => x.Id == id);
-                if (entity is null) return null;
+                if (entity is null) return null!;
 
                 if (username.Trim() != "")
                     entity.Username = username;
@@ -81,21 +81,18 @@ namespace F1GuessAPI.Functions.User
                 }
 
                 _context.TblUsers.Update(entity);
-                var response = await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
-                UserModel result = new UserModel
+                UserModel response = new UserModel
                 {
-                    Id = entity.Id,
-                    Username = entity.Username,
-                    Email = entity.Email,
-                    AvatarSourceName = entity.AvatarSourceName,
+                    Username = username,
                 };
 
-                return result;
+                return response;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return null;
+                return null!;
             }
         }
 

@@ -11,7 +11,7 @@
             _userFunctions = userFunctions;
         }
 
-        [HttpPost("Authenticate")]
+        [HttpPost]
         public IActionResult Authenticate(AuthenticateRequest request)
         {
             var response = _userFunctions.Authenticate(request.Username, request.Password);
