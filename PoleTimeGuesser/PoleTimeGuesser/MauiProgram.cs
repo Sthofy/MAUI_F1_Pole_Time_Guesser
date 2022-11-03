@@ -22,6 +22,7 @@ public static class MauiProgram
             .AddTransient<MainViewModel>()
             .AddSingleton<SettingsViewModel>()
             .AddSingleton<GamesViewModel>()
+            .AddSingleton<GuessViewModel>()
             .AddSingleton<QuizViewModel>();
 
         builder.Services.AddTransient<MainView>()
@@ -33,6 +34,7 @@ public static class MauiProgram
             .AddTransient<RegisterView>()
             .AddSingleton<SettingsView>()
             .AddSingleton<GamesView>()
+            .AddSingleton<GuessView>()
             .AddSingleton<QuizView>();
 
         builder.Services.AddSingleton<IServiceManager, ServiceManager>()

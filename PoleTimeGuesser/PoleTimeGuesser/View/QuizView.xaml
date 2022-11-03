@@ -15,7 +15,7 @@
                        HorizontalTextAlignment="Center"/>
             </Frame>
             <Label Text="{Binding Question}"/>
-            <CollectionView ItemsSource="{Binding quizAnswears}"
+            <CollectionView ItemsSource="{Binding Answears}"
                             SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Answear">

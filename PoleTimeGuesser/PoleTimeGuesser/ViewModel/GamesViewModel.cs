@@ -8,13 +8,19 @@ namespace PoleTimeGuesser.ViewModel
 {
     public partial class GamesViewModel : ObservableObject
     {
-        
+
         [RelayCommand]
-        async Task ShowQuiz()
+        async Task ShowQuizPage()
         {
             await Shell.Current.GoToAsync(nameof(QuizView));
             //string action = await Shell.Current.DisplayActionSheet("Ki nyerte a 2022-es világbajnokságot", "Cancel", null, "Lewis Hamilton", "Max Verstapppen", "George Russel");
             //Debug.WriteLine("Action: " + action);
+        }
+
+        [RelayCommand]
+        async Task ShowGuessPage()
+        {
+            await Shell.Current.GoToAsync(nameof(GuessView));
         }
 
     }

@@ -118,5 +118,27 @@ namespace PoleTimeGuesser.Services
                 return result;
             }
         }
+
+        public async Task<List<QuestionModel>> GetQuestions()
+        {
+            var httpRequestMessage = new HttpRequestMessage();
+            httpRequestMessage.Method = HttpMethod.Get;
+            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/Game/Questions");
+
+            try
+            {
+                var response = await _devSslHelper.HttpClient.SendAsync(httpRequestMessage);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                var result = JsonConvert.DeserializeObject<List<QuestionModel>>(responseContent);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+        }
     }
 }

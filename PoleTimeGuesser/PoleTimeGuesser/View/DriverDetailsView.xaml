@@ -4,7 +4,7 @@
              x:Class="PoleTimeGuesser.View.DriverDetailsView"
              xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
              x:DataType="viewmodel:DriverDetailsViewModel"
-             Title="Driver Infomations">
+             Shell.NavBarIsVisible="True">
 
     <Grid>
         <ScrollView >
@@ -94,7 +94,7 @@
 
             </Grid>
         </ScrollView>
-        
+
         <ActivityIndicator IsVisible="{Binding IsBusy}"
                            IsRunning="{Binding IsBusy}"
                            HorizontalOptions="FillAndExpand"

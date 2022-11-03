@@ -13,7 +13,9 @@
             <Frame HeightRequest="170"
                    WidthRequest="170">
                 <Frame.GestureRecognizers>
-                    <TapGestureRecognizer/>
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource
+                        AncestorType={x:Type viewmodel:GamesViewModel}},
+                        Path=ShowQuizCommand}"/>
                 </Frame.GestureRecognizers>
                 <Image Source="lights.png"/>
             </Frame>
@@ -22,7 +24,7 @@
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding Source={RelativeSource
                         AncestorType={x:Type viewmodel:GamesViewModel}},
-                        Path=ShowQuizCommand}"/>
+                        Path=ShowQuizPageCommand}"/>
                 </Frame.GestureRecognizers>
                 <Image Source="quiz.png"/>
             </Frame>
@@ -31,14 +33,12 @@
                              Spacing="10">
             <Frame HeightRequest="170"
                    WidthRequest="170">
-                <Image Source="stopwatch.png"/>
-            </Frame>
-            <Frame HeightRequest="170"
-                   WidthRequest="170">
                 <Frame.GestureRecognizers>
-                    <TapGestureRecognizer/>
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource
+                        AncestorType={x:Type viewmodel:GamesViewModel}},
+                        Path=ShowGuessPageCommand}"/>
                 </Frame.GestureRecognizers>
-                <Image Source="quiz2.png"/>
+                <Image Source="stopwatch.png"/>
             </Frame>
         </VerticalStackLayout>
     </Grid>
