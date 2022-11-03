@@ -2,7 +2,7 @@
 
 namespace PoleTimeGuesser.Services
 {
-    public class ServiceManager
+    public class ServiceManager : IServiceManager
     {
         DevHttpsConnectionHelper _devSslHelper;
 

@@ -9,7 +9,12 @@
         [ObservableProperty]
         DriverInfoModel driverInfo;
 
-        F1DataGetterService f1DataGetterService = new F1DataGetterService();
+        IF1DataGetterService _f1DataGetterService;
+
+        public DriverDetailsViewModel(IF1DataGetterService f1DataGetterService)
+        {
+            _f1DataGetterService = f1DataGetterService;
+        }
 
         public void Initailize()
         {
@@ -26,7 +31,7 @@
         [RelayCommand]
         private async Task GetDriverInfo()
         {
-            DriverInfo = await f1DataGetterService.GetDriverInfo(Driver.driverId);
+            DriverInfo = await _f1DataGetterService.GetDriverInfo(Driver.driverId);
         }
     }
 }

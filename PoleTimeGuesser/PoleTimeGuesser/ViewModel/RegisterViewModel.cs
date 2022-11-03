@@ -15,9 +15,9 @@ namespace PoleTimeGuesser.ViewModel
         [ObservableProperty]
         bool isProcessing;
 
-        ServiceManager _serviceManager;
+        IServiceManager _serviceManager;
 
-        public RegisterViewModel(ServiceManager serviceManager)
+        public RegisterViewModel(IServiceManager serviceManager)
         {
             IsProcessing = false;
             _serviceManager = serviceManager;
@@ -26,6 +26,8 @@ namespace PoleTimeGuesser.ViewModel
         [RelayCommand]
         async Task Register()
         {
+            //TODO: Megvizsgálni hogy létezik e már a felhasználó
+
             if (IsProcessing) return;
 
             IsProcessing = true;

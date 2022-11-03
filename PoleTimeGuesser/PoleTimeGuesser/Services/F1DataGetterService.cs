@@ -1,6 +1,6 @@
 ﻿namespace PoleTimeGuesser.Services
 {
-    public class F1DataGetterService
+    public class F1DataGetterService : IF1DataGetterService
     {
         private DateTime _date = DateTime.Now;
         readonly HttpClient _httpClient;

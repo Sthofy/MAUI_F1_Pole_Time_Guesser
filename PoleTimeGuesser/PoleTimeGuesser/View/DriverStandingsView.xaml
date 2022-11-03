@@ -5,7 +5,6 @@
              xmlns:model="clr-namespace:PoleTimeGuesser.Model"
              xmlns:viewModel="clr-namespace:PoleTimeGuesser.ViewModel"
              x:DataType="viewModel:DriverStandingsViewModel"
-             BindingContext="{Binding DriverStandingsView, Source={StaticResource ViewModelLocator}}"
              Title="{Binding Title}">
 
     <Grid ColumnDefinitions="*,*"

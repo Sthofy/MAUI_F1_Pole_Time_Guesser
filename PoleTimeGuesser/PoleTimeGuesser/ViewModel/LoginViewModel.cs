@@ -12,10 +12,10 @@
         [ObservableProperty]
         bool _isProcessing;
 
-        ServiceManager _serviceManager;
+        IServiceManager _serviceManager;
         ISharedData _sharedData;
 
-        public LoginViewModel(ServiceManager serviceManager, ISharedData sharedData)
+        public LoginViewModel(IServiceManager serviceManager, ISharedData sharedData)
         {
             Username = "Sthofy";
             Password = "Pwd12345.";

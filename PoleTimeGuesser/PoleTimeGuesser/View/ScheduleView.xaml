@@ -5,7 +5,6 @@
              xmlns:model="clr-namespace:PoleTimeGuesser.Model"
              xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
              x:DataType="viewmodel:ScheduleViewModel"
-             BindingContext="{Binding ScheduleView, Source={StaticResource ViewModelLocator}}"
              Title="{Binding Title}">
 
     <Grid>

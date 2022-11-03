@@ -31,7 +31,7 @@
         [RelayCommand]
         async Task VerifyAnswear(Answear answear)
         {
-            // TODO:  A kapott választ összegasinlítai a jóval
+            // TODO:  A kapott választ összehasonlítani a jóval
             await Shell.Current.DisplayAlert("Válasz", $"{answear.Item}", "OK");
         }
     }

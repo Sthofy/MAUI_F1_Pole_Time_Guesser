@@ -7,14 +7,13 @@
         [ObservableProperty]
         ScheduleModel _upcomingEvent;
         public ObservableCollection<DriverStandingsModel> TopDrivers { get; } = new();
-
         public Task Init { get; }
+        IF1DataGetterService _f1DataGetterService;
 
-        F1DataGetterService f1DataGetterService = new F1DataGetterService();
-
-        public MainViewModel(ISharedData sharedData)
+        public MainViewModel(ISharedData sharedData,IF1DataGetterService f1DataGetterService)
         {
             _sharedData = sharedData;
+            _f1DataGetterService = f1DataGetterService;
             Init = Initialize();
         }
 
@@ -27,8 +26,8 @@
             {
                 IsBusy = true;
 
-                UpcomingEvent = await f1DataGetterService.GetUpComingEvent();
-                var response = await f1DataGetterService.GetTopDrivers();
+                UpcomingEvent = await _f1DataGetterService.GetUpComingEvent();
+                var response = await _f1DataGetterService.GetTopDrivers();
                 response.ForEach(x => TopDrivers.Add(x));
             }
             catch (Exception ex)

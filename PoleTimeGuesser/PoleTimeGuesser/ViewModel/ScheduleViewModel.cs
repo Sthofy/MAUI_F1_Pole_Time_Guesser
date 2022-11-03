@@ -1,6 +1,4 @@
-﻿using PoleTimeGuesser.Model;
-
-namespace PoleTimeGuesser.ViewModel
+﻿namespace PoleTimeGuesser.ViewModel
 {
     public partial class ScheduleViewModel : BaseViewModel
     {
@@ -9,10 +7,11 @@ namespace PoleTimeGuesser.ViewModel
 
         public Task Init { get; }
         public ObservableCollection<ScheduleModel> scheduleModels { get; } = new();
-        F1DataGetterService f1DataGetterService = new F1DataGetterService();
+        IF1DataGetterService _f1DataGetterService;
 
-        public ScheduleViewModel()
+        public ScheduleViewModel(IF1DataGetterService f1DataGetterService)
         {
+            _f1DataGetterService = f1DataGetterService;
             Title = "Schedule";
             Init = Initailize();
         }
@@ -31,7 +30,7 @@ namespace PoleTimeGuesser.ViewModel
             try
             {
                 IsBusy = true;
-                var schedules = await f1DataGetterService.GetSchedule();
+                var schedules = await _f1DataGetterService.GetSchedule();
                 if (scheduleModels.Count != 0)
                     scheduleModels.Clear();
 

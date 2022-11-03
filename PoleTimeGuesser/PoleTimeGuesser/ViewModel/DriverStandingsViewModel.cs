@@ -7,10 +7,11 @@
 
         public Task Init { get; }
         public ObservableCollection<DriverStandingsModel> driverStandingsModels { get; } = new();
-        F1DataGetterService f1DataGetterService = new F1DataGetterService();
+        IF1DataGetterService _f1DataGetterService;
 
-        public DriverStandingsViewModel()
+        public DriverStandingsViewModel(IF1DataGetterService f1DataGetterService)
         {
+            _f1DataGetterService = f1DataGetterService;
             Title = "Driver Standings";
             Init = Initialize();
         }
@@ -29,7 +30,7 @@
             try
             {
                 IsBusy = true;
-                var driversStandigs = await f1DataGetterService.GetDriverStandings();
+                var driversStandigs = await _f1DataGetterService.GetDriverStandings();
                 if (driverStandingsModels.Count != 0)
                     driverStandingsModels.Clear();
 

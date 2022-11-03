@@ -13,19 +13,20 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
             });
 
-        builder.Services.AddSingleton<F1DataGetterService>()
-            .AddSingleton<DriverStandingsViewModel>()
+        builder.Services.AddSingleton<DriverStandingsViewModel>()
             .AddTransient<DriverDetailsViewModel>()
             .AddSingleton<ScheduleViewModel>()
             .AddTransient<CircuitDetailsViewModel>()
             .AddSingleton<LoginViewModel>()
             .AddSingleton<RegisterViewModel>()
-            .AddSingleton<MainViewModel>()
+            .AddTransient<MainViewModel>()
             .AddSingleton<SettingsViewModel>()
             .AddSingleton<GamesViewModel>()
             .AddSingleton<QuizViewModel>();
 
         builder.Services.AddTransient<MainView>()
+            .AddTransient<DriverStandingsView>()
+            .AddTransient<ScheduleView>()
             .AddTransient<DriverDetailsView>()
             .AddTransient<CircuitDetailsView>()
             .AddSingleton<LoginView>()
@@ -34,8 +35,9 @@ public static class MauiProgram
             .AddSingleton<GamesView>()
             .AddSingleton<QuizView>();
 
-        builder.Services.AddSingleton<ServiceManager>()
-            .AddSingleton<ISharedData,SharedData>();
+        builder.Services.AddSingleton<IServiceManager, ServiceManager>()
+            .AddSingleton<ISharedData, SharedData>()
+            .AddSingleton<IF1DataGetterService, F1DataGetterService>();
 
         return builder.Build();
     }

@@ -75,8 +75,6 @@
                         <Setter Property="CornerRadius" Value="10"/>
                         <Setter Property="IsClippedToBounds" Value="True"/>
                     </Style>
-
-                    <viewmodel:ViewModelLocator x:Key="ViewModelLocator"/>
                 </ResourceDictionary>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />

@@ -15,9 +15,9 @@ namespace PoleTimeGuesser.ViewModel
         string _newEmail;
         [ObservableProperty]
         string _newPassword;
-        ServiceManager _serviceManager;
+        IServiceManager _serviceManager;
 
-        public SettingsViewModel(ISharedData sharedData, ServiceManager serviceManager)
+        public SettingsViewModel(ISharedData sharedData, IServiceManager serviceManager)
         {
             NewUsername = NewPassword = NewEmail = "";
             IsProcessing = false;

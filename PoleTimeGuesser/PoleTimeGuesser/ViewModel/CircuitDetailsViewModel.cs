@@ -12,7 +12,12 @@
         [ObservableProperty]
         CircuitInfoModel circuitInfo;
 
-        F1DataGetterService f1DataGetterService = new F1DataGetterService();
+        IF1DataGetterService _f1DataGetterService;
+
+        public CircuitDetailsViewModel(IF1DataGetterService f1DataGetterService)
+        {
+            _f1DataGetterService = f1DataGetterService;
+        }
 
         public void Initailize()
         {
@@ -29,7 +34,7 @@
         [RelayCommand]
         private async Task GetCircuitInfo()
         {
-            CircuitInfo = await f1DataGetterService.GetCicuitInfoAsync(Circuit.Circuit.CircuitId);
+            CircuitInfo = await _f1DataGetterService.GetCicuitInfoAsync(Circuit.Circuit.CircuitId);
         }
     }
 }
