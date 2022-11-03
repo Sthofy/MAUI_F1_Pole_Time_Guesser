@@ -7,3 +7,4 @@ global using Newtonsoft.Json;
 global using Microsoft.EntityFrameworkCore;
 global using F1GuessAPI.Entites;
 global using F1GuessAPI.Functions.User;
+global using F1GuessAPI.Functions.Game;

@@ -1,4 +1,3 @@
-using F1GuessAPI.Functions.User;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +14,7 @@ builder.Services.AddDbContext<F1GuessContext>(opt =>
 });
 
 builder.Services.AddTransient<IUserFunctions, UserFunctions>();
+builder.Services.AddTransient<IQuestionFunctions, QuestionFunctions>();
 
 var app = builder.Build();
 

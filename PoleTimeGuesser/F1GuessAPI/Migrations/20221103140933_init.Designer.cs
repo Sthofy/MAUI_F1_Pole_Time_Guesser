@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace F1GuessAPI.Migrations
 {
     [DbContext(typeof(F1GuessContext))]
-    [Migration("20221030115657_init")]
+    [Migration("20221103140933_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,6 +47,35 @@ namespace F1GuessAPI.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("TblGuess");
+                });
+
+            modelBuilder.Entity("F1GuessAPI.Entites.TblQuestions", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AnswerA")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AnswerB")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AnswerC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TblQuestions");
                 });
 
             modelBuilder.Entity("F1GuessAPI.Entites.TblUser", b =>
