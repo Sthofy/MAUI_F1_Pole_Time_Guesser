@@ -1,4 +1,3 @@
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -10,11 +9,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<F1GuessContext>(opt =>
 {
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("F1Data"));
 });
 
-builder.Services.AddTransient<IUserFunctions, UserFunctions>();
-builder.Services.AddTransient<IQuestionFunctions, QuestionFunctions>();
+builder.Services.AddTransient<IUserData, UserData>();
+builder.Services.AddTransient<IQuestionData, QuestionData>();
+builder.Services.AddTransient<IScoreData, ScoreData>();
+builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 
 var app = builder.Build();
 

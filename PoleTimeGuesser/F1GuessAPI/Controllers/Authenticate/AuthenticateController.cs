@@ -4,17 +4,17 @@
     [ApiController]
     public class AuthenticateController : ControllerBase
     {
-        IUserFunctions _userFunctions;
+        IUserData _userData;
 
-        public AuthenticateController(IUserFunctions userFunctions)
+        public AuthenticateController(IUserData userData)
         {
-            _userFunctions = userFunctions;
+            _userData = userData;
         }
 
         [HttpPost]
         public IActionResult Authenticate(AuthenticateRequest request)
         {
-            var response = _userFunctions.Authenticate(request.Username, request.Password);
+            var response = _userData.Authenticate(request.Username, request.Password);
             if (response == null)
                 return BadRequest(new { StatusMessage = "Invalid username or password!" });
 

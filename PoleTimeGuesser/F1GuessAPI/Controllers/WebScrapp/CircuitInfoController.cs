@@ -5,15 +5,15 @@
     public class CircuitInfoController : ControllerBase
     {
         CircuitInfoModel _circuitInfo = new CircuitInfoModel();
-        HtmlDocument doc = new HtmlDocument();
-        UrlHelper urlHelper = new UrlHelper();
+        private HtmlDocument doc = new HtmlDocument();
+        private UrlHelper _urlHelper = new UrlHelper();
 
         [HttpGet("{id}")]
         public async Task<string> GetCircuitInfo(string id)
         {
             try
             {
-                var response = await urlHelper.CallUrl(DataConverter.ConvertCircuitName(id));
+                var response = await _urlHelper.CallUrl(DataConverter.ConvertCircuitName(id));
                 doc.LoadHtml(response);
                 var table = doc.DocumentNode.SelectNodes("//p[@class='f1-bold--stat']");
                 var description = doc.DocumentNode.SelectNodes("//fieldset[@class='f1-border--three-right f1-border--single f1-border-color--gray3']/p");

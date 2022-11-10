@@ -1,12 +1,14 @@
-﻿namespace F1GuessAPI.Controllers.Registration
+﻿using F1GuessAPI.DataAccess.User;
+
+namespace F1GuessAPI.Controllers.Registration
 {
     [Route("[controller]")]
     [ApiController]
     public class RegistrationController : ControllerBase
     {
-        IUserFunctions _userFunctions;
+        readonly IUserData _userFunctions;
 
-        public RegistrationController(IUserFunctions userFunctions)
+        public RegistrationController(IUserData userFunctions)
         {
             _userFunctions = userFunctions;
         }
@@ -14,11 +16,11 @@
         [HttpPost]
         public IActionResult Registration(RegistrationRequest request)
         {
-            var response = _userFunctions.Registration(request.Username, request.Email, request.Password).Result;
-            if (response is null)
+            var response = _userFunctions.Registration(request.Username, request.Email, request.Password);
+            if (!response)
                 return BadRequest(new { StatusMessage = "Registration error!" });
 
-            return Ok(response);
+            return Ok();
         }
     }
 }

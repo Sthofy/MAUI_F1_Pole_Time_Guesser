@@ -4,8 +4,8 @@
     [ApiController]
     public class UpdateUserController : ControllerBase
     {
-        IUserFunctions _userFunctions;
-        public UpdateUserController(IUserFunctions userFunctions)
+        IUserData _userFunctions;
+        public UpdateUserController(IUserData userFunctions)
         {
             _userFunctions = userFunctions;
         }
@@ -13,11 +13,11 @@
         [HttpPut]
         public IActionResult UserUpdate(UpdateUserRequest request)
         {
-            var response = _userFunctions.Update(request.Id, request.Username, request.Email, request.Password).Result;
-            if (response is null)
+            var response = _userFunctions.Update(request.Id, request.Username, request.Email, request.Password);
+            if (!response)
                 return BadRequest(new { StatusMessage = "Something went wrong!" });
 
-            return Ok(response);
+            return Ok();
         }
     }
 }
