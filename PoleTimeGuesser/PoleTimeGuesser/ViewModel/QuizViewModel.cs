@@ -1,4 +1,4 @@
-﻿using Microsoft.Maui.Controls;
+﻿using PoleTimeGuesser.Services.Game;
 
 namespace PoleTimeGuesser.ViewModel
 {
@@ -55,7 +55,9 @@ namespace PoleTimeGuesser.ViewModel
 
         async Task GetQuestions()
         {
-            ListOfQuestions = await _serviceManager.GetQuestions();
+            var response = await _serviceManager.CallWebAPI<int?, QuestionResponse>("/Game/Questions", HttpMethod.Get, null);
+
+            ListOfQuestions = response.Questions;
         }
 
 

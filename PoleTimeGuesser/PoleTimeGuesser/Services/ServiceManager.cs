@@ -5,6 +5,7 @@ namespace PoleTimeGuesser.Services
     public class ServiceManager : IServiceManager
     {
         DevHttpsConnectionHelper _devSslHelper;
+        string Url = "https://f1infoapi.azurewebsites.net";
 
         public ServiceManager()
         {
@@ -15,6 +16,7 @@ namespace PoleTimeGuesser.Services
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Post;
+            //httpRequestMessage.RequestUri = new Uri(Url + "/Registration");
             httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/Registration");
 
             if (request is not null)
@@ -50,6 +52,7 @@ namespace PoleTimeGuesser.Services
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Post;
+            //httpRequestMessage.RequestUri = new Uri(Url + "/Authenticate");
             httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/Authenticate");
 
             if (request is not null)
@@ -89,6 +92,7 @@ namespace PoleTimeGuesser.Services
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Put;
+            //httpRequestMessage.RequestUri = new Uri(Url + "/UpdateUser");
             httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/UpdateUser");
 
             if (request is not null)
@@ -123,6 +127,7 @@ namespace PoleTimeGuesser.Services
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Get;
+            //httpRequestMessage.RequestUri = new Uri(Url + "/Game/Questions");
             httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/Game/Questions");
 
             try
@@ -138,6 +143,42 @@ namespace PoleTimeGuesser.Services
             {
                 Debug.WriteLine(ex.Message);
                 return null;
+            }
+        }
+
+        public async Task<TResponse> CallWebAPI<TRequest, TResponse>(string apiUrl, HttpMethod httpMethod, TRequest request) where TResponse : BaseResponse
+        {
+            var httpRequestMessage = new HttpRequestMessage();
+            httpRequestMessage.Method = httpMethod;
+            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + apiUrl);
+
+            if (request != null)
+            {
+                string jsonContent = JsonConvert.SerializeObject(request);
+                var httpContent = new StringContent(jsonContent, encoding: Encoding.UTF8, "application/json"); ;
+                httpRequestMessage.Content = httpContent;
+            }
+            else
+            {
+                httpRequestMessage.Content = null;
+            }
+
+            try
+            {
+                var response = await _devSslHelper.HttpClient.SendAsync(httpRequestMessage);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                var result = JsonConvert.DeserializeObject<TResponse>(responseContent);
+                result.StatusCode = (int)response.StatusCode;
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                var result = Activator.CreateInstance<TResponse>();
+                result.StatusCode = 500;
+                result.StatusMessage = ex.Message;
+                return result;
             }
         }
     }
