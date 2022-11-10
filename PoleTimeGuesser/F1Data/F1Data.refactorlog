@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="108e10d5-1e83-4f8b-9104-5036b4f555c4" ChangeDateTime="11/09/2022 11:48:29">
+    <Property Name="ElementName" Value="[dbo].[Users].[AvatarSource]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AvatarSourceName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b0bb2453-da15-444c-bf9c-eaa19634ff3f" ChangeDateTime="11/09/2022 12:12:55">
+    <Property Name="ElementName" Value="[dbo].[Questions].[UserId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Questions]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Question" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="9c85ecce-e7f9-4896-8e9a-1d25b8b5bb1c" ChangeDateTime="11/09/2022 12:13:26">
+    <Property Name="ElementName" Value="[dbo].[Questions].[Score]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Questions]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AnswerA" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="41e9b246-434e-433a-bcb4-47e83d5e8929" ChangeDateTime="11/09/2022 12:15:48">
+    <Property Name="ElementName" Value="[dbo].[FK_UsersScoreboard_ToTable]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[UsersScoreboard]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_UsersScoreboard_ToUsers]" />
+  </Operation>
+</Operations>

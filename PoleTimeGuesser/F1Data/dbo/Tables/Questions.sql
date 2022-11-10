@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[Questions]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Question] NVARCHAR(MAX) NOT NULL DEFAULT '', 
+    [AnswerA] NVARCHAR(50) NOT NULL DEFAULT '', 
+    [AnswerB] NVARCHAR(50) NOT NULL DEFAULT '', 
+    [AnswerC] NVARCHAR(50) NOT NULL DEFAULT '',
+)
