@@ -1,4 +1,4 @@
-﻿namespace F1GuessAPI.Controllers.UpdateUser
+﻿namespace F1GuessAPI.Controllers.User
 {
     public class UpdateUserRequest
     {

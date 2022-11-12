@@ -1,4 +1,4 @@
-﻿namespace PoleTimeGuesser.Services.Registration
+﻿namespace PoleTimeGuesser.Services.User
 {
     public class RegistrationRequest
     {

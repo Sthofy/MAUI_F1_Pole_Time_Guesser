@@ -1,4 +1,4 @@
-﻿namespace PoleTimeGuesser.Services.Authenticate
+﻿namespace PoleTimeGuesser.Services.User
 {
     public class AuthenticateRequest
     {

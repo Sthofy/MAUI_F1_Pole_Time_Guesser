@@ -9,8 +9,8 @@ namespace F1GuessAPI.DataAccess.User
 {
     public class UserData : IUserData
     {
-        private readonly string cnnStringLocal= "F1GuessLocal";
-        private readonly string cnnString= "F1Guess";
+        private readonly string cnnStringLocal = "F1GuessLocal";
+        private readonly string cnnString = "F1Guess";
         readonly ISqlDataAccess _sql;
 
         public UserData(ISqlDataAccess sql)
@@ -20,27 +20,20 @@ namespace F1GuessAPI.DataAccess.User
 
         public bool Registration(string username, string email, string password)
         {
-            try
+            byte[] salt = GenerateSalt();
+
+            var user = new UserModel
             {
-                byte[] salt = GenerateSalt();
+                Username = username,
+                Email = email,
+                Password = GeneratePawword(password, salt),
+                StoredSalt = salt,
+                AvatarSourceName = "default_avatar.png",
+            };
 
-                var user = new UserModel
-                {
-                    Username = username,
-                    Email = email,
-                    Password = GeneratePawword(password, salt),
-                    StoredSalt = salt,
-                    AvatarSourceName = "default_avatar.png",
-                };
+            _sql.SaveData("dbo.spUser_Insert", user, cnnStringLocal);
 
-                _sql.SaveData("dbo.spUser_Insert", user, cnnStringLocal);
-
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return true;
         }
 
         public LoggedInUserModel? Authenticate(string username, string password)
@@ -58,7 +51,7 @@ namespace F1GuessAPI.DataAccess.User
 
                 var output = new LoggedInUserModel
                 {
-                    Id= user.Id,
+                    Id = user.Id,
                     Username = user.Username,
                     Email = user.Email,
                     Token = token,
@@ -99,6 +92,16 @@ namespace F1GuessAPI.DataAccess.User
             {
                 return false;
             }
+        }
+
+        public bool GetUserByUsername(string username)
+        {
+            var user = _sql.LoadData<UserModel, dynamic>("dbo.spUser_Lookup", new { username }, cnnStringLocal).FirstOrDefault();
+
+            if (user != null)
+                return true;
+
+            return false;
         }
 
         private string GeneratePawword(string enteredPassword, byte[] enteredSalt)

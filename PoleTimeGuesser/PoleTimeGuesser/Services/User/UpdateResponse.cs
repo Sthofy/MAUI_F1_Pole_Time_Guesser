@@ -1,4 +1,4 @@
-﻿namespace PoleTimeGuesser.Services.UpdateUser
+﻿namespace PoleTimeGuesser.Services.User
 {
     public class UpdateResponse : BaseResponse
     {

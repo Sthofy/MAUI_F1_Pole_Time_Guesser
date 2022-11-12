@@ -1,4 +1,4 @@
-﻿namespace F1GuessAPI.Controllers.Authenticate
+﻿namespace F1GuessAPI.Controllers.User
 {
     public class AuthenticateRequest
     {

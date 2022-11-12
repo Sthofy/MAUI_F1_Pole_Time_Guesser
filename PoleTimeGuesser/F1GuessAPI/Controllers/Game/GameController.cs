@@ -29,7 +29,7 @@ namespace F1GuessAPI.Controllers.Quiz
         [HttpPost("InsertScore")]
         public IActionResult InsertScore(ScoreRequest request)
         {
-            var response = _scoreData.Insert(request.Id, request.Score);
+            var response = _scoreData.Insert(request.UserId, request.Score);
             if (!response) return BadRequest(new { StatusMessage = "Something went wrong!" });
 
             return Ok();

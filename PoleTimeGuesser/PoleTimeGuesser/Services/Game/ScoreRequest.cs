@@ -1,4 +1,4 @@
-﻿namespace F1GuessAPI.Controllers.Game
+﻿namespace PoleTimeGuesser.Services.Game
 {
     public class ScoreRequest
     {

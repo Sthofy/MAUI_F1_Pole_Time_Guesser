@@ -1,4 +1,4 @@
-﻿namespace F1GuessAPI.Controllers.Registration
+﻿namespace F1GuessAPI.Controllers.User
 {
     public class RegistrationRequest
     {

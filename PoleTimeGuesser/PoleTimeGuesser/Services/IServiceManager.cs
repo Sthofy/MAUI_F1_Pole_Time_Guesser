@@ -1,4 +1,4 @@
-﻿using PoleTimeGuesser.Services.UpdateUser;
+﻿using PoleTimeGuesser.Services.User;
 
 namespace PoleTimeGuesser.Services
 {
