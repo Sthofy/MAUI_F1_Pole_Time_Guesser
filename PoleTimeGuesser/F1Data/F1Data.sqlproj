@@ -71,6 +71,8 @@
     <Build Include="dbo\Stored Procedures\spQuestion_GetAll.sql" />
     <Build Include="dbo\Stored Procedures\spUser_Update.sql" />
     <Build Include="dbo\Stored Procedures\spUsersScoreboard_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\spUserScoreboard_Update.sql" />
+    <Build Include="dbo\Stored Procedures\spUsers_GetByUsername.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="F1Data.refactorlog" />
@@ -78,5 +80,6 @@
   <ItemGroup>
     <None Include="PublishLocations\F1Data.publish.xml" />
     <None Include="PublishLocations\F1DataLocal.publish.xml" />
+    <None Include="F1DataLaptop.publish.xml" />
   </ItemGroup>
 </Project>
