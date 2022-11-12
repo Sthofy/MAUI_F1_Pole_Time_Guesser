@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="PoleTimeGuesser.View.RegisterView"
              xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
+             xmlns:converter="clr-namespace:PoleTimeGuesser.Converters"
              Title="RegisterView"
              Background="#13232f">
+    <ContentPage.Resources>
+        <converter:StringToColor x:Key="StringToColor"/>
+    </ContentPage.Resources>
+
     <Grid>
         <VerticalStackLayout Margin="30"
                              VerticalOptions="Center">
@@ -43,8 +49,23 @@
                        IsPassword="True"
                        ReturnType="Go"
                        Text="{Binding Password}"
-                       TextColor="Black"/>
+                       TextColor="Black">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior EventName="TextChanged" Command="{Binding VerifyPasswordCommand}"/>
+                    </Entry.Behaviors>
+                </Entry>
             </Frame>
+            <Label Text="Password must:" TextColor="Gray"/>
+            <VerticalStackLayout Margin="20,0,0,0">
+                <Label Text="Be minimum 8 characters" 
+                           TextColor="{Binding LenTextColor,Converter={StaticResource StringToColor}}"/>
+                <Label Text="Include at least one lowercase letter (a-z)"
+                           TextColor="{Binding LTextColor,Converter={StaticResource StringToColor}}"/>
+                <Label Text="Include at least one uppercase letter (A-Z)"
+                           TextColor="{Binding UTextColor,Converter={StaticResource StringToColor}}"/>
+                <Label Text="Include at least one number (0-9)"
+                           TextColor="{Binding NTextColor,Converter={StaticResource StringToColor}}"/>
+            </VerticalStackLayout>
 
             <Frame Margin="0,45,0,0"
                    Padding="10,0,10,0"
