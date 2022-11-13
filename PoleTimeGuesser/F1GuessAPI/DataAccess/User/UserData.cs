@@ -120,9 +120,8 @@ namespace F1GuessAPI.DataAccess.User
         private byte[] GenerateSalt()
         {
             byte[] salt = new byte[32];
-            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
 
-            rng.GetBytes(salt);
+            RandomNumberGenerator.Fill(salt);
 
             return salt;
         }
