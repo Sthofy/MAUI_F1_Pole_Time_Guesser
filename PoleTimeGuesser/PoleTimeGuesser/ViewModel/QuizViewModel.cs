@@ -110,5 +110,16 @@
             else
                 await Shell.Current.DisplayAlert("Üzenet", $"Sajnos rossz a helyes válasz {_corretAnswer}", "Ok");
         }
+
+        [RelayCommand]
+        async Task ShowInfo()
+        {
+            await AppShell.Current.DisplayAlert("Info", 
+                "Szia!" +
+                "\n\nA Quiz játék során a feldatod egyszerű." +
+                "\n\nFelteszünk neked egy kérdést és neked csupán annyi a feladatod, hogy kiválaszd a helyes megfejtést." +
+                "\n\nMinden nap lehetőséged lesz megválaszolni egy kérdést. A helyes megfejtés után 1000 pontot kapsz",
+                "OK");
+        }
     }
 }

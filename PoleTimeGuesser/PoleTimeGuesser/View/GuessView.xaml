@@ -7,12 +7,51 @@
              xmlns:model="clr-namespace:PoleTimeGuesser.Model"
              Title="GuessView"
              Shell.NavBarIsVisible="True">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Settings"
+                     IconImageSource="question_mark.png"
+                     Command="{Binding ShowInfoCommand}"/>
+    </ContentPage.ToolbarItems>
+
     <Grid Margin="20">
         <VerticalStackLayout>
-            <Frame BackgroundColor="IndianRed">
-                <Label Text="{Binding GameRules}"
-                       HorizontalOptions="Center"
-                       HorizontalTextAlignment="Center"/>
+            <Label Text="Prevoius Guesses"/>
+            <Frame HeightRequest="300">
+                <CollectionView>
+
+                </CollectionView>
+            </Frame>
+            <Label Text="Take a Guess"/>
+            <Frame HeightRequest="300">
+                <Grid ColumnDefinitions="*,*"
+                      RowDefinitions="*,*">
+                    <CollectionView ItemsSource="{Binding Drivers}"
+                                    SelectionMode="Single"
+                                    SelectedItem="{Binding SelectedDriver}"
+                                    SelectionChangedCommand="{Binding GetSelectedDriverCommand}"
+                                    HeightRequest="100">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:DriverStandingsModel">
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="{Binding Driver.givenName}" Style="{StaticResource MediumLabel}"/>
+                                    <Label Text="{Binding Driver.familyName}" Style="{StaticResource MediumLabel}"/>
+                                </HorizontalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <Frame Grid.Column="1"
+                           Grid.Row="0"
+                           HeightRequest="100"
+                           WidthRequest="100"
+                           CornerRadius="50"
+                           BorderColor="Transparent">
+                        <Image Source="{Binding SelectedDriverImage}"
+                               HeightRequest="100"
+                               WidthRequest="100"
+                               Aspect="AspectFill"/>
+                    </Frame>
+                </Grid>
             </Frame>
         </VerticalStackLayout>
     </Grid>
