@@ -14,28 +14,28 @@ public static class MauiProgram
             });
 
         builder.Services.AddSingleton<DriverStandingsViewModel>()
-            .AddTransient<DriverDetailsViewModel>()
+            .AddSingleton<DriverDetailsViewModel>()
             .AddSingleton<ScheduleViewModel>()
-            .AddTransient<CircuitDetailsViewModel>()
+            .AddSingleton<CircuitDetailsViewModel>()
             .AddSingleton<LoginViewModel>()
             .AddSingleton<RegisterViewModel>()
             .AddTransient<MainViewModel>()
             .AddSingleton<SettingsViewModel>()
             .AddSingleton<GamesViewModel>()
             .AddSingleton<GuessViewModel>()
-            .AddSingleton<QuizViewModel>();
+            .AddTransient<QuizViewModel>();
 
         builder.Services.AddTransient<MainView>()
             .AddTransient<DriverStandingsView>()
             .AddTransient<ScheduleView>()
             .AddTransient<DriverDetailsView>()
-            .AddTransient<CircuitDetailsView>()
+            .AddSingleton<CircuitDetailsView>()
             .AddSingleton<LoginView>()
             .AddTransient<RegisterView>()
             .AddSingleton<SettingsView>()
             .AddSingleton<GamesView>()
             .AddSingleton<GuessView>()
-            .AddSingleton<QuizView>();
+            .AddTransient<QuizView>();
 
         builder.Services.AddSingleton<IServiceManager, ServiceManager>()
             .AddSingleton<ISharedData, SharedData>()

@@ -14,4 +14,5 @@ global using Newtonsoft.Json.Linq;
 global using Newtonsoft.Json;
 global using PoleTimeGuesser.Helpers;
 global using PoleTimeGuesser.Services.User;
+global using PoleTimeGuesser.Services.Game;
 global using System.Text;

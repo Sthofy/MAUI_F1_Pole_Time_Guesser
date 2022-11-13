@@ -17,7 +17,7 @@ namespace PoleTimeGuesser.Services
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Post;
             //httpRequestMessage.RequestUri = new Uri(Url + "/Registration");
-            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/Registration");
+            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/Registration");
 
             if (request is not null)
             {
@@ -53,7 +53,7 @@ namespace PoleTimeGuesser.Services
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Post;
             //httpRequestMessage.RequestUri = new Uri(Url + "/Authenticate");
-            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/Authenticate");
+            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/Authenticate");
 
             if (request is not null)
             {
@@ -93,7 +93,7 @@ namespace PoleTimeGuesser.Services
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Put;
             //httpRequestMessage.RequestUri = new Uri(Url + "/UpdateUser");
-            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/UpdateUser");
+            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/UpdateUser");
 
             if (request is not null)
             {

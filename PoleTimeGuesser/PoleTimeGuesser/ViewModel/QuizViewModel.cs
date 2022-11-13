@@ -1,7 +1,4 @@
-﻿using PoleTimeGuesser.Model;
-using PoleTimeGuesser.Services.Game;
-
-namespace PoleTimeGuesser.ViewModel
+﻿namespace PoleTimeGuesser.ViewModel
 {
     public partial class QuizViewModel : BaseViewModel
     {
@@ -97,7 +94,8 @@ namespace PoleTimeGuesser.ViewModel
         [RelayCommand]
         async Task VerifyAnswear(Answear answear)
         {
-            // TODO: Gombra rakni a kiértékelést
+            // TODO: Gombra rakni a kiértékelést (zöld a helyes a többi piros)
+            // TODO: Napi 1 kérdést engedni
             if (answear.Item.Equals(_corretAnswer))
             {
                 var request = new ScoreRequest

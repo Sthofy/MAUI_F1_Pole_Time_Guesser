@@ -1,5 +1,4 @@
-﻿using PoleTimeGuesser.Services.UpdateUser;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PoleTimeGuesser.ViewModel
 {
