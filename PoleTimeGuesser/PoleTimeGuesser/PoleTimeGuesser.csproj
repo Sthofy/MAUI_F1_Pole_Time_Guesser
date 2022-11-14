@@ -55,6 +55,7 @@
 	  <None Remove="Resources\Images\game.png" />
 	  <None Remove="Resources\Images\google_logo.png" />
 	  <None Remove="Resources\Images\lights.png" />
+	  <None Remove="Resources\Images\pin.png" />
 	  <None Remove="Resources\Images\question_mark.png" />
 	  <None Remove="Resources\Images\quiz.png" />
 	  <None Remove="Resources\Images\quiz2.png" />

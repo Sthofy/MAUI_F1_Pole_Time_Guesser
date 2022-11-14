@@ -22,7 +22,7 @@ public static class MauiProgram
             .AddTransient<MainViewModel>()
             .AddSingleton<SettingsViewModel>()
             .AddSingleton<GamesViewModel>()
-            .AddSingleton<GuessViewModel>()
+            .AddTransient<GuessViewModel>()
             .AddTransient<QuizViewModel>()
             .AddSingleton<LightsOutGameViewModel>();
 

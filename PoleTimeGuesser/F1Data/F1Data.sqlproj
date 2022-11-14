@@ -73,6 +73,8 @@
     <Build Include="dbo\Stored Procedures\spUsersScoreboard_Insert.sql" />
     <Build Include="dbo\Stored Procedures\spUserScoreboard_Update.sql" />
     <Build Include="dbo\Stored Procedures\spUsers_GetByUsername.sql" />
+    <Build Include="dbo\Stored Procedures\spGuess_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\spGuess_GetByUserId.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="F1Data.refactorlog" />

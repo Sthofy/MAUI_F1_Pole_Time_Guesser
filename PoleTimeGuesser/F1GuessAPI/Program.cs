@@ -15,6 +15,7 @@ builder.Services.AddDbContext<F1GuessContext>(opt =>
 builder.Services.AddTransient<IUserData, UserData>();
 builder.Services.AddTransient<IQuestionData, QuestionData>();
 builder.Services.AddTransient<IScoreData, ScoreData>();
+builder.Services.AddTransient<IGuessData, GuessData>();
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 
 var app = builder.Build();

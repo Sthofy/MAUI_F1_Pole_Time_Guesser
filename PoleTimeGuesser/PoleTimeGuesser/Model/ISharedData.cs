@@ -6,5 +6,6 @@
         string AvatarSourceName { get; set; }
         string Email { get; set; }
         int Id { get; set; }
+        DateTime Date { get; set; }
     }
 }

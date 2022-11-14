@@ -1,4 +1,6 @@
-﻿namespace PoleTimeGuesser.ViewModel
+﻿// TODO: Dátumra kattinva => egész napos esemény a naptárba 
+
+namespace PoleTimeGuesser.ViewModel
 {
     [QueryProperty("Circuit", "Circuit")]
     public partial class CircuitDetailsViewModel : BaseViewModel

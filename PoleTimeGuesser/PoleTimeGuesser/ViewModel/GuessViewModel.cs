@@ -6,26 +6,40 @@
         private string _selectedDriverImage = "default_avatar.png";
         [ObservableProperty]
         private DriverStandingsModel _selectedDriver;
+        [ObservableProperty]
+        private string _selectedEventImage = "pin.png";
+        [ObservableProperty]
+        private ScheduleModel _selectedEvent;
+        [ObservableProperty]
+        int _minutes;
+        [ObservableProperty]
+        int _seconds;
+        [ObservableProperty]
+        int _miliseconds;
         private readonly string _gameRules;
         public ObservableCollection<DriverStandingsModel> Drivers { get; } = new();
+        public ObservableCollection<ScheduleModel> Events { get; } = new();
+        public ObservableCollection<GuessModel> PreviousGuesses { get; } = new();
+
         private readonly IF1DataGetterService _f1DataGetterService;
+        private readonly ISharedData _sharedData;
+        private readonly IServiceManager _serviceManager;
         private Task Init { get; }
 
-        public GuessViewModel(IF1DataGetterService f1DataGetterService)
+        public GuessViewModel(IF1DataGetterService f1DataGetterService, ISharedData sharedData, IServiceManager serviceManager)
         {
             _gameRules = "Szia!" +
                 "\n\nA Tipp játék során a feldatod egyszerű." +
                 "\n\nTippeld meg ki nyeri az időmérőt és milyen idővel szerzi meg azt!";
+
             _f1DataGetterService = f1DataGetterService;
+            _sharedData = sharedData;
+            _serviceManager = serviceManager;
+
             Init = Initialize();
         }
 
         private async Task Initialize()
-        {
-            await GetDrivers();
-        }
-
-        private async Task GetDrivers()
         {
             if (IsBusy)
                 return;
@@ -33,24 +47,55 @@
             try
             {
                 IsBusy = true;
-                var driversStandigs = await _f1DataGetterService.GetDriverStandings();
-                if (Drivers.Count != 0)
-                    Drivers.Clear();
 
-                foreach (var item in driversStandigs)
-                {
-                    Drivers.Add(item);
-                }
+                await GetDrivers();
+                await GetEvents();
+                await GetPreviousGuesses();
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                Debug.Write(ex.Message);
             }
             finally
             {
                 IsBusy = false;
             }
         }
+
+        private async Task GetDrivers()
+        {
+            var driversStandigs = await _f1DataGetterService.GetDriverStandings();
+            if (Drivers.Count != 0)
+                Drivers.Clear();
+
+            foreach (var item in driversStandigs)
+            {
+                Drivers.Add(item);
+            }
+        }
+        private async Task GetEvents()
+        {
+            var schedules = await _f1DataGetterService.GetSchedule();
+            if (Events.Count != 0)
+                Events.Clear();
+
+            foreach (var item in schedules)
+            {
+                if (DateTime.Parse(item.Date).CompareTo(_sharedData.Date) == 1)
+                {
+                    Events.Add(item);
+                }
+            }
+        }
+        private async Task GetPreviousGuesses()
+        {
+            var guesses = await _serviceManager.CallWebAPI<int, GuessGetByUserIdResponse>("/Game/GuessByUserId", HttpMethod.Get, _sharedData.Id);
+            if (PreviousGuesses.Count != 0)
+                PreviousGuesses.Clear();
+
+            guesses.Guesses.ForEach(x => PreviousGuesses.Add(x));
+        }
+
 
         [RelayCommand]
         async Task ShowInfo()
@@ -59,10 +104,50 @@
         }
 
         [RelayCommand]
-        async Task GetSelectedDriver()
+        void GetSelectedDriver()
         {
-            var driver = Drivers.Where(x => x == SelectedDriver).FirstOrDefault();
-            SelectedDriverImage = driver.Driver.Image.Front;
+            if (SelectedDriver != null)
+            {
+                var driver = Drivers.Where(x => x == SelectedDriver).FirstOrDefault();
+                SelectedDriverImage = driver.Driver.Image.Front;
+            }
+        }
+
+        [RelayCommand]
+        void GetSelectedEvent()
+        {
+            if (SelectedEvent != null)
+            {
+                var sEvent = Events.Where(x => x == SelectedEvent).FirstOrDefault();
+                SelectedEventImage = sEvent.Circuit.Location.Image;
+            }
+        }
+
+        [RelayCommand]
+        async void TakeGuess()
+        {
+            var request = new GuessRequest
+            {
+                UserId = _sharedData.Id,
+                Guess = $"{Minutes}:{Seconds}:{Miliseconds}",
+                EventId = SelectedEvent.Circuit.CircuitId,
+                DriverId = SelectedDriver.Driver.driverId
+            };
+            var response = await _serviceManager.CallWebAPI<GuessRequest, BaseResponse>("/Game/InsertGuess", HttpMethod.Post, request);
+
+            ResetGuess();
+        }
+
+        [RelayCommand]
+        void ResetGuess()
+        {
+            Minutes = 0;
+            Seconds = 0;
+            Miliseconds = 0;
+            SelectedDriver = null;
+            SelectedDriverImage = "default_avatar.png";
+            SelectedEvent = null;
+            SelectedEventImage = "pin.png";
         }
     }
 }

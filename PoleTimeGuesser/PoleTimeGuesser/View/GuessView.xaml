@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="PoleTimeGuesser.View.GuessView"
              xmlns:viewModel="clr-namespace:PoleTimeGuesser.ViewModel"
              x:DataType="viewModel:GuessViewModel"
@@ -13,46 +14,195 @@
                      IconImageSource="question_mark.png"
                      Command="{Binding ShowInfoCommand}"/>
     </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Red" />
+        </Style>
+        <Style x:Key="ValidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Green" />
+        </Style>
+    </ContentPage.Resources>
 
-    <Grid Margin="20">
-        <VerticalStackLayout>
-            <Label Text="Prevoius Guesses"/>
-            <Frame HeightRequest="300">
-                <CollectionView>
-
-                </CollectionView>
-            </Frame>
-            <Label Text="Take a Guess"/>
-            <Frame HeightRequest="300">
-                <Grid ColumnDefinitions="*,*"
-                      RowDefinitions="*,*">
-                    <CollectionView ItemsSource="{Binding Drivers}"
-                                    SelectionMode="Single"
-                                    SelectedItem="{Binding SelectedDriver}"
-                                    SelectionChangedCommand="{Binding GetSelectedDriverCommand}"
-                                    HeightRequest="100">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="model:DriverStandingsModel">
-                                <HorizontalStackLayout Spacing="10">
-                                    <Label Text="{Binding Driver.givenName}" Style="{StaticResource MediumLabel}"/>
-                                    <Label Text="{Binding Driver.familyName}" Style="{StaticResource MediumLabel}"/>
-                                </HorizontalStackLayout>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                    <Frame Grid.Column="1"
-                           Grid.Row="0"
+    <ScrollView>
+        <Grid Margin="20">
+            <VerticalStackLayout>
+                <Label Text="Take a Guess"/>
+                <Frame HeightRequest="550">
+                    <Grid ColumnDefinitions="*,*,*"
+                          RowDefinitions="40,*,40,*,60,*"
+                          RowSpacing="10"
+                          ColumnSpacing="10">
+                        <VerticalStackLayout Spacing="5"
+                                             Grid.Row="0"
+                                             Grid.ColumnSpan="3">
+                            <Label Text="Select Driver:"
+                                   Style="{StaticResource LargeLabel}"/>
+                            <Line HeightRequest="1"
+                                  BackgroundColor="Black"/>
+                        </VerticalStackLayout>
+                        <CollectionView ItemsSource="{Binding Drivers}"
+                                        SelectionMode="Single"
+                                        SelectedItem="{Binding SelectedDriver}"
+                                        SelectionChangedCommand="{Binding GetSelectedDriverCommand}"
+                                        HeightRequest="100"
+                                        Grid.ColumnSpan="2"
+                                        Grid.Row="1">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:DriverStandingsModel">
+                                    <HorizontalStackLayout Spacing="10">
+                                        <Label Text="{Binding Driver.givenName}" Style="{StaticResource MediumLabel}"/>
+                                        <Label Text="{Binding Driver.familyName}" Style="{StaticResource MediumLabel}"/>
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        <Frame Grid.Column="2"
+                           Grid.Row="1"
                            HeightRequest="100"
                            WidthRequest="100"
                            CornerRadius="50"
                            BorderColor="Transparent">
-                        <Image Source="{Binding SelectedDriverImage}"
+                            <Image Source="{Binding SelectedDriverImage}"
                                HeightRequest="100"
                                WidthRequest="100"
                                Aspect="AspectFill"/>
-                    </Frame>
-                </Grid>
-            </Frame>
-        </VerticalStackLayout>
-    </Grid>
+                        </Frame>
+                        <VerticalStackLayout Spacing="5"
+                                             Grid.Row="2"
+                                             Grid.ColumnSpan="3">
+                            <Label Text="Select Event:"
+                                   Style="{StaticResource LargeLabel}"/>
+                            <Line HeightRequest="1"
+                                  BackgroundColor="Black"/>
+                        </VerticalStackLayout>
+                        <HorizontalStackLayout Grid.Row="4"
+                                               Grid.ColumnSpan="3"
+                                               HorizontalOptions="Center"
+                                               Spacing="10">
+
+                            <VerticalStackLayout WidthRequest="90">
+                                <Label Text="Minute:"/>
+                                <Frame HeightRequest="50">
+                                    <Entry Placeholder="0"
+                                           ReturnType="Default"
+                                           Text="{Binding Minutes}"
+                                           MaxLength="1"
+                                           Keyboard="Numeric"
+                                           HeightRequest="50">
+                                        <Entry.Behaviors>
+                                            <toolkit:NumericValidationBehavior  MaximumValue="9"
+                                                                                MinimumValue="0"
+                                                                                MaximumDecimalPlaces="0"
+                                                                                InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                                                                ValidStyle="{StaticResource ValidEntryStyle}"/>
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                </Frame>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout WidthRequest="90">
+                                <Label Text="Second:"/>
+                                <Frame HeightRequest="50">
+                                    <Entry Placeholder="00"
+                                           ReturnType="Done"
+                                           Text="{Binding Seconds}"
+                                           MaxLength="2"
+                                           Keyboard="Numeric"
+                                           HeightRequest="50">
+                                        <Entry.Behaviors>
+                                            <toolkit:NumericValidationBehavior  MaximumValue="59"
+                                                                                MinimumValue="0"
+                                                                                MaximumDecimalPlaces="0"
+                                                                                InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                                                                ValidStyle="{StaticResource ValidEntryStyle}"/>
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                </Frame>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout WidthRequest="90">
+                                <Label Text="Milisecond:"/>
+                                <Frame HeightRequest="50">
+                                    <Entry Placeholder="000"
+                                           ReturnType="Done"
+                                           Text="{Binding Miliseconds}"
+                                           MaxLength="3"
+                                           Keyboard="Numeric"
+                                           HeightRequest="50">
+                                        <Entry.Behaviors>
+                                            <toolkit:NumericValidationBehavior  MaximumValue="999"
+                                                                                MinimumValue="0"
+                                                                                MaximumDecimalPlaces="0"
+                                                                                InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                                                                ValidStyle="{StaticResource ValidEntryStyle}"/>
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                </Frame>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                        <CollectionView ItemsSource="{Binding Events}"
+                                        SelectionMode="Single"
+                                        SelectedItem="{Binding SelectedEvent}"
+                                        SelectionChangedCommand="{Binding GetSelectedEventCommand}"
+                                        HeightRequest="100"
+                                        Grid.ColumnSpan="2"
+                                        Grid.Row="3">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:ScheduleModel">
+                                    <HorizontalStackLayout Spacing="10">
+                                        <Label Text="{Binding Circuit.Location.Country}" Style="{StaticResource MediumLabel}"/>
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        <Frame Grid.Column="2"
+                           Grid.Row="3"
+                           HeightRequest="100"
+                           WidthRequest="100"
+                           CornerRadius="50"
+                           BorderColor="Transparent">
+                            <Image Source="{Binding SelectedEventImage}"
+                               HeightRequest="100"
+                               WidthRequest="100"
+                               Aspect="AspectFill"/>
+                        </Frame>
+
+                        <HorizontalStackLayout Grid.Row="5"
+                                               Grid.ColumnSpan="3"
+                                               Spacing="30"
+                                               HorizontalOptions="Center">
+                            <Button Text="Reset"
+                                    HeightRequest="50"
+                                    WidthRequest="130"
+                                    BackgroundColor="Red"
+                                    Command="{Binding ResetGuessCommand}"/>
+                            <Button Text="Guess"
+                                    HeightRequest="50"
+                                    WidthRequest="130"
+                                    BackgroundColor="Green"
+                                    Command="{Binding TakeGuessCommand}"/>
+
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <Label Text="Prevoius Guesses"/>
+                <Frame HeightRequest="150">
+                    <CollectionView ItemsSource="{Binding Drivers}"
+                                        SelectionMode="Single"
+                                        SelectedItem="{Binding SelectedDriver}"
+                                        SelectionChangedCommand="{Binding GetSelectedDriverCommand}"
+                                        HeightRequest="100"
+                                        Grid.ColumnSpan="2"
+                                        Grid.Row="1">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:GuessModel">
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="{Binding Guess}" Style="{StaticResource MediumLabel}"/>
+                                </HorizontalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Frame>
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
 </ContentPage>

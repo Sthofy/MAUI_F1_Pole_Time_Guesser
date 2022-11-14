@@ -11,11 +11,13 @@ namespace F1GuessAPI.Controllers.Quiz
     {
         private readonly IQuestionData _questionData;
         private readonly IScoreData _scoreData;
+        private readonly IGuessData _guessData;
 
-        public GameController(IQuestionData questionData, IScoreData scoreData)
+        public GameController(IQuestionData questionData, IScoreData scoreData, IGuessData guessData)
         {
             _questionData = questionData;
             _scoreData = scoreData;
+            _guessData = guessData;
         }
 
         [HttpGet("Questions")]
@@ -33,6 +35,26 @@ namespace F1GuessAPI.Controllers.Quiz
             if (!response) return BadRequest(new { StatusMessage = "Something went wrong!" });
 
             return Ok();
+        }
+
+        //[HttpPost]
+        //public IActionResult UpdateScore(ScoreRequest request) { }
+
+        [HttpPost("InsertGuess")]
+        public IActionResult InsertGuess(GuessRequest request)
+        {
+            var response = _guessData.Insert(request);
+            if (!response) return BadRequest(new { StatusMessage = "Something went wrong!" });
+
+            return Ok();
+        }
+
+        [HttpGet("GuessByUserId")]
+        public ListOfGuessModel GetByUserId(int userId)
+        {
+            var response = _guessData.GetByUserId(userId);
+
+            return response;
         }
     }
 }
