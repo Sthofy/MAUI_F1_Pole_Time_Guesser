@@ -89,13 +89,19 @@
         }
         private async Task GetPreviousGuesses()
         {
-            var guesses = await _serviceManager.CallWebAPI<int, GuessGetByUserIdResponse>("/Game/GuessByUserId", HttpMethod.Get, _sharedData.Id);
-            if (PreviousGuesses.Count != 0)
-                PreviousGuesses.Clear();
+            var guesses = await _serviceManager.CallWebAPI<int?, GuessGetByUserIdResponse>("/Game/GuessByUserId", HttpMethod.Post, _sharedData.Id);
+            if (guesses is null)
+                return;
 
             guesses.Guesses.ForEach(x => PreviousGuesses.Add(x));
         }
 
+        private async Task VerifyGuess()
+        {
+            // TODO: Kiértékelni a tippet
+            // Újra bevinni az adatokat (Pilóta teljes neve helyett csak a rövidített van => szebb megjelenítés)
+            // Kiértéklés terv => felette +-1 sec alatt zöld (pontot ér) felette piros (nem ér pontot)
+        }
 
         [RelayCommand]
         async Task ShowInfo()
@@ -130,8 +136,9 @@
             {
                 UserId = _sharedData.Id,
                 Guess = $"{Minutes}:{Seconds}:{Miliseconds}",
-                EventId = SelectedEvent.Circuit.CircuitId,
-                DriverId = SelectedDriver.Driver.driverId
+                EventId = SelectedEvent.Circuit.CircuitId.ToUpper(),
+                DriverId = SelectedDriver.Driver.code.ToUpper(),
+                Difference = "Soon"
             };
             var response = await _serviceManager.CallWebAPI<GuessRequest, BaseResponse>("/Game/InsertGuess", HttpMethod.Post, request);
 

@@ -29,7 +29,7 @@ namespace F1GuessAPI.DataAccess.Game
 
         public ListOfGuessModel GetByUserId(int userId)
         {
-            var response = _sql.LoadData<GuessModel, dynamic>("spGuess_GetByUserId", new { UserId = userId }, "F1GuessLocal");
+            var response = _sql.LoadData<GuessModel, dynamic>("dbo.spGuess_GetByUserId", new { UserId = userId }, "F1GuessLocal");
 
             var output = new ListOfGuessModel
             {

@@ -9,4 +9,5 @@ global using F1GuessAPI.Entites;
 global using F1GuessAPI.DataAccess.Internal;
 global using F1GuessAPI.DataAccess.User;
 global using F1GuessAPI.DataAccess.Game;
+global using F1GuessAPI.Controllers.Game;
 global using System.Data;

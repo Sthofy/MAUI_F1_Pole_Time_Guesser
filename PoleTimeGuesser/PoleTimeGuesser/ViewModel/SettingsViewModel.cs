@@ -68,8 +68,6 @@ namespace PoleTimeGuesser.ViewModel
             _sharedData.AvatarSourceName = "";
             Application.Current.MainPage = new AppShell();
             await Shell.Current.GoToAsync("///LoginView");
-
-            // TODO: Még nem tökéletes a kilépés. Megooldani hogy minden oldal újra töltsön.
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using F1GuessAPI.Controllers.Game;
-using F1GuessAPI.DataAccess.Game;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace F1GuessAPI.Controllers.Quiz
+﻿namespace F1GuessAPI.Controllers.Quiz
 {
     [Route("[controller]")]
     [ApiController]
@@ -49,10 +44,10 @@ namespace F1GuessAPI.Controllers.Quiz
             return Ok();
         }
 
-        [HttpGet("GuessByUserId")]
-        public ListOfGuessModel GetByUserId(int userId)
+        [HttpPost("GuessByUserId")]
+        public ListOfGuessModel GetByUserId([FromBody] int data)
         {
-            var response = _guessData.GetByUserId(userId);
+            var response = _guessData.GetByUserId(data);
 
             return response;
         }
