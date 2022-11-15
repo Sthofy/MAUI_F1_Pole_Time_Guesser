@@ -13,9 +13,7 @@
             <Frame HeightRequest="170"
                    WidthRequest="170">
                 <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding Source={RelativeSource
-                        AncestorType={x:Type viewmodel:GamesViewModel}},
-                        Path=ShowQuizCommand}"/>
+                    <TapGestureRecognizer Command="{Binding ShowLightOutPageCommand}"/>
                 </Frame.GestureRecognizers>
                 <Image Source="lights.png"/>
             </Frame>
