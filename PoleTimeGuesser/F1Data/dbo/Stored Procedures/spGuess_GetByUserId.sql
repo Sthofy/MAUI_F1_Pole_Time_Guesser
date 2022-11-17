@@ -4,7 +4,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	SELECT Id,Guess,EventId,DriverId
+	SELECT Id,Guess,EventId,DriverId,[Difference]
 	FROM [dbo].[Guesses]
 	WHERE UserId = @UserId;
 END

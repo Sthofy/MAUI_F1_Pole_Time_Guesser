@@ -49,10 +49,16 @@
                                         Grid.Row="1">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="model:DriverStandingsModel">
-                                    <HorizontalStackLayout Spacing="10">
-                                        <Label Text="{Binding Driver.givenName}" Style="{StaticResource MediumLabel}"/>
-                                        <Label Text="{Binding Driver.familyName}" Style="{StaticResource MediumLabel}"/>
-                                    </HorizontalStackLayout>
+                                    <Border Margin="0,5,0,0"
+                                            Padding="5">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="10"/>
+                                        </Border.StrokeShape>
+                                        <HorizontalStackLayout Spacing="10">
+                                            <Label Text="{Binding Driver.givenName}" Style="{StaticResource MediumLabel}"/>
+                                            <Label Text="{Binding Driver.familyName}" Style="{StaticResource MediumLabel}"/>
+                                        </HorizontalStackLayout>
+                                    </Border>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
@@ -186,31 +192,40 @@
 
                 <Label Text="Prevoius Guesses"/>
                 <Frame HeightRequest="150">
-                    <Grid RowDefinitions="20,20,*"
-                          ColumnDefinitions="*,*,*,*">
-                        <HorizontalStackLayout Spacing="20"
-                                               Grid.ColumnSpan="4">
+                    <Grid RowDefinitions="Auto,Auto,*"
+                          RowSpacing="5">
+                        <Grid ColumnDefinitions="*,*,*,*">
                             <Label Text="Event" Style="{StaticResource MediumLabel}"/>
-                            <Label Text="Guessed Driver" Style="{StaticResource MediumLabel}"/>
-                            <Label Text="Guess" Style="{StaticResource MediumLabel}"/>
-                            <Label Text="Diff" Style="{StaticResource MediumLabel}"/>
-                        </HorizontalStackLayout>
+                            <Label Text="Driver" Style="{StaticResource MediumLabel}"
+                                   Grid.Column="1"/>
+                            <Label Text="Guess" Style="{StaticResource MediumLabel}"
+                                   Grid.Column="2"/>
+                            <Label Text="Diff" Style="{StaticResource MediumLabel}"
+                                   Grid.Column="3"/>
+
+                        </Grid>
                         <Line HeightRequest="1"
-                              BackgroundColor="Black"
-                              Grid.Row="1"
-                              Grid.ColumnSpan="4"/>
+                                      BackgroundColor="Black"
+                                      Grid.Row="1"
+                                      Grid.ColumnSpan="4"/>
                         <CollectionView ItemsSource="{Binding PreviousGuesses}"
                                         SelectionMode="Single"
-                                        Grid.Row="2"
-                                        Grid.ColumnSpan="4">
+                                        Grid.Row="2">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="model:GuessModel">
-                                    <HorizontalStackLayout Spacing="25">
-                                        <Label Text="{Binding EventId}" Style="{StaticResource MediumLabel}"/>
-                                        <Label Text="{Binding DriverId}" Style="{StaticResource MediumLabel}"/>
-                                        <Label Text="{Binding Guess}" Style="{StaticResource MediumLabel}"/>
-                                        <Label Text="" Style="{StaticResource MediumLabel}"/>
-                                    </HorizontalStackLayout>
+                                    <Grid ColumnDefinitions="*,*,*,*">
+                                        <Label Text="{Binding EventId}"
+                                               Style="{StaticResource MediumLabel}"/>
+                                        <Label Text="{Binding DriverId}" 
+                                                   Style="{StaticResource MediumLabel}"
+                                                   Grid.Column="1"/>
+                                        <Label Text="{Binding Guess}" 
+                                                   Style="{StaticResource MediumLabel}"
+                                                   Grid.Column="2"/>
+                                        <Label Text="{Binding }" 
+                                                   Style="{StaticResource MediumLabel}"
+                                                   Grid.Column="3"/>
+                                    </Grid>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>

@@ -3,31 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PoleTimeGuesser.View.LightsOutGameView"
              xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
+             xmlns:converter="clr-namespace:PoleTimeGuesser.Converters"
              Title="LightsOutGameView"
              BackgroundColor="LightGray"
              Shell.NavBarIsVisible="True">
+    <ContentPage.Resources>
+        <converter:StringToColor x:Key="StringToColor"/>
+    </ContentPage.Resources>
+
     <Grid RowDefinitions="100,auto,auto,auto"
           RowSpacing="20"
           Padding="10">
-        <Label Text="{Binding Header}"
+        <Label Text="{Binding HText}"
                HorizontalOptions="Center"
                Style="{StaticResource LargeLabel}"/>
         <Frame Grid.Row="1"
                BackgroundColor="Black"
                HeightRequest="200">
             <Grid ColumnDefinitions="*,*,*">
-                <Frame BackgroundColor="Red"
+                <Frame BackgroundColor="{Binding LightFirst,Converter={StaticResource StringToColor}}"
                        HeightRequest="100"
                        WidthRequest="100"
                        CornerRadius="50"
                        BorderColor="Transparent"/>
-                <Frame BackgroundColor="Red"
+                <Frame BackgroundColor="{Binding LightSecond,Converter={StaticResource StringToColor}}"
                        HeightRequest="100"
                        WidthRequest="100"
                        CornerRadius="50"
                        BorderColor="Transparent"
                        Grid.Column="1"/>
-                <Frame BackgroundColor="Red"
+                <Frame BackgroundColor="{Binding LightThird,Converter={StaticResource StringToColor}}"
                        HeightRequest="100"
                        WidthRequest="100"
                        CornerRadius="50"
@@ -35,16 +40,18 @@
                        Grid.Column="2"/>
             </Grid>
         </Frame>
-        <Button Text="Start"
+        <Button Text="{Binding BtnText}"
                 Grid.Row="2"
-                HeightRequest="100"/>
+                HeightRequest="100"
+                Command="{Binding GameCommand}"
+                IsEnabled="{Binding IsClickable}"/>
         <VerticalStackLayout Grid.Row="3">
             <Label Text="Best:"
                    Style="{StaticResource LargeLabel}"/>
             <Line HeightRequest="5"
                   BackgroundColor="Black"/>
             <Frame Margin="0,10,0,0">
-                <Label Text="0:00:234"
+                <Label Text="{Binding ETime}"
                        HorizontalTextAlignment="Center"
                        Style="{StaticResource LargeLabel}"/>
             </Frame>

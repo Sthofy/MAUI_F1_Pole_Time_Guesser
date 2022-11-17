@@ -90,8 +90,12 @@
         private async Task GetPreviousGuesses()
         {
             var guesses = await _serviceManager.CallWebAPI<int?, GuessGetByUserIdResponse>("/Game/GuessByUserId", HttpMethod.Post, _sharedData.Id);
+
             if (guesses is null)
                 return;
+
+            if (PreviousGuesses.Count != 0)
+                PreviousGuesses.Clear();
 
             guesses.Guesses.ForEach(x => PreviousGuesses.Add(x));
         }
@@ -143,6 +147,7 @@
             var response = await _serviceManager.CallWebAPI<GuessRequest, BaseResponse>("/Game/InsertGuess", HttpMethod.Post, request);
 
             ResetGuess();
+            await GetPreviousGuesses();
         }
 
         [RelayCommand]

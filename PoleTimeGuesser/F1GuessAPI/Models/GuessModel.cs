@@ -7,5 +7,6 @@
         public string Guess { get; set; } = null!;
         public string EventId { get; set; } = null!;
         public string DriverId { get; set; } = null!;
+        public string Difference { get; set; } = null!;
     }
 }
