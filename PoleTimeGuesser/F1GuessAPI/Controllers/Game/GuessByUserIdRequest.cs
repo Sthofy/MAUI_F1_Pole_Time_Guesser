@@ -1,4 +1,4 @@
-﻿namespace F1GuessAPI.DataAccess.Game
+﻿namespace F1GuessAPI.Controllers.Game
 {
     public class GuessByUserIdRequest
     {

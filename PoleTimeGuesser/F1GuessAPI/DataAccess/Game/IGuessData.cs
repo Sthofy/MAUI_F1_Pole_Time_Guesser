@@ -6,5 +6,6 @@ namespace F1GuessAPI.DataAccess.Game
     {
         ListOfGuessModel GetByUserId(int userId);
         bool Insert(GuessRequest request);
+        bool Update(GuessRequest request);
     }
 }

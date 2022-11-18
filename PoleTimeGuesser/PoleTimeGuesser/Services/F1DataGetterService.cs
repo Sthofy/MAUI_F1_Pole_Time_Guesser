@@ -167,5 +167,33 @@
                 return null;
             }
         }
+
+        public async Task<QualifyingResultModel> GetQualifyingResult(string circuitId)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"https://ergast.com/api/f1/current/{circuitId}/qualifying/1.json");
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    var json = JObject.Parse(result);
+
+                    if (json["MRData"]["RaceTable"]["Races"].FirstOrDefault() is null)
+                        return null;
+
+                    var res = json["MRData"]["RaceTable"]["Races"].First["QualifyingResults"].ToString();
+                    var qualiResult = JsonConvert.DeserializeObject<List<QualifyingResultModel>>(res).FirstOrDefault();
+
+                    return qualiResult;
+                }
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return null;
+            }
+        }
     }
 }

@@ -51,6 +51,7 @@ namespace PoleTimeGuesser.ViewModel
                 if (!Password.Equals(ConfirmPassword))
                     throw new Exception("Password and Confirm Password is not equal");
 
+                await VerifyUsername(Username);
 
                 if (_isStrongPassword)
                 {
@@ -130,15 +131,14 @@ namespace PoleTimeGuesser.ViewModel
                 _isStrongPassword = true;
         }
 
-        private bool VerifyUsername()
+        private async Task VerifyUsername(string username)
         {
             var request = new GetByUsernameRequest
             {
-                Username = Username,
+                Username = username,
             };
-            var response = _serviceManager.CallWebAPI<GetByUsernameRequest, GetByUsernameResponse>("/User/GetByUsername", HttpMethod.Get, request).Result;
+            var response = await _serviceManager.CallWebAPI<GetByUsernameRequest, AuthenticateResponse>("/User/GetByUsername", HttpMethod.Get, request);
 
-            return response.IsExist;
         }
     }
 }

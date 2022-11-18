@@ -41,8 +41,8 @@
             return Ok();
         }
 
-        [HttpPost("GetByUsername")]
-        public bool GetByUsername(GetByUsernameRequest request)
+        [HttpGet("GetByUsername")]
+        public LoggedInUserModel? GetByUsername(GetByUsernameRequest request)
         {
             var response = _userData.GetUserByUsername(request.Username);
 

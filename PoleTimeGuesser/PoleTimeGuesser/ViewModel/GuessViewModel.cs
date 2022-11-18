@@ -1,4 +1,6 @@
-﻿namespace PoleTimeGuesser.ViewModel
+﻿using Microsoft.Maui.Graphics.Text;
+
+namespace PoleTimeGuesser.ViewModel
 {
     public partial class GuessViewModel : BaseViewModel
     {
@@ -51,6 +53,7 @@
                 await GetDrivers();
                 await GetEvents();
                 await GetPreviousGuesses();
+                await VerifyGuess();
             }
             catch (Exception ex)
             {
@@ -81,10 +84,10 @@
 
             foreach (var item in schedules)
             {
-                if (DateTime.Parse(item.Date).CompareTo(_sharedData.Date) == 1)
-                {
-                    Events.Add(item);
-                }
+                //if (DateTime.Parse(item.Date).CompareTo(_sharedData.Date) == 1)
+                //{
+                Events.Add(item);
+                //}
             }
         }
         private async Task GetPreviousGuesses()
@@ -105,6 +108,19 @@
             // TODO: Kiértékelni a tippet
             // Újra bevinni az adatokat (Pilóta teljes neve helyett csak a rövidített van => szebb megjelenítés)
             // Kiértéklés terv => felette +-1 sec alatt zöld (pontot ér) felette piros (nem ér pontot)
+
+
+            foreach (var item in PreviousGuesses)
+            {
+                var raceEvent = Events.Where(x => x.Circuit.CircuitId.ToUpper() == item.EventId).FirstOrDefault();
+                if (DateTime.Parse(raceEvent.Date) < DateTime.Now)
+                {
+                    var result = await _f1DataGetterService.GetQualifyingResult(raceEvent.Round);
+                    bool isCorrectDriver = item.DriverId.Equals(result.Driver.code);
+                    double timeDiff = TimeSpan.Parse($"0:0{result.Q3}").TotalMilliseconds - TimeSpan.Parse($"0:0{item.Guess}").TotalMilliseconds;
+                    int score = CalculateScore(isCorrectDriver, Convert.ToInt32(timeDiff));
+                }
+            }
         }
 
         [RelayCommand]
@@ -139,7 +155,7 @@
             var request = new GuessRequest
             {
                 UserId = _sharedData.Id,
-                Guess = $"{Minutes}:{Seconds}:{Miliseconds}",
+                Guess = $"{Minutes}:{Seconds}.{Miliseconds}",
                 EventId = SelectedEvent.Circuit.CircuitId.ToUpper(),
                 DriverId = SelectedDriver.Driver.code.ToUpper(),
                 Difference = "Soon"
@@ -160,6 +176,30 @@
             SelectedDriverImage = "default_avatar.png";
             SelectedEvent = null;
             SelectedEventImage = "pin.png";
+        }
+
+        private int CalculateScore(bool isCorrectDriver, int timeDiff)
+        {
+            int score = 0;
+
+            if (isCorrectDriver)
+                score += 1000;
+
+            // TODO: Konstansba helyezni a pontozási érékeket és határokat 
+            if (timeDiff >= -1000 && timeDiff <= 1000)
+                score += (Math.Abs(timeDiff) * 10);
+
+            return score;
+        }
+
+        private async Task InsertScore(int userId, int score)
+        {
+            var result = await 
+        }
+
+        private void UpdateGuess(int userId, string diff)
+        {
+
         }
     }
 }

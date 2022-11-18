@@ -27,6 +27,12 @@ namespace F1GuessAPI.DataAccess.Game
             }
         }
 
+        public bool Update(GuessRequest request)
+        {
+            var response = _sql.LoadData<GuessModel, dynamic>("dbo.spGuess_GetByUserId", new { UserId = userId }, "F1GuessLocal").FirstOrDefault();
+            // TODO: Befejezni a logikát
+        }
+
         public ListOfGuessModel GetByUserId(int userId)
         {
             var response = _sql.LoadData<GuessModel, dynamic>("dbo.spGuess_GetByUserId", new { UserId = userId }, "F1GuessLocal");

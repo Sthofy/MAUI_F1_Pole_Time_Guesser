@@ -1,4 +1,6 @@
-﻿namespace F1GuessAPI.Controllers.Quiz
+﻿using Azure.Core;
+
+namespace F1GuessAPI.Controllers.Quiz
 {
     [Route("[controller]")]
     [ApiController]
@@ -41,6 +43,15 @@
             var response = _guessData.Insert(request);
             if (!response) return BadRequest(new { StatusMessage = "Something went wrong!" });
 
+            return Ok();
+        }
+
+        [HttpPut("UpdteGuess")]
+        public IActionResult UpdateGuess(GuessRequest request)
+        {
+            var response = _guessData.Update(request);
+            if (!response)
+                return BadRequest(new { StatusMessage = "Something went wrong!" });
             return Ok();
         }
 

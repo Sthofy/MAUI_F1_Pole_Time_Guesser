@@ -194,14 +194,16 @@
                 <Frame HeightRequest="150">
                     <Grid RowDefinitions="Auto,Auto,*"
                           RowSpacing="5">
-                        <Grid ColumnDefinitions="*,*,*,*">
+                        <Grid ColumnDefinitions="120,*,*,auto">
                             <Label Text="Event" Style="{StaticResource MediumLabel}"/>
                             <Label Text="Driver" Style="{StaticResource MediumLabel}"
                                    Grid.Column="1"/>
                             <Label Text="Guess" Style="{StaticResource MediumLabel}"
-                                   Grid.Column="2"/>
+                                   Grid.Column="2"
+                                   HorizontalTextAlignment="Start"/>
                             <Label Text="Diff" Style="{StaticResource MediumLabel}"
-                                   Grid.Column="3"/>
+                                   Grid.Column="3"
+                                   HorizontalTextAlignment="End"/>
 
                         </Grid>
                         <Line HeightRequest="1"
@@ -213,7 +215,7 @@
                                         Grid.Row="2">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="model:GuessModel">
-                                    <Grid ColumnDefinitions="*,*,*,*">
+                                    <Grid ColumnDefinitions="120,*,*,*">
                                         <Label Text="{Binding EventId}"
                                                Style="{StaticResource MediumLabel}"/>
                                         <Label Text="{Binding DriverId}" 
@@ -222,9 +224,10 @@
                                         <Label Text="{Binding Guess}" 
                                                    Style="{StaticResource MediumLabel}"
                                                    Grid.Column="2"/>
-                                        <Label Text="{Binding }" 
+                                        <Label Text="{Binding Difference}" 
                                                    Style="{StaticResource MediumLabel}"
-                                                   Grid.Column="3"/>
+                                                   Grid.Column="3"
+                                               HorizontalTextAlignment="End"/>
                                     </Grid>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
