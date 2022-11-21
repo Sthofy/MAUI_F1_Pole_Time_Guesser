@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spUserScoreboard_Update]
+﻿CREATE PROCEDURE [dbo].[spUsersScoreboard_Update]
 	@UserId INT,
 	@Score INT
 AS

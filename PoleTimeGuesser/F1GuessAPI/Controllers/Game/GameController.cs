@@ -34,8 +34,14 @@ namespace F1GuessAPI.Controllers.Quiz
             return Ok();
         }
 
-        //[HttpPost]
-        //public IActionResult UpdateScore(ScoreRequest request) { }
+        [HttpPut("UpdateScore")]
+        public IActionResult UpdateScore(ScoreRequest request) 
+        {
+            var response = _scoreData.Update(request);
+            if (!response) return BadRequest(new { StatusMessage = "Something went wrong!" });
+
+            return Ok();
+        }
 
         [HttpPost("InsertGuess")]
         public IActionResult InsertGuess(GuessRequest request)
@@ -46,10 +52,19 @@ namespace F1GuessAPI.Controllers.Quiz
             return Ok();
         }
 
-        [HttpPut("UpdteGuess")]
+        [HttpPut("UpdateGuess")]
         public IActionResult UpdateGuess(GuessRequest request)
         {
             var response = _guessData.Update(request);
+            if (!response)
+                return BadRequest(new { StatusMessage = "Something went wrong!" });
+            return Ok();
+        }
+
+        [HttpPut("UpdateGuessDiff")]
+        public IActionResult UpdateGuessDiff(GuessRequest request)
+        {
+            var response = _guessData.UpdateDiff(request);
             if (!response)
                 return BadRequest(new { StatusMessage = "Something went wrong!" });
             return Ok();

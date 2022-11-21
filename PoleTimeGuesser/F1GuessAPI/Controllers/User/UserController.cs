@@ -25,10 +25,10 @@
         public IActionResult Registration(RegistrationRequest request)
         {
             var response = _userData.Registration(request.Username, request.Email, request.Password);
-            if (!response)
+            if (response is null)
                 return BadRequest(new { StatusMessage = "Registration error!" });
 
-            return Ok();
+            return Ok(response);
         }
 
         [HttpPut("Update")]
@@ -41,12 +41,15 @@
             return Ok();
         }
 
-        [HttpGet("GetByUsername")]
-        public LoggedInUserModel? GetByUsername(GetByUsernameRequest request)
-        {
-            var response = _userData.GetUserByUsername(request.Username);
+        //TODO: MIÉRT NEM MŰKÖDIK??? [HttpGet("GetByUsername")] 405 Method Not Allowed
+        //public GetByUsernameResponse GetByUsername([FromQuery] string username)
 
-            return response;
+        [HttpPost("GetByUsername")]
+        public GetByUsernameResponse GetByUsername([FromBody] string username)
+        {
+            var response = _userData.GetUserByUsername(username);
+
+            return new GetByUsernameResponse { IsExist = response };
         }
     }
 }

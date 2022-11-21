@@ -3,8 +3,6 @@
     public partial class QuizViewModel : BaseViewModel
     {
         [ObservableProperty]
-        string _gameRules;
-        [ObservableProperty]
         string _question;
         [ObservableProperty]
         bool _isEnabledToClick;
@@ -24,11 +22,6 @@
             _serviceManager = serviceManager;
             _sharedData = sharedData;
             IsEnabledToClick = true;
-
-            GameRules = "Szia!" +
-                "\n\nA Quiz játék során a feldatod egyszerű." +
-                "\n\nFelteszünk neked egy kérdést és neked csupán annyi a feladatod, hogy kiválaszd a helyes megfejtést." +
-                "\n\nMinden nap lehetőséged lesz megválaszolni egy kérdést. A helyes megfejtés után 1000 pontot kapsz";
 
             Init = Initialize();
         }
@@ -103,12 +96,17 @@
                     UserId = _sharedData.Id,
                     Score = 1000
                 };
-                var response = _serviceManager.CallWebAPI<ScoreRequest, BaseResponse>("/Game/InsertScore", HttpMethod.Post, request);
+
+                var response = _serviceManager.CallWebAPI<ScoreRequest, BaseResponse>("/Game/UpdateScore", HttpMethod.Put, request);
+
                 IsEnabledToClick = false;
                 await Shell.Current.DisplayAlert("Üzenet", "Helyes!", "OK");
             }
             else
+            {
+                IsEnabledToClick = false;
                 await Shell.Current.DisplayAlert("Üzenet", $"Sajnos rossz a helyes válasz {_corretAnswer}", "Ok");
+            }
         }
 
         [RelayCommand]

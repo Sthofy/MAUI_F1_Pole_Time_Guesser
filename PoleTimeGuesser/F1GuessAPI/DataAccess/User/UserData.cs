@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using F1GuessAPI.Controllers.User;
 
 namespace F1GuessAPI.DataAccess.User
 {
@@ -18,7 +19,7 @@ namespace F1GuessAPI.DataAccess.User
             _sql = sql;
         }
 
-        public bool Registration(string username, string email, string password)
+        public RegistrationModel Registration(string username, string email, string password)
         {
             byte[] salt = GenerateSalt();
 
@@ -31,9 +32,14 @@ namespace F1GuessAPI.DataAccess.User
                 AvatarSourceName = "default_avatar.png",
             };
 
-            _sql.SaveData("dbo.spUser_Insert", user, cnnStringLocal);
+            var data = _sql.SaveUser("dbo.spUser_Insert", user, cnnStringLocal);
 
-            return true;
+            var output = new RegistrationModel
+            {
+                Id = data
+            };
+
+            return output;
         }
 
         public LoggedInUserModel? Authenticate(string username, string password)
@@ -94,11 +100,14 @@ namespace F1GuessAPI.DataAccess.User
             }
         }
 
-        public LoggedInUserModel? GetUserByUsername(string username)
+        public bool GetUserByUsername(string username)
         {
             var user = _sql.LoadData<LoggedInUserModel, dynamic>("dbo.spUsers_GetByUsername", new { username }, cnnStringLocal).FirstOrDefault();
 
-            return user;
+            if (user is not null)
+                return true;
+            else
+                return false;
         }
 
         private string GeneratePawword(string enteredPassword, byte[] enteredSalt)

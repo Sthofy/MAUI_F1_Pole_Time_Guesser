@@ -11,5 +11,7 @@ BEGIN
 
 	INSERT INTO [dbo].[Users](Username,[Password],StoredSalt,Email,AvatarSourceName)
 	VALUES (@Username,@Password,@StoredSalt,@Email,@AvatarSourceName);
+
+	SELECT SCOPE_IDENTITY();
 END
 

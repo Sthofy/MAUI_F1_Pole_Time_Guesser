@@ -3,5 +3,6 @@
     public interface IScoreData
     {
         bool Insert(int id, int score);
+        bool Update(ScoreRequest request);
     }
 }

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spGuess_Update]
+﻿CREATE PROCEDURE [dbo].[spGuess_UpdateDiff]
 	@UserId INT,
 	@EventId NVARCHAR(50),
 	@Difference NVARCHAR(50)
@@ -8,5 +8,5 @@ BEGIN
 
 	UPDATE [dbo].[Guesses]
 	SET [Difference]=@Difference
-	WHERE UserId=@UserId AND EventId=@EventId;
+	WHERE UserId=@UserId;
 END

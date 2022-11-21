@@ -7,11 +7,11 @@ namespace PoleTimeGuesser.ViewModel
         [ObservableProperty]
         private string _selectedDriverImage = "default_avatar.png";
         [ObservableProperty]
-        private DriverStandingsModel _selectedDriver;
+        private DriverStandingsModel _selectedDriver = null;
         [ObservableProperty]
         private string _selectedEventImage = "pin.png";
         [ObservableProperty]
-        private ScheduleModel _selectedEvent;
+        private ScheduleModel _selectedEvent = null;
         [ObservableProperty]
         int _minutes;
         [ObservableProperty]
@@ -105,22 +105,32 @@ namespace PoleTimeGuesser.ViewModel
 
         private async Task VerifyGuess()
         {
-            // TODO: Kiértékelni a tippet
-            // Újra bevinni az adatokat (Pilóta teljes neve helyett csak a rövidített van => szebb megjelenítés)
-            // Kiértéklés terv => felette +-1 sec alatt zöld (pontot ér) felette piros (nem ér pontot)
-
+            if (PreviousGuesses is null)
+                return;
 
             foreach (var item in PreviousGuesses)
             {
-                var raceEvent = Events.Where(x => x.Circuit.CircuitId.ToUpper() == item.EventId).FirstOrDefault();
-                if (DateTime.Parse(raceEvent.Date) < DateTime.Now)
+                if (item.Difference.Equals("Soon"))
                 {
-                    var result = await _f1DataGetterService.GetQualifyingResult(raceEvent.Round);
-                    bool isCorrectDriver = item.DriverId.Equals(result.Driver.code);
-                    double timeDiff = TimeSpan.Parse($"0:0{result.Q3}").TotalMilliseconds - TimeSpan.Parse($"0:0{item.Guess}").TotalMilliseconds;
-                    int score = CalculateScore(isCorrectDriver, Convert.ToInt32(timeDiff));
+                    var raceEvent = Events.Where(x => x.Circuit.CircuitId.ToUpper() == item.EventId).FirstOrDefault();
+                    if (DateTime.Parse(raceEvent.Date) < DateTime.Now)
+                    {
+                        var result = await _f1DataGetterService.GetQualifyingResult(raceEvent.Round);
+                        bool isCorrectDriver = item.DriverId.Equals(result.Driver.code);
+                        double timeDiff = TimeSpan.Parse($"0:0{result.Q3}").TotalMilliseconds - TimeSpan.Parse($"0:0{item.Guess}").TotalMilliseconds;
+                        int score = CalculateScore(isCorrectDriver, Convert.ToInt32(timeDiff));
+
+
+                        await UpdateGuessDiff(_sharedData.Id, timeDiff.ToString(), item.EventId);
+
+                        if (score > 0)
+                            await UpdateScore(_sharedData.Id, score);
+                    }
+
                 }
             }
+
+            await GetPreviousGuesses();
         }
 
         [RelayCommand]
@@ -152,6 +162,12 @@ namespace PoleTimeGuesser.ViewModel
         [RelayCommand]
         async void TakeGuess()
         {
+            if (SelectedEvent is null || SelectedDriver is null)
+            {
+                await Shell.Current.DisplayAlert("Missing data", "Please select a driver or event!", "OK");
+                return;
+            }
+
             var request = new GuessRequest
             {
                 UserId = _sharedData.Id,
@@ -192,14 +208,27 @@ namespace PoleTimeGuesser.ViewModel
             return score;
         }
 
-        private async Task InsertScore(int userId, int score)
+        private async Task UpdateScore(int userId, int score)
         {
-            var result = await 
+            var request = new ScoreRequest
+            {
+                UserId = userId,
+                Score = score
+            };
+            var result = await _serviceManager.CallWebAPI<ScoreRequest, BaseResponse>("/Game/UpdateScore", HttpMethod.Put, request);
         }
 
-        private void UpdateGuess(int userId, string diff)
+        private async Task UpdateGuessDiff(int userId, string diff, string eventId)
         {
-
+            var request = new GuessRequest
+            {
+                UserId = userId,
+                Difference = diff,
+                EventId = eventId,
+                DriverId = "",
+                Guess = ""
+            };
+            var result = await _serviceManager.CallWebAPI<GuessRequest, BaseResponse>("/Game/UpdateGuessDiff", HttpMethod.Put, request);
         }
     }
 }

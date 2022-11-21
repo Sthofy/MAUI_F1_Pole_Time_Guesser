@@ -7,13 +7,14 @@
              xmlns:model="clr-namespace:PoleTimeGuesser.Model"
              Title="QuizView"
              Shell.NavBarIsVisible="True">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Settings"
+                     IconImageSource="question_mark.png"
+                     Command="{Binding ShowInfoCommand}"/>
+    </ContentPage.ToolbarItems>
+    
     <Grid Margin="20">
         <VerticalStackLayout>
-            <Frame BackgroundColor="IndianRed">
-                <Label Text="{Binding GameRules}"
-                       HorizontalOptions="Center"
-                       HorizontalTextAlignment="Center"/>
-            </Frame>
             <Label Text="{Binding Question}"/>
             <CollectionView ItemsSource="{Binding Answears}"
                             SelectionMode="None">

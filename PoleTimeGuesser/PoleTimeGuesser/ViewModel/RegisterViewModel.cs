@@ -22,8 +22,13 @@ namespace PoleTimeGuesser.ViewModel
         string _uTextColor = "red";
         [ObservableProperty]
         string _nTextColor = "red";
+        [ObservableProperty]
+        string _usernameTextColor = "Green";
+        [ObservableProperty]
+        string _errorMessage;
 
         private bool _isStrongPassword = false;
+        private bool _isUserExist = false;
         IServiceManager _serviceManager;
 
         public RegisterViewModel(IServiceManager serviceManager)
@@ -51,9 +56,8 @@ namespace PoleTimeGuesser.ViewModel
                 if (!Password.Equals(ConfirmPassword))
                     throw new Exception("Password and Confirm Password is not equal");
 
-                await VerifyUsername(Username);
 
-                if (_isStrongPassword)
+                if (_isStrongPassword && !_isUserExist)
                 {
                     var request = new RegistrationRequest
                     {
@@ -62,7 +66,9 @@ namespace PoleTimeGuesser.ViewModel
                         Email = Email,
                     };
 
-                    await _serviceManager.Registration(request);
+                    var userId = await _serviceManager.Registration(request);
+
+                    InsertScore(userId.Id);
 
                     await Shell.Current.GoToAsync($"{nameof(LoginView)}", true,
                         new Dictionary<string, object>
@@ -131,14 +137,40 @@ namespace PoleTimeGuesser.ViewModel
                 _isStrongPassword = true;
         }
 
-        private async Task VerifyUsername(string username)
+        [RelayCommand]
+        private async Task VerifyUsername()
         {
-            var request = new GetByUsernameRequest
-            {
-                Username = username,
-            };
-            var response = await _serviceManager.CallWebAPI<GetByUsernameRequest, AuthenticateResponse>("/User/GetByUsername", HttpMethod.Get, request);
+            var response = await _serviceManager.CallWebAPI<string, GetByUsernameResponse>("/User/GetByUsername", HttpMethod.Post, Username);
 
+            if (response.IsExist)
+            {
+                UsernameTextColor = "Red";
+                _isUserExist = true;
+                ErrorMessage = "Username already exists!";
+            }
+            else
+            {
+                UsernameTextColor = "Green";
+                _isUserExist = false;
+                ErrorMessage = "";
+            }
+        }
+
+        [RelayCommand]
+        private async Task BackToLoginPage()
+        {
+            await Shell.Current.GoToAsync($"{nameof(LoginView)}", true);
+        }
+
+        private void InsertScore(int userId)
+        {
+            
+            var request = new ScoreRequest
+            {
+                UserId = userId,
+                Score = 0
+            };
+            var response = _serviceManager.CallWebAPI<ScoreRequest, BaseResponse>("/Game/InsertScore", HttpMethod.Post, request);
         }
     }
 }

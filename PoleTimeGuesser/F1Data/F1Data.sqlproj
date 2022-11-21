@@ -71,11 +71,13 @@
     <Build Include="dbo\Stored Procedures\spQuestion_GetAll.sql" />
     <Build Include="dbo\Stored Procedures\spUser_Update.sql" />
     <Build Include="dbo\Stored Procedures\spUsersScoreboard_Insert.sql" />
-    <Build Include="dbo\Stored Procedures\spUserScoreboard_Update.sql" />
+    <Build Include="dbo\Stored Procedures\spUsersScoreboard_Update.sql" />
     <Build Include="dbo\Stored Procedures\spUsers_GetByUsername.sql" />
     <Build Include="dbo\Stored Procedures\spGuess_Insert.sql" />
     <Build Include="dbo\Stored Procedures\spGuess_GetByUserId.sql" />
     <Build Include="dbo\Stored Procedures\spGuess_Update.sql" />
+    <Build Include="dbo\Stored Procedures\spGuess_UpdateDiff.sql" />
+    <Build Include="dbo\Stored Procedures\spUsersScoreboard_GetByUserId.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="F1Data.refactorlog" />
@@ -84,5 +86,7 @@
     <None Include="PublishLocations\F1Data.publish.xml" />
     <None Include="PublishLocations\F1DataLocal.publish.xml" />
     <None Include="F1DataLaptop.publish.xml" />
+    <None Include="F1Data.publish.xml" />
+    <None Include="F1DataLocalGep.publish.xml" />
   </ItemGroup>
 </Project>

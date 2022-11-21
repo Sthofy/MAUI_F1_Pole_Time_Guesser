@@ -2,6 +2,6 @@
 {
     public class RegistrationResponse : BaseResponse
     {
-
+        public int Id { get; set; }
     }
 }

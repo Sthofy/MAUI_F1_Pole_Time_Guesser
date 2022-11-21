@@ -194,7 +194,7 @@
                 <Frame HeightRequest="150">
                     <Grid RowDefinitions="Auto,Auto,*"
                           RowSpacing="5">
-                        <Grid ColumnDefinitions="120,*,*,auto">
+                        <Grid ColumnDefinitions="125,*,*,auto">
                             <Label Text="Event" Style="{StaticResource MediumLabel}"/>
                             <Label Text="Driver" Style="{StaticResource MediumLabel}"
                                    Grid.Column="1"/>
@@ -215,7 +215,7 @@
                                         Grid.Row="2">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="model:GuessModel">
-                                    <Grid ColumnDefinitions="120,*,*,*">
+                                    <Grid ColumnDefinitions="130,*,*,50">
                                         <Label Text="{Binding EventId}"
                                                Style="{StaticResource MediumLabel}"/>
                                         <Label Text="{Binding DriverId}" 
