@@ -17,8 +17,8 @@ namespace PoleTimeGuesser.Services
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Post;
-            httpRequestMessage.RequestUri = new Uri(Url + "/User/Registration");
-            //httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/Registration");
+            //httpRequestMessage.RequestUri = new Uri(Url + "/User/Registration");
+            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/Registration");
 
             if (request is not null)
             {
@@ -27,26 +27,9 @@ namespace PoleTimeGuesser.Services
                 httpRequestMessage.Content = httpContent;
             }
 
-            try
-            {
-                var response = await _devSslHelper.HttpClient.SendAsync(httpRequestMessage);
-                var responseConcent = await response.Content.ReadAsStringAsync();
+            var response = await _devSslHelper.HttpClient.SendAsync(httpRequestMessage);
 
-                var result = JsonConvert.DeserializeObject<RegistrationResponse>(responseConcent);
-                result.StatusCode = (int)response.StatusCode;
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                var result = new RegistrationResponse
-                {
-                    StatusCode = 500,
-                    StatusMessage = ex.Message
-                };
-
-                return result;
-            }
+            return response;
         }
 
         public async Task<HttpResponseMessage> Authenticate(AuthenticateRequest request)
