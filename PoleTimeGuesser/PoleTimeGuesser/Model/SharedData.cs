@@ -6,6 +6,7 @@
         public string Username { get; set; }
         public string AvatarSourceName { get; set; }
         public string Email { get; set; }
+        public string Token { get; set; }
         public DateTime Date { get; set; } = DateTime.Now;
     }
 }

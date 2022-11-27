@@ -6,6 +6,7 @@
         string AvatarSourceName { get; set; }
         string Email { get; set; }
         int Id { get; set; }
+        string Token { get; set; }
         DateTime Date { get; set; }
     }
 }

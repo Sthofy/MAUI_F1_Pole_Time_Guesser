@@ -1,4 +1,7 @@
-﻿namespace PoleTimeGuesser.ViewModel
+﻿using PoleTimeGuesser.Library.Models;
+using PoleTimeGuesser.Library.Requests;
+
+namespace PoleTimeGuesser.ViewModel
 {
     [QueryProperty("Username", "Username")]
     [QueryProperty("Password", "Password")]
@@ -36,24 +39,29 @@
                 if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
                     throw new Exception("Username or Password field is empty!");
 
-                var requset = new AuthenticateRequest
+                var request = new AuthenticateRequest
                 {
                     Username = Username,
                     Password = Password,
                 };
 
-                var response = await _serviceManager.Authenticate(requset);
-                if (response.StatusCode == 200)
+                var response = await _serviceManager.Authenticate(request);
+                if (response.IsSuccessStatusCode)
                 {
-                    _sharedData.Id = response.Id;
-                    _sharedData.Username = response.Username;
-                    _sharedData.AvatarSourceName = response.AvatarSourceName;
-                    _sharedData.Email = response.Email;
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    var result = JsonConvert.DeserializeObject<LoggedInUserModel>(responseContent);
+
+                    _sharedData.Id = result.Id;
+                    _sharedData.Username = result.Username;
+                    _sharedData.AvatarSourceName = result.AvatarSourceName;
+                    _sharedData.Email = result.Email;
+                    _sharedData.Token= result.Token;
                     await Shell.Current.GoToAsync("///main");
                 }
-                else
+                else if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    await AppShell.Current.DisplayAlert("F1Guess", response.StatusMessage, "OK");
+                    await AppShell.Current.DisplayAlert("F1Guess", "Username or Password is wrong!", "OK");
                 }
             }
             catch (Exception ex)

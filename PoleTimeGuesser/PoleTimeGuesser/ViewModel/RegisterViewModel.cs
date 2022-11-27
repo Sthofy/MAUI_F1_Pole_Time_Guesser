@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PoleTimeGuesser.Library.Requests;
+using System.ComponentModel.DataAnnotations;
 
 namespace PoleTimeGuesser.ViewModel
 {

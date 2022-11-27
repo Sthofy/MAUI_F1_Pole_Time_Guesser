@@ -1,12 +1,12 @@
-﻿using PoleTimeGuesser.Services.User;
+﻿using PoleTimeGuesser.Library.Requests;
 
 namespace PoleTimeGuesser.Services
 {
     public interface IServiceManager
     {
-        Task<AuthenticateResponse> Authenticate(AuthenticateRequest request);
+        Task<HttpResponseMessage> Authenticate(AuthenticateRequest request);
         Task<TResponse> CallWebAPI<TRequest, TResponse>(string apiUrl, HttpMethod httpMethod, TRequest request) where TResponse : BaseResponse;
-        Task<RegistrationResponse> Registration(RegistrationRequest request);
+        Task<HttpResponseMessage> Registration(RegistrationRequest request);
         Task<UpdateResponse> UpdateUser(UpdateRequest request);
     }
 }
