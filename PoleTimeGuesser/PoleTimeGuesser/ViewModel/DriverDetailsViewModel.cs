@@ -31,7 +31,15 @@
         [RelayCommand]
         private async Task GetDriverInfo()
         {
-            DriverInfo = await _f1DataGetterService.GetDriverInfo(Driver.driverId);
+            var result = await _f1DataGetterService.GetDriverInfo(Driver.driverId);
+            if (result is null)
+            {
+                // TODO: Error képernyő/not found képernyő
+            }
+            else
+            {
+                DriverInfo = result;
+            }
         }
     }
 }
