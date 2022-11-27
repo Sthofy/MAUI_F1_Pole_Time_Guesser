@@ -1,11 +1,9 @@
-﻿using PoleTimeGuesser.Services.User;
-
-namespace PoleTimeGuesser.Services
+﻿namespace PoleTimeGuesser.Services
 {
     public class ServiceManager : IServiceManager
     {
         DevHttpsConnectionHelper _devSslHelper;
-        string Url = "https://f1infoapi.azurewebsites.net";
+        string Url = "https://f1guessapi.azurewebsites.net";
 
         public ServiceManager()
         {
@@ -16,8 +14,8 @@ namespace PoleTimeGuesser.Services
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Post;
-            //httpRequestMessage.RequestUri = new Uri(Url + "/Registration");
-            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/Registration");
+            httpRequestMessage.RequestUri = new Uri(Url + "/User/Registration");
+            //httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/Registration");
 
             if (request is not null)
             {
@@ -52,8 +50,8 @@ namespace PoleTimeGuesser.Services
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Post;
-            //httpRequestMessage.RequestUri = new Uri(Url + "/Authenticate");
-            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/Authenticate");
+            httpRequestMessage.RequestUri = new Uri(Url + "/User/Authenticate");
+            //httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/Authenticate");
 
             if (request is not null)
             {
@@ -92,8 +90,8 @@ namespace PoleTimeGuesser.Services
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Put;
-            //httpRequestMessage.RequestUri = new Uri(Url + "/UpdateUser");
-            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/UpdateUser");
+            httpRequestMessage.RequestUri = new Uri(Url + "/User/UpdateUser");
+            //httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/UpdateUser");
 
             if (request is not null)
             {
@@ -123,34 +121,13 @@ namespace PoleTimeGuesser.Services
             }
         }
 
-        public async Task<List<QuestionModel>> GetQuestions()
-        {
-            var httpRequestMessage = new HttpRequestMessage();
-            httpRequestMessage.Method = HttpMethod.Get;
-            //httpRequestMessage.RequestUri = new Uri(Url + "/Game/Questions");
-            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/Game/Questions");
-
-            try
-            {
-                var response = await _devSslHelper.HttpClient.SendAsync(httpRequestMessage);
-                var responseContent = await response.Content.ReadAsStringAsync();
-
-                var result = JsonConvert.DeserializeObject<List<QuestionModel>>(responseContent);
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                return null;
-            }
-        }
-
         public async Task<TResponse> CallWebAPI<TRequest, TResponse>(string apiUrl, HttpMethod httpMethod, TRequest request) where TResponse : BaseResponse
         {
+
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = httpMethod;
-            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + apiUrl);
+            httpRequestMessage.RequestUri = new Uri(Url + apiUrl);
+            //httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + apiUrl);
 
             if (request != null)
             {

@@ -5,6 +5,8 @@ namespace F1GuessAPI.DataAccess.Game
     public class GuessData : IGuessData
     {
         ISqlDataAccess _sql;
+        private readonly string cnnStringLocal = "F1GuessLocal";
+        private readonly string cnnString = "F1GuessDB";
 
         public GuessData(ISqlDataAccess sql)
         {
@@ -17,7 +19,7 @@ namespace F1GuessAPI.DataAccess.Game
             {
                 //TODO : ConnectionStringet kiemelni globális elérésbe
 
-                _sql.SaveData("dbo.spGuess_Insert", request, "F1GuessLocal");
+                _sql.SaveData("dbo.spGuess_Insert", request, cnnString);
 
                 return true;
             }
@@ -29,7 +31,7 @@ namespace F1GuessAPI.DataAccess.Game
 
         public bool Update(GuessRequest request)
         {
-            var data = _sql.LoadData<GuessModel, int>("dbo.spGuess_GetByUserId", request.UserId, "F1GuessLocal").FirstOrDefault();
+            var data = _sql.LoadData<GuessModel, int>("dbo.spGuess_GetByUserId", request.UserId, cnnString).FirstOrDefault();
 
             if (!request.Guess.Equals(data.Guess))
                 data.Guess = request.Guess;
@@ -38,7 +40,7 @@ namespace F1GuessAPI.DataAccess.Game
             if (request.DriverId.Equals(data.DriverId))
                 data.DriverId = request.DriverId;
 
-            _sql.SaveData("dbo.spGuess_Update", new { UserId = data.Id, EventId = data.EventId, Difference = data.Difference }, "F1GuessLocal");
+            _sql.SaveData("dbo.spGuess_Update", new { UserId = data.Id, EventId = data.EventId, Difference = data.Difference }, cnnString);
 
             return true;
         }
@@ -47,7 +49,7 @@ namespace F1GuessAPI.DataAccess.Game
         {
             try
             {
-                _sql.SaveData("dbo.spGuess_UpdateDiff", new { UserId = request.UserId, EventId = request.EventId, Difference = request.Difference }, "F1GuessLocal");
+                _sql.SaveData("dbo.spGuess_UpdateDiff", new { UserId = request.UserId, EventId = request.EventId, Difference = request.Difference }, cnnString);
 
                 return true;
             }
@@ -60,7 +62,7 @@ namespace F1GuessAPI.DataAccess.Game
 
         public ListOfGuessModel GetByUserId(int userId)
         {
-            var response = _sql.LoadData<GuessModel, dynamic>("dbo.spGuess_GetByUserId", new { UserId = userId }, "F1GuessLocal");
+            var response = _sql.LoadData<GuessModel, dynamic>("dbo.spGuess_GetByUserId", new { UserId = userId }, cnnString);
 
             var output = new ListOfGuessModel
             {

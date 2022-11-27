@@ -10,8 +10,8 @@ namespace F1GuessAPI.DataAccess.User
 {
     public class UserData : IUserData
     {
-        private readonly string cnnStringLocal = "F1GuessLocal";
-        private readonly string cnnString = "F1Guess";
+        //"F1GuessLocal";
+        private readonly string cnnString = "F1GuessDB";
         readonly ISqlDataAccess _sql;
 
         public UserData(ISqlDataAccess sql)
@@ -32,7 +32,7 @@ namespace F1GuessAPI.DataAccess.User
                 AvatarSourceName = "default_avatar.png",
             };
 
-            var data = _sql.SaveUser("dbo.spUser_Insert", user, cnnStringLocal);
+            var data = _sql.SaveUser("dbo.spUser_Insert", user, cnnString);
 
             var output = new RegistrationModel
             {
@@ -46,7 +46,7 @@ namespace F1GuessAPI.DataAccess.User
         {
             try
             {
-                var user = _sql.LoadData<UserModel, dynamic>("dbo.spUser_Lookup", new { username }, cnnStringLocal).FirstOrDefault();
+                var user = _sql.LoadData<UserModel, dynamic>("dbo.spUser_Lookup", new { username }, cnnString).FirstOrDefault();
                 if (user is null) return null;
 
                 bool isPasswordMatched = VertifyPassword(password, user.StoredSalt, user.Password);
@@ -76,7 +76,7 @@ namespace F1GuessAPI.DataAccess.User
         {
             try
             {
-                var user = _sql.LoadData<UserModel, dynamic>("dbo.spUser_Lookup", new { username }, cnnStringLocal).FirstOrDefault();
+                var user = _sql.LoadData<UserModel, dynamic>("dbo.spUser_Lookup", new { username }, cnnString).FirstOrDefault();
                 if (user is null) return false;
 
                 if (username.Trim() != "")
@@ -90,7 +90,7 @@ namespace F1GuessAPI.DataAccess.User
                     user.Password = GeneratePawword(password, salt);
                 }
 
-                _sql.SaveData("dbo.spUser_Update", user, cnnStringLocal);
+                _sql.SaveData("dbo.spUser_Update", user, cnnString);
 
                 return true;
             }
@@ -102,12 +102,24 @@ namespace F1GuessAPI.DataAccess.User
 
         public bool GetUserByUsername(string username)
         {
-            var user = _sql.LoadData<LoggedInUserModel, dynamic>("dbo.spUsers_GetByUsername", new { username }, cnnStringLocal).FirstOrDefault();
+            var user = _sql.LoadData<LoggedInUserModel, dynamic>("dbo.spUsers_GetByUsername", new { username }, cnnString).FirstOrDefault();
 
             if (user is not null)
                 return true;
             else
                 return false;
+        }
+
+        public ScoreboardResponse GetScoreboard()
+        {
+            var data = _sql.LoadData<ScoreboardModel, dynamic>("dbo.spUsersScoreboard_GetAll", new { }, cnnString);
+
+            var output = new ScoreboardResponse
+            {
+                ListOfScoreboard = data
+            };
+
+            return output;
         }
 
         private string GeneratePawword(string enteredPassword, byte[] enteredSalt)

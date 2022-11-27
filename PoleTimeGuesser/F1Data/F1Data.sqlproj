@@ -78,15 +78,12 @@
     <Build Include="dbo\Stored Procedures\spGuess_Update.sql" />
     <Build Include="dbo\Stored Procedures\spGuess_UpdateDiff.sql" />
     <Build Include="dbo\Stored Procedures\spUsersScoreboard_GetByUserId.sql" />
+    <Build Include="dbo\Stored Procedures\spUsersScoreboard_GetAll.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="F1Data.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="PublishLocations\F1Data.publish.xml" />
-    <None Include="PublishLocations\F1DataLocal.publish.xml" />
-    <None Include="F1DataLaptop.publish.xml" />
     <None Include="F1Data.publish.xml" />
-    <None Include="F1DataLocalGep.publish.xml" />
   </ItemGroup>
 </Project>

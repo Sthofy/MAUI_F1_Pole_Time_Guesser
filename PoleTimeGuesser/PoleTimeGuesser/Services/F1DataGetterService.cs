@@ -6,6 +6,7 @@
         readonly HttpClient _httpClient;
         List<DriverStandingsModel> driverStadingModel = new();
         List<ScheduleModel> scheduleModels = new();
+        string Url = "https://f1guessapi.azurewebsites.net";
 
         public F1DataGetterService()
         {
@@ -81,7 +82,7 @@
 
             try
             {
-                var response = await _httpClient.GetAsync($"https://f1infoapi.azurewebsites.net/DriverInfo/{id}");
+                var response = await _httpClient.GetAsync($"{Url}/DriverInfo/{id}");
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
@@ -103,7 +104,7 @@
         {
             try
             {
-                var response = await _httpClient.GetAsync($"https://f1infoapi.azurewebsites.net/CircuitInfo/{id}");
+                var response = await _httpClient.GetAsync($"{Url}/CircuitInfo/{id}");
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();

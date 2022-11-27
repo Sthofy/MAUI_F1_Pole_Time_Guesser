@@ -7,11 +7,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<F1GuessContext>(opt =>
-{
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("F1Data"));
-});
-
 builder.Services.AddTransient<IUserData, UserData>();
 builder.Services.AddTransient<IQuestionData, QuestionData>();
 builder.Services.AddTransient<IScoreData, ScoreData>();

@@ -51,5 +51,13 @@
 
             return new GetByUsernameResponse { IsExist = response };
         }
+
+        [HttpGet("GetScoreboard")]
+        public ScoreboardResponse GetScoreboard()
+        {
+            var response = _userData.GetScoreboard();
+
+            return response;
+        }
     }
 }

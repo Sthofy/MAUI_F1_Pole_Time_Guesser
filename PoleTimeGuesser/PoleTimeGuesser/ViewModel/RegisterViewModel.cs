@@ -40,9 +40,6 @@ namespace PoleTimeGuesser.ViewModel
         [RelayCommand]
         async Task Register()
         {
-            //TODO: Megvizsgálni hogy létezik e már a felhasználó
-            //TODO: Létrehozáskor beszúrni a scoreboard táblába 0 ponttal
-
             if (IsProcessing) return;
 
             IsProcessing = true;

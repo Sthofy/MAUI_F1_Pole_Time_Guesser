@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="PoleTimeGuesser.View.RegisterView"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             android:Application.WindowSoftInputModeAdjust="Resize"
              xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
              xmlns:converter="clr-namespace:PoleTimeGuesser.Converters"
              Title="RegisterView"

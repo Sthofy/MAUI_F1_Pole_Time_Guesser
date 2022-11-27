@@ -4,6 +4,7 @@
              x:Class="PoleTimeGuesser.View.MainView"
              xmlns:model="clr-namespace:PoleTimeGuesser.Model"
              xmlns:viewModel="clr-namespace:PoleTimeGuesser.ViewModel"
+             x:DataType="viewModel:MainViewModel"
              Title="{Binding SharedData.Username}"
              Background="#13232f">
     <ContentPage.ToolbarItems>
@@ -16,77 +17,112 @@
         <ScrollView>
             <Grid>
                 <VerticalStackLayout>
+                    <!-- Logged in user info -->
                     <Frame Style="{StaticResource CardView}"
                                Margin="5"
                                HeightRequest="200">
                         <Grid ColumnDefinitions="150,*"
-                                  RowDefinitions="150,*">
+                              RowDefinitions="150,*">
                             <Frame WidthRequest="128"
-                                       HeightRequest="128"
-                                       CornerRadius="64"
-                                       BorderColor="Transparent"
-                                       BackgroundColor="Aqua">
+                                   HeightRequest="128"
+                                   CornerRadius="64"
+                                   BorderColor="Transparent"
+                                   BackgroundColor="Aqua">
                                 <Image WidthRequest="128"
-                                           HeightRequest="128"
-                                           Source="{Binding SharedData.AvatarSourceName}"
-                                           Aspect="AspectFill"/>
+                                       HeightRequest="128"
+                                       Source="{Binding SharedData.AvatarSourceName}"
+                                       Aspect="AspectFill"/>
                             </Frame>
                             <Label Grid.Row="1"
-                                       Text="{Binding SharedData.Username}"
-                                       HorizontalOptions="Center"
-                                       FontSize="30"/>
+                                   Text="{Binding SharedData.Username}"
+                                   HorizontalOptions="Center"
+                                   FontSize="30"/>
+                            <VerticalStackLayout Grid.Column="1"
+                                                 Grid.RowSpan="2"
+                                                 HorizontalOptions="Center"
+                                                 Margin="10">
+                                <Label Text="Your Points: "
+                                       Style="{StaticResource LargeLabel}"/>
+                                <Label Text="{Binding UserPoints}"/>
+                                <Label Text="Season Events:"
+                                       Style="{StaticResource LargeLabel}"/>
+                                <Label Text="{Binding EllapsedEvents}"/>
 
+                            </VerticalStackLayout>
                         </Grid>
                     </Frame>
 
+                    <!-- Scoreboard -->
+                    <Label Text="Scoreboard"
+                           TextColor="Red"
+                           HorizontalTextAlignment="Center"/>
+                    <Line HeightRequest="1"
+                          BackgroundColor="Red"/>
                     <Frame Style="{StaticResource CardView}"
-                               Margin="5"
-                               HeightRequest="300">
-
-                        <Label Text="Felhasználók Score board"/>
-
+                           Margin="5"
+                           HeightRequest="300">
+                        <CollectionView ItemsSource="{Binding Scoreboard}"
+                                        SelectionMode="None">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:ScoreboardModel">
+                                    <Grid Margin="10">
+                                        <HorizontalStackLayout Spacing="30">
+                                            <Label Text="{Binding Username}"
+                                                   Style="{StaticResource MediumLabel}"/>
+                                            <Label Text="{Binding Score}"
+                                                   Style="{StaticResource MediumLabel}"/>
+                                        </HorizontalStackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
                     </Frame>
 
+                    <!-- Upcomint Envet -->
+                    <Label Text="Upcoming Event"
+                           HorizontalTextAlignment="Center"
+                           TextColor="Red"
+                           Style="{StaticResource MediumLabel}"/>
+                    <Line HeightRequest="1"
+                          BackgroundColor="Red"/>
                     <Frame Style="{StaticResource CardView}"
-                               Margin="5"
-                               HeightRequest="100"
-                               Padding="5"
-                               BackgroundColor="IndianRed"
-                               BorderColor="Transparent">
-
-                        <Grid RowDefinitions="auto,*"
-                                  RowSpacing="5">
-                            <Label Text="Upcoming Event"
-                                       HorizontalTextAlignment="Center"
+                           Margin="5"
+                           HeightRequest="100"
+                           Padding="5"
+                           BackgroundColor="IndianRed"
+                           BorderColor="Transparent">
+                        <Grid ColumnDefinitions="65,2*,*"
+                              ColumnSpacing="10">
+                            <Frame HeightRequest="64"
+                                   WidthRequest="64"
+                                   CornerRadius="32"
+                                   BorderColor="Transparent">
+                                <Image Source="{Binding UpcomingEvent.Circuit.Location.Image}"
+                                       WidthRequest="100"
+                                       HeightRequest="100"
+                                       Aspect="AspectFill"/>
+                            </Frame>
+                            <VerticalStackLayout Grid.Column="1"
+                                                 VerticalOptions="Center">
+                                <Label Text="{Binding UpcomingEvent.Circuit.Location.Country}"
                                        Style="{StaticResource MediumLabel}"/>
-                            <Grid Grid.Row="1"
-                                      ColumnDefinitions="65,2*,*"
-                                      ColumnSpacing="10">
-                                <Frame HeightRequest="64"
-                                           WidthRequest="64"
-                                           CornerRadius="32"
-                                           BorderColor="Transparent">
-                                    <Image Source="{Binding UpcomingEvent.Circuit.Location.Image}"
-                                               WidthRequest="100"
-                                               HeightRequest="100"
-                                               Aspect="AspectFill"/>
-                                </Frame>
-                                <VerticalStackLayout Grid.Column="1"
-                                                         VerticalOptions="Center">
-                                    <Label Text="{Binding UpcomingEvent.Circuit.Location.Country}"
-                                               Style="{StaticResource MediumLabel}"/>
-                                    <Label Text="{Binding UpcomingEvent.Circuit.Location.Locality}"
-                                               Style="{StaticResource SmallLabel}"/>
-                                    <Label Text="{Binding UpcomingEvent.Circuit.CircuitName}"
-                                               Style="{StaticResource SmallLabel}"/>
-                                </VerticalStackLayout>
-                                <Label Text="{Binding UpcomingEvent.Date}"
-                                           Grid.Column="2"
-                                           VerticalTextAlignment="Center"/>
-                            </Grid>
+                                <Label Text="{Binding UpcomingEvent.Circuit.Location.Locality}"
+                                       Style="{StaticResource SmallLabel}"/>
+                                <Label Text="{Binding UpcomingEvent.Circuit.CircuitName}"
+                                       Style="{StaticResource SmallLabel}"/>
+                            </VerticalStackLayout>
+                            <Label Text="{Binding UpcomingEvent.Date}"
+                                   Grid.Column="2"
+                                   VerticalTextAlignment="Center"/>
                         </Grid>
                     </Frame>
 
+                    <!-- Top3 Driver -->
+                    <Label Text="Top 3 Driver" TextColor="Red"
+                           HorizontalTextAlignment="Center"
+                           Style="{StaticResource MediumLabel}"/>
+                    <Line HeightRequest="1"
+                          BackgroundColor="Red"/>
                     <ScrollView Orientation="Horizontal"
                                     HorizontalScrollBarVisibility="Never">
                         <HorizontalStackLayout BindableLayout.ItemsSource="{Binding TopDrivers}">
@@ -141,6 +177,7 @@
                             </BindableLayout.ItemTemplate>
                         </HorizontalStackLayout>
                     </ScrollView>
+
                 </VerticalStackLayout>
             </Grid>
         </ScrollView>
