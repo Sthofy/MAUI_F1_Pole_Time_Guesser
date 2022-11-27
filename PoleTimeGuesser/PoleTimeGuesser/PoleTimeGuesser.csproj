@@ -74,6 +74,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\PoleTimeGuesser.Library\PoleTimeGuesser.Library.csproj" />
+	  <ProjectReference Include="..\PoleTimeGuesser.Models\PoleTimeGuesser.Library.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="View\MainView.xaml.cs">
 	    <DependentUpon>MainView.xaml</DependentUpon>
 	  </Compile>

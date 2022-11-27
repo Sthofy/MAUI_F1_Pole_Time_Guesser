@@ -1,4 +1,6 @@
-﻿namespace PoleTimeGuesser.Services
+﻿using PoleTimeGuesser.Library.Requests;
+
+namespace PoleTimeGuesser.Services
 {
     public class ServiceManager : IServiceManager
     {
@@ -7,10 +9,11 @@
 
         public ServiceManager()
         {
-            _devSslHelper = new DevHttpsConnectionHelper(sslPort: 7297);
+            //_devSslHelper = new DevHttpsConnectionHelper(sslPort: 7297);
+            _devSslHelper = new DevHttpsConnectionHelper(sslPort: 7200);
         }
 
-        public async Task<RegistrationResponse> Registration(RegistrationRequest request)
+        public async Task<HttpResponseMessage> Registration(RegistrationRequest request)
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Post;
@@ -46,44 +49,16 @@
             }
         }
 
-        public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest request)
+        public async Task<HttpResponseMessage> Authenticate(AuthenticateRequest request)
         {
             var httpRequestMessage = new HttpRequestMessage();
-            httpRequestMessage.Method = HttpMethod.Post;
-            httpRequestMessage.RequestUri = new Uri(Url + "/User/Authenticate");
-            //httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/Authenticate");
+            httpRequestMessage.Method = HttpMethod.Get;
+            //httpRequestMessage.RequestUri = new Uri(Url + $"/User/Authenticate/{request.Username}/{request.Password}");
+            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + $"/User/Authenticate/{request.Username}/{request.Password}");
 
-            if (request is not null)
-            {
-                string jsonContent = JsonConvert.SerializeObject(request);
-                var httpContent = new StringContent(jsonContent, encoding: Encoding.UTF8, "application/json");
-                httpRequestMessage.Content = httpContent;
-            }
+            var response = await _devSslHelper.HttpClient.SendAsync(httpRequestMessage);
 
-            try
-            {
-                var response = await _devSslHelper.HttpClient.SendAsync(httpRequestMessage);
-                var responseContent = await response.Content.ReadAsStringAsync();
-
-                var result = JsonConvert.DeserializeObject<AuthenticateResponse>(responseContent);
-                result.StatusCode = (int)response.StatusCode;
-
-                if (result.StatusCode == 200)
-                {
-
-                }
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                var result = new AuthenticateResponse
-                {
-                    StatusCode = 500,
-                    StatusMessage = ex.Message
-                };
-                return result;
-            }
+            return response;
         }
 
         public async Task<UpdateResponse> UpdateUser(UpdateRequest request)
