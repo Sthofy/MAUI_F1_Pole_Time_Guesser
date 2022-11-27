@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PoleTimeGuesser.Api.Repositories.Contracts;
 using PoleTimeGuesser.Library.Models;
 using PoleTimeGuesser.Library.Requests;

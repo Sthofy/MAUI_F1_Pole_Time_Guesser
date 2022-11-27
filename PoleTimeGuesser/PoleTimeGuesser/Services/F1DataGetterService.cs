@@ -79,25 +79,18 @@
 
         public async Task<DriverInfoModel> GetDriverInfo(string id)
         {
-
-            try
+            var response = await _httpClient.GetAsync($"{Url}/DriverInfo/{id}");
+            if (response.IsSuccessStatusCode)
             {
-                var response = await _httpClient.GetAsync($"{Url}/DriverInfo/{id}");
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = await response.Content.ReadAsStringAsync();
-                    var driverInfoModel = JsonConvert.DeserializeObject<DriverInfoModel>(result);
+                var responseContent = await response.Content.ReadAsStringAsync();
 
-                    return driverInfoModel;
-                }
-                else
-                    return null;
+                var result = JsonConvert.DeserializeObject<DriverInfoModel>(responseContent);
+                return result;
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
+            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 return null;
-            }
+            else
+                return null;
         }
 
         public async Task<CircuitInfoModel> GetCicuitInfoAsync(string id)
