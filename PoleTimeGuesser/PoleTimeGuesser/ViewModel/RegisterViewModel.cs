@@ -1,4 +1,5 @@
-﻿using PoleTimeGuesser.Library.Requests;
+﻿using PoleTimeGuesser.Library.Models;
+using PoleTimeGuesser.Library.Requests;
 using System.ComponentModel.DataAnnotations;
 
 namespace PoleTimeGuesser.ViewModel
@@ -64,16 +65,23 @@ namespace PoleTimeGuesser.ViewModel
                         Email = Email,
                     };
 
-                    var userId = await _serviceManager.Registration(request);
+                    var response = await _serviceManager.Registration(request);
+                    var responseContent = await response.Content.ReadAsStringAsync();
 
-                    InsertScore(userId.Id);
+                    var user = JsonConvert.DeserializeObject<RegistrationModel>(responseContent);
 
-                    await Shell.Current.GoToAsync($"{nameof(LoginView)}", true,
-                        new Dictionary<string, object>
-                        {
-                            { "Username" , Username },
-                            { "Password" , Password },
-                        });
+                    if (response.IsSuccessStatusCode)
+                    {
+
+                        await InsertScore(user.Id);
+
+                        await Shell.Current.GoToAsync($"{nameof(LoginView)}", true,
+                            new Dictionary<string, object>
+                            {
+                                { "Username" , Username },
+                                { "Password" , Password },
+                            });
+                    }
                 }
             }
             catch (Exception ex)
@@ -160,7 +168,7 @@ namespace PoleTimeGuesser.ViewModel
             await Shell.Current.GoToAsync($"{nameof(LoginView)}", true);
         }
 
-        private void InsertScore(int userId)
+        private async Task InsertScore(int userId)
         {
             
             var request = new ScoreRequest

@@ -19,9 +19,24 @@ namespace PoleTimeGuesser.Api.Controllers
 
         [HttpPost]
         [Route("Registration")]
-        public Task<ActionResult<RegistrationModel>> Registration(RegistrationRequest request)
+        public async Task<ActionResult<RegistrationModel>> Registration(RegistrationRequest request)
         {
+            try
+            {
+                var response = await _userRepository.Registration(request.Username, request.Email, request.Password);
 
+                if (response is null)
+                {
+                    return BadRequest();
+                }
+                else
+                    return Ok(response);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                "Error retrieving data from the database");
+            }
         }
 
         [HttpGet]
@@ -32,7 +47,7 @@ namespace PoleTimeGuesser.Api.Controllers
             {
                 var loggedInUser = await _userRepository.Authenticate(username, password);
 
-                if (loggedInUser == null)
+                if (loggedInUser is null)
                 {
                     return NotFound();
                 }

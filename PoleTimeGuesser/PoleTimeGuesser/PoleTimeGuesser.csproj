@@ -75,7 +75,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\PoleTimeGuesser.Library\PoleTimeGuesser.Library.csproj" />
-	  <ProjectReference Include="..\PoleTimeGuesser.Models\PoleTimeGuesser.Library.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

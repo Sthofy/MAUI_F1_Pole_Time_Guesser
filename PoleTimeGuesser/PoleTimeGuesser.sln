@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "F1GuessAPI", "F1GuessAPI\F1
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "F1Data", "F1Data\F1Data.sqlproj", "{CB47550C-89A7-4FB8-8B6F-C05A7FE03DDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoleTimeGuesser.Api", "PoleTimeGuesser.Api\PoleTimeGuesser.Api.csproj", "{E5D1E25F-7AF2-4CCB-9A26-1F97250ECE99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoleTimeGuesser.Api", "PoleTimeGuesser.Api\PoleTimeGuesser.Api.csproj", "{E5D1E25F-7AF2-4CCB-9A26-1F97250ECE99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoleTimeGuesser.Library", "PoleTimeGuesser.Library\PoleTimeGuesser.Library.csproj", "{69B2F515-290C-4457-AD68-2EB129A3C2B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoleTimeGuesser.Library", "PoleTimeGuesser.Library\PoleTimeGuesser.Library.csproj", "{BE087A18-8DCF-47E1-A0F9-39813C52E451}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +39,10 @@ Global
 		{E5D1E25F-7AF2-4CCB-9A26-1F97250ECE99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5D1E25F-7AF2-4CCB-9A26-1F97250ECE99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5D1E25F-7AF2-4CCB-9A26-1F97250ECE99}.Release|Any CPU.Build.0 = Release|Any CPU
-		{69B2F515-290C-4457-AD68-2EB129A3C2B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{69B2F515-290C-4457-AD68-2EB129A3C2B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{69B2F515-290C-4457-AD68-2EB129A3C2B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{69B2F515-290C-4457-AD68-2EB129A3C2B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE087A18-8DCF-47E1-A0F9-39813C52E451}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE087A18-8DCF-47E1-A0F9-39813C52E451}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE087A18-8DCF-47E1-A0F9-39813C52E451}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE087A18-8DCF-47E1-A0F9-39813C52E451}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
