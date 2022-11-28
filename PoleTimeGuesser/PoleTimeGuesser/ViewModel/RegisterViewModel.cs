@@ -146,9 +146,12 @@ namespace PoleTimeGuesser.ViewModel
         [RelayCommand]
         private async Task VerifyUsername()
         {
-            var response = await _serviceManager.CallWebAPI<string, GetByUsernameResponse>("/User/GetByUsername", HttpMethod.Post, Username);
+            var response = await _serviceManager.CallWebAPI<string>("/User/GetByUsername", HttpMethod.Get, Username);
+            var responseContent = await response.Content.ReadAsStringAsync();
 
-            if (response.IsExist)
+            var isExist = JsonConvert.DeserializeObject<bool>(responseContent);
+
+            if (isExist)
             {
                 UsernameTextColor = "Red";
                 _isUserExist = true;
@@ -170,13 +173,13 @@ namespace PoleTimeGuesser.ViewModel
 
         private async Task InsertScore(int userId)
         {
-            
+
             var request = new ScoreRequest
             {
                 UserId = userId,
                 Score = 0
             };
-            var response = _serviceManager.CallWebAPI<ScoreRequest, BaseResponse>("/Game/InsertScore", HttpMethod.Post, request);
+            var response = _serviceManager.CallWebAPI<ScoreRequest>("/Game/InsertScore", HttpMethod.Post, request);
         }
     }
 }

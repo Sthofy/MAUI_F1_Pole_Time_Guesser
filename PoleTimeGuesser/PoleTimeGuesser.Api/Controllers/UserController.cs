@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PoleTimeGuesser.Api.Repositories.Contracts;
-using PoleTimeGuesser.Library.Models;
-using PoleTimeGuesser.Library.Requests;
-
-namespace PoleTimeGuesser.Api.Controllers
+﻿namespace PoleTimeGuesser.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
@@ -102,6 +97,15 @@ namespace PoleTimeGuesser.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                 "Error retrieving data from the database");
             }
+        }
+
+        [HttpGet]
+        [Route("GetByUsername/{username}")]
+        public async Task<ActionResult<bool>> GetByUsername(string username)
+        {
+            var response = await _userRepository.GetByUsername(username);
+
+            return Ok(response);
         }
     }
 }

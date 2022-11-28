@@ -49,12 +49,19 @@
 
         private async Task GetScoreboard()
         {
-            var response = await _serviceManager.CallWebAPI<int?, ScoreboardRespone>("/User/GetScoreboard", HttpMethod.Get, null);
+            var response = await _serviceManager.CallWebAPI<int?>("/User/GetScoreboard", HttpMethod.Get, null);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
 
-            if (response.ListOfScoreboard.Count == 0)
-                return;
+                var listOfScoreboard = JsonConvert.DeserializeObject<IEnumerable<ScoreboardModel>>(responseContent).ToList();
 
-            response.ListOfScoreboard.ForEach(x => Scoreboard.Add(x));
+                if (listOfScoreboard.Count == 0)
+                    return;
+
+                listOfScoreboard.ForEach(x => Scoreboard.Add(x));
+            }
+
         }
 
         private void GetLoggedInUserPoints()

@@ -1,7 +1,8 @@
-﻿namespace PoleTimeGuesser.Services.Game
+﻿namespace PoleTimeGuesser.Library.Models
 {
-    public class GuessRequest
+    public class GuessModel
     {
+        public int Id { get; set; }
         public int UserId { get; set; }
         public string Guess { get; set; }
         public string EventId { get; set; }

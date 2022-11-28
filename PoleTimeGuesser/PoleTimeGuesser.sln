@@ -5,13 +5,11 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoleTimeGuesser", "PoleTimeGuesser\PoleTimeGuesser.csproj", "{F7962B56-31E0-49EA-95CC-E46BF9DFBADE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "F1GuessAPI", "F1GuessAPI\F1GuessAPI.csproj", "{DCE06C6B-BBCD-49E8-AA44-3676A58A010F}"
-EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "F1Data", "F1Data\F1Data.sqlproj", "{CB47550C-89A7-4FB8-8B6F-C05A7FE03DDC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoleTimeGuesser.Api", "PoleTimeGuesser.Api\PoleTimeGuesser.Api.csproj", "{E5D1E25F-7AF2-4CCB-9A26-1F97250ECE99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoleTimeGuesser.Library", "PoleTimeGuesser.Library\PoleTimeGuesser.Library.csproj", "{BE087A18-8DCF-47E1-A0F9-39813C52E451}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoleTimeGuesser.Library", "PoleTimeGuesser.Library\PoleTimeGuesser.Library.csproj", "{BE087A18-8DCF-47E1-A0F9-39813C52E451}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,6 @@ Global
 		{F7962B56-31E0-49EA-95CC-E46BF9DFBADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7962B56-31E0-49EA-95CC-E46BF9DFBADE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F7962B56-31E0-49EA-95CC-E46BF9DFBADE}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{DCE06C6B-BBCD-49E8-AA44-3676A58A010F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DCE06C6B-BBCD-49E8-AA44-3676A58A010F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DCE06C6B-BBCD-49E8-AA44-3676A58A010F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DCE06C6B-BBCD-49E8-AA44-3676A58A010F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CB47550C-89A7-4FB8-8B6F-C05A7FE03DDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CB47550C-89A7-4FB8-8B6F-C05A7FE03DDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB47550C-89A7-4FB8-8B6F-C05A7FE03DDC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU

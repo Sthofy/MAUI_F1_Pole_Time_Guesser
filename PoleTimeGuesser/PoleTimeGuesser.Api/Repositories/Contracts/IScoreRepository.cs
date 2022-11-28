@@ -2,7 +2,7 @@
 {
     public interface IScoreRepository
     {
-        Task Insert(int id, int score);
-        Task Update(int id, int score);
+        Task Insert(ScoreRequest request);
+        Task Update(ScoreRequest request);
     }
 }

@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.IdentityModel.Tokens;
-using PoleTimeGuesser.Api.DataAccess;
-using PoleTimeGuesser.Api.Repositories.Contracts;
-using PoleTimeGuesser.Library.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -98,6 +95,16 @@ namespace PoleTimeGuesser.Api.Repositories
             return data;
         }
 
+        public async Task<bool> GetByUsername(string username)
+        {
+            var user = await _sql.LoadData<LoggedInUserModel, dynamic>("dbo.spUsers_GetByUsername", new { username }, cnnString);
+
+            if (user.FirstOrDefault() is not null)
+                return true;
+            else
+                return false;
+        }
+            
         private string GeneratePawword(string enteredPassword, byte[] enteredSalt)
         {
             string output = Convert.ToBase64String(
