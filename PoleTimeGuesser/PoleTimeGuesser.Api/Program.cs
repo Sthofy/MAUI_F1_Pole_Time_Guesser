@@ -14,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+builder.Services.AddScoped<IScoreRepository, ScoreRepository>();
 
 var app = builder.Build();
 
