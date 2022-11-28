@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PoleTimeGuesser.Api.Repositories;
 using PoleTimeGuesser.Api.Repositories.Contracts;
 using PoleTimeGuesser.Library.Models;
+using PoleTimeGuesser.Library.Requests;
 
 namespace PoleTimeGuesser.Api.Controllers
 {
@@ -12,10 +13,12 @@ namespace PoleTimeGuesser.Api.Controllers
     public class GameController : ControllerBase
     {
         private readonly IQuestionRepository _questionRepository;
+        private readonly IScoreRepository _scoreRepository;
 
-        public GameController(IQuestionRepository questionRepository)
+        public GameController(IQuestionRepository questionRepository, IScoreRepository scoreRepository)
         {
             _questionRepository = questionRepository;
+            _scoreRepository = scoreRepository;
         }
 
         [HttpGet]
@@ -37,5 +40,40 @@ namespace PoleTimeGuesser.Api.Controllers
                                 "Error retrieving data from the database");
             }
         }
+
+        [HttpPost]
+        [Route("InsertScore")]
+        public async Task<ActionResult> InsertScore(ScoreRequest request)
+        {
+            try
+            {
+                await _scoreRepository.Insert(request.UserId, request.Score);
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                "Error retrieving data from the database");
+            }
+        }
+
+        [HttpPut]
+        [Route("UpdateScore")]
+        public async Task<ActionResult> UpdateScore(ScoreRequest request)
+        {
+            try
+            {
+                await _scoreRepository.Update(request.UserId, request.Score);
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                "Error retrieving data from the database");
+            }
+        }
+
     }
 }

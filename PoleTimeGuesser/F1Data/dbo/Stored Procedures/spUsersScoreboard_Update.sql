@@ -6,6 +6,6 @@ BEGIN
 	SET NOCOUNT ON;
 
 	UPDATE [dbo].[UsersScoreboard]
-	SET Score=@Score
+	SET Score=Score + @Score
 	WHERE UserId=@UserId;
 END
