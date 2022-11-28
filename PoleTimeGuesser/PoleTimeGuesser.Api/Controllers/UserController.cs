@@ -61,5 +61,47 @@ namespace PoleTimeGuesser.Api.Controllers
                                 "Error retrieving data from the database");
             }
         }
+
+        [HttpPut]
+        [Route("Update")]
+        public async Task<ActionResult> Update(UpdateUserRequest request)
+        {
+            try
+            {
+                var response = await _userRepository.Update(request.Id, request.Username, request.Email, request.Password);
+
+                if (response)
+                    return NoContent();
+                else
+                    return BadRequest();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                "Error retrieving data from the database");
+            }
+        }
+
+        [HttpGet]
+        [Route("GetScoreboard")]
+        public async Task<ActionResult<IEnumerable<ScoreboardModel>>> GetScoreboard()
+        {
+            try
+            {
+                var response = await _userRepository.GetScoreboard();
+
+                if (response is null)
+                    return NotFound();
+                else
+                {
+                    return Ok(response);
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                "Error retrieving data from the database");
+            }
+        }
     }
 }
