@@ -67,6 +67,37 @@ namespace PoleTimeGuesser.Api.Repositories
             return output;
         }
 
+        public async Task<bool> Update(int id, string username, string email, string password)
+        {
+
+            var response = await _sql.LoadData<UserModel, dynamic>("dbo.spUser_GetById", new { id }, cnnString);
+            var user = response.FirstOrDefault();
+
+            if (user is null) return false;
+
+            if (username.Trim() != "")
+                user.Username = username;
+            if (email.Trim() != "")
+                user.Email = email;
+            if (password.Trim() != "")
+            {
+                byte[] salt = GenerateSalt();
+                user.StoredSalt = salt;
+                user.Password = GeneratePawword(password, salt);
+            }
+
+            await _sql.SaveData("dbo.spUser_Update", user, cnnString);
+
+            return true;
+        }
+
+        public async Task<IEnumerable<ScoreboardModel>> GetScoreboard()
+        {
+            var data = await _sql.LoadData<ScoreboardModel, dynamic>("dbo.spUsersScoreboard_GetAll", new { }, cnnString);
+
+            return data;
+        }
+
         private string GeneratePawword(string enteredPassword, byte[] enteredSalt)
         {
             string output = Convert.ToBase64String(
