@@ -34,7 +34,7 @@ namespace PoleTimeGuesser.ViewModel
                 if (!new EmailAddressAttribute().IsValid(_newEmail) && !string.IsNullOrEmpty(_newEmail))
                     throw new Exception("Wrong email!");
 
-                var request = new UpdateRequest
+                var request = new UpdateUserRequest
                 {
                     Id = _sharedData.Id,
                     Username = _newUsername,
@@ -44,10 +44,14 @@ namespace PoleTimeGuesser.ViewModel
 
                 var response = await _serviceManager.UpdateUser(request);
 
-                if (response.StatusCode == 200)
+                if (response.IsSuccessStatusCode)
                 {
-                    _sharedData.Username = response.Username;
+                    // TODO: _shared data lekérni újra az adatokat
                     await AppShell.Current.DisplayAlert("F1Guess", "Succesfull!", "OK");
+                }
+                else
+                {
+                    await AppShell.Current.DisplayAlert("F1Guess", "Failed!", "OK");
                 }
             }
             catch (Exception ex)

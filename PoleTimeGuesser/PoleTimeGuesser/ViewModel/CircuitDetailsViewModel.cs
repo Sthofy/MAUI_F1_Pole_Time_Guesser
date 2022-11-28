@@ -1,5 +1,7 @@
 ﻿// TODO: Dátumra kattinva => egész napos esemény a naptárba 
 
+using System.IO;
+
 namespace PoleTimeGuesser.ViewModel
 {
     [QueryProperty("Circuit", "Circuit")]
@@ -36,7 +38,16 @@ namespace PoleTimeGuesser.ViewModel
         [RelayCommand]
         private async Task GetCircuitInfo()
         {
-            CircuitInfo = await _f1DataGetterService.GetCicuitInfoAsync(Circuit.Circuit.CircuitId);
+            var result = await _f1DataGetterService.GetCicuitInfoAsync(Circuit.Circuit.CircuitId);
+
+            if (result is null)
+            {
+                // TODO: Error képernyő/not found képernyő
+            }
+            else
+            {
+                CircuitInfo = result;
+            }
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using PoleTimeGuesser.Library.Models;
-
-namespace PoleTimeGuesser.Api.Repositories.Contracts
+﻿namespace PoleTimeGuesser.Api.Repositories.Contracts
 {
     public interface IQuestionRepository
     {

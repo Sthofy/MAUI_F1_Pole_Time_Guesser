@@ -51,9 +51,16 @@
 
         async Task GetQuestions()
         {
-            var response = await _serviceManager.CallWebAPI<int?, QuestionResponse>("/Game/Questions", HttpMethod.Get, null);
+            var response = await _serviceManager.CallWebAPI<int?>("/Game/Questions", HttpMethod.Get, null);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
 
-            ListOfQuestions = response.Questions;
+                var questions = JsonConvert.DeserializeObject<IEnumerable<QuestionModel>>(responseContent).ToList();
+
+                ListOfQuestions = questions;
+            }
+
         }
 
 
@@ -97,7 +104,7 @@
                     Score = 1000
                 };
 
-                var response = _serviceManager.CallWebAPI<ScoreRequest, BaseResponse>("/Game/UpdateScore", HttpMethod.Put, request);
+                var response = _serviceManager.CallWebAPI<ScoreRequest>("/Game/UpdateScore", HttpMethod.Put, request);
 
                 IsEnabledToClick = false;
                 await Shell.Current.DisplayAlert("Üzenet", "Helyes!", "OK");
@@ -112,7 +119,7 @@
         [RelayCommand]
         async Task ShowInfo()
         {
-            await AppShell.Current.DisplayAlert("Info", 
+            await AppShell.Current.DisplayAlert("Info",
                 "Szia!" +
                 "\n\nA Quiz játék során a feldatod egyszerű." +
                 "\n\nFelteszünk neked egy kérdést és neked csupán annyi a feladatod, hogy kiválaszd a helyes megfejtést." +

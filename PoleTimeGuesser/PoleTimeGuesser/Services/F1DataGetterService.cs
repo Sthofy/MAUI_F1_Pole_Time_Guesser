@@ -95,24 +95,20 @@
 
         public async Task<CircuitInfoModel> GetCicuitInfoAsync(string id)
         {
-            try
-            {
-                var response = await _httpClient.GetAsync($"{Url}/CircuitInfo/{id}");
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = await response.Content.ReadAsStringAsync();
-                    var circuitInfoModel = JsonConvert.DeserializeObject<CircuitInfoModel>(result);
 
-                    return circuitInfoModel;
-                }
-                else
-                    return null;
-            }
-            catch (Exception ex)
+            var response = await _httpClient.GetAsync($"{Url}/CircuitInfo/{id}");
+            if (response.IsSuccessStatusCode)
             {
-                Debug.WriteLine(ex);
-                return null;
+                var result = await response.Content.ReadAsStringAsync();
+
+                var circuitInfoModel = JsonConvert.DeserializeObject<CircuitInfoModel>(result);
+
+                return circuitInfoModel;
             }
+            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                return null;
+            else
+                return null;
         }
 
         public async Task<ScheduleModel> GetUpComingEvent()

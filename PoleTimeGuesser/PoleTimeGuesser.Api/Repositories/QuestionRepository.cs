@@ -1,8 +1,4 @@
-﻿using PoleTimeGuesser.Api.DataAccess;
-using PoleTimeGuesser.Api.Repositories.Contracts;
-using PoleTimeGuesser.Library.Models;
-
-namespace PoleTimeGuesser.Api.Repositories
+﻿namespace PoleTimeGuesser.Api.Repositories
 {
     public class QuestionRepository : IQuestionRepository
     {

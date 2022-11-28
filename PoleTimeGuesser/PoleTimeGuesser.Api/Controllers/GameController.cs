@@ -1,12 +1,4 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PoleTimeGuesser.Api.Repositories;
-using PoleTimeGuesser.Api.Repositories.Contracts;
-using PoleTimeGuesser.Library.Models;
-using PoleTimeGuesser.Library.Requests;
-
-namespace PoleTimeGuesser.Api.Controllers
+﻿namespace PoleTimeGuesser.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
@@ -14,11 +6,13 @@ namespace PoleTimeGuesser.Api.Controllers
     {
         private readonly IQuestionRepository _questionRepository;
         private readonly IScoreRepository _scoreRepository;
+        private readonly IGuessRepository _guessRepository;
 
-        public GameController(IQuestionRepository questionRepository, IScoreRepository scoreRepository)
+        public GameController(IQuestionRepository questionRepository, IScoreRepository scoreRepository, IGuessRepository guessRepository)
         {
             _questionRepository = questionRepository;
             _scoreRepository = scoreRepository;
+            _guessRepository = guessRepository;
         }
 
         [HttpGet]
@@ -47,7 +41,7 @@ namespace PoleTimeGuesser.Api.Controllers
         {
             try
             {
-                await _scoreRepository.Insert(request.UserId, request.Score);
+                await _scoreRepository.Insert(request);
 
                 return NoContent();
             }
@@ -64,9 +58,62 @@ namespace PoleTimeGuesser.Api.Controllers
         {
             try
             {
-                await _scoreRepository.Update(request.UserId, request.Score);
+                await _scoreRepository.Update(request);
 
                 return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                "Error retrieving data from the database");
+            }
+        }
+
+        [HttpPost]
+        [Route("InsertGuess")]
+        public async Task<ActionResult> InsertGuess(GuessRequest request)
+        {
+            try
+            {
+                await _guessRepository.Insert(request);
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                "Error retrieving data from the database");
+            }
+        }
+
+        [HttpPut]
+        [Route("UpdateGuess")]
+        public async Task<ActionResult> UpdateGuess(GuessRequest request)
+        {
+            try
+            {
+                await _guessRepository.Update(request);
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                "Error retrieving data from the database");
+            }
+        }
+
+        [HttpGet]
+        [Route("GuessGetByUserId/{userId}")]
+        public async Task<ActionResult<IEnumerable<GuessModel>>> GuessGetByUserId(int userId)
+        {
+            try
+            {
+                var response = await _guessRepository.GuessGetByUserId(userId);
+                if (response is null)
+                    return BadRequest();
+                else
+                    return Ok(response);
             }
             catch (Exception)
             {

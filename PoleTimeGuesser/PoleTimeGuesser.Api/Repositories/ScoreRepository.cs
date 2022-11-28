@@ -1,9 +1,4 @@
-﻿using Azure.Core;
-using PoleTimeGuesser.Api.DataAccess;
-using PoleTimeGuesser.Api.Repositories.Contracts;
-using PoleTimeGuesser.Library.Models;
-
-namespace PoleTimeGuesser.Api.Repositories
+﻿namespace PoleTimeGuesser.Api.Repositories
 {
     public class ScoreRepository : IScoreRepository
     {
@@ -15,14 +10,14 @@ namespace PoleTimeGuesser.Api.Repositories
             _sql = sql;
         }
 
-        public async Task Insert(int id, int score)
+        public async Task Insert(ScoreRequest request)
         {
-            await _sql.SaveData("dbo.spUsersScoreboard_Insert", new { UserId = id, Score = score }, cnnString);
+            await _sql.SaveData("dbo.spUsersScoreboard_Insert", request, cnnString);
         }
 
-        public async Task Update(int id, int score)
+        public async Task Update(ScoreRequest request)
         {
-            await _sql.SaveData("dbo.spUsersScoreboard_Update", new { UserId = id, Score = score }, cnnString);
+            await _sql.SaveData("dbo.spUsersScoreboard_Update", request, cnnString);
         }
     }
 }

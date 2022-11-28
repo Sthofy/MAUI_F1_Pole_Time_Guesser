@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Graphics.Text;
-
-namespace PoleTimeGuesser.ViewModel
+﻿namespace PoleTimeGuesser.ViewModel
 {
     public partial class GuessViewModel : BaseViewModel
     {
@@ -92,15 +90,21 @@ namespace PoleTimeGuesser.ViewModel
         }
         private async Task GetPreviousGuesses()
         {
-            var guesses = await _serviceManager.CallWebAPI<int?, GuessGetByUserIdResponse>("/Game/GuessByUserId", HttpMethod.Post, _sharedData.Id);
+            var response = await _serviceManager.CallWebAPI<int>("/Game/GuessByUserId", HttpMethod.Post, _sharedData.Id);
+            if(response.IsSuccessStatusCode)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
 
-            if (guesses is null)
-                return;
+                var guesses = JsonConvert.DeserializeObject<IEnumerable<GuessModel>>(responseContent).ToList();
 
-            if (PreviousGuesses.Count != 0)
-                PreviousGuesses.Clear();
+                if (guesses is null)
+                    return;
 
-            guesses.Guesses.ForEach(x => PreviousGuesses.Add(x));
+                if (PreviousGuesses.Count != 0)
+                    PreviousGuesses.Clear();
+
+                guesses.ForEach(x => PreviousGuesses.Add(x));
+            }
         }
 
         private async Task VerifyGuess()
@@ -176,7 +180,7 @@ namespace PoleTimeGuesser.ViewModel
                 DriverId = SelectedDriver.Driver.code.ToUpper(),
                 Difference = "Soon"
             };
-            var response = await _serviceManager.CallWebAPI<GuessRequest, BaseResponse>("/Game/InsertGuess", HttpMethod.Post, request);
+            var response = await _serviceManager.CallWebAPI<GuessRequest>("/Game/InsertGuess", HttpMethod.Post, request);
 
             ResetGuess();
             await GetPreviousGuesses();
@@ -215,7 +219,7 @@ namespace PoleTimeGuesser.ViewModel
                 UserId = userId,
                 Score = score
             };
-            var result = await _serviceManager.CallWebAPI<ScoreRequest, BaseResponse>("/Game/UpdateScore", HttpMethod.Put, request);
+            var result = await _serviceManager.CallWebAPI<ScoreRequest>("/Game/UpdateScore", HttpMethod.Put, request);
         }
 
         private async Task UpdateGuessDiff(int userId, string diff, string eventId)
@@ -228,7 +232,7 @@ namespace PoleTimeGuesser.ViewModel
                 DriverId = "",
                 Guess = ""
             };
-            var result = await _serviceManager.CallWebAPI<GuessRequest, BaseResponse>("/Game/UpdateGuessDiff", HttpMethod.Put, request);
+            var result = await _serviceManager.CallWebAPI<GuessRequest>("/Game/UpdateGuessDiff", HttpMethod.Put, request);
         }
     }
 }

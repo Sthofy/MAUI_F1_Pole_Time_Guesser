@@ -1,8 +1,4 @@
-﻿using System.Data;
-using Dapper;
-using Microsoft.Data.SqlClient;
-
-namespace PoleTimeGuesser.Api.DataAccess
+﻿namespace PoleTimeGuesser.Api.DataAccess
 {
     public class SqlDataAccess : ISqlDataAccess
     {

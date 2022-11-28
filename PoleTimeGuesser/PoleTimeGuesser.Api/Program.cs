@@ -1,6 +1,7 @@
 using PoleTimeGuesser.Api.DataAccess;
 using PoleTimeGuesser.Api.Repositories;
 using PoleTimeGuesser.Api.Repositories.Contracts;
+using PoleTimeGuesser.Library.Requests;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddScoped<IScoreRepository, ScoreRepository>();
+builder.Services.AddScoped<IGuessRepository, GuessRepository>();
 
 var app = builder.Build();
 

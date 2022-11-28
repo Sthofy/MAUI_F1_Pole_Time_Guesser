@@ -44,12 +44,12 @@ namespace PoleTimeGuesser.Services
             return response;
         }
 
-        public async Task<UpdateResponse> UpdateUser(UpdateRequest request)
+        public async Task<HttpResponseMessage> UpdateUser(UpdateUserRequest request)
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Put;
-            httpRequestMessage.RequestUri = new Uri(Url + "/User/UpdateUser");
-            //httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/UpdateUser");
+            //httpRequestMessage.RequestUri = new Uri(Url + "/User/UpdateUser");
+            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/UpdateUser");
 
             if (request is not null)
             {
@@ -58,63 +58,41 @@ namespace PoleTimeGuesser.Services
                 httpRequestMessage.Content = httpContent;
             }
 
-            try
-            {
-                var response = await _devSslHelper.HttpClient.SendAsync(httpRequestMessage);
-                var responseContent = await response.Content.ReadAsStringAsync();
+            var response = await _devSslHelper.HttpClient.SendAsync(httpRequestMessage);
 
-                var result = JsonConvert.DeserializeObject<UpdateResponse>(responseContent);
-                result.StatusCode = (int)response.StatusCode;
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                var result = new UpdateResponse
-                {
-                    StatusCode = 500,
-                    StatusMessage = ex.Message
-                };
-                return result;
-            }
+            return response;
         }
 
-        public async Task<TResponse> CallWebAPI<TRequest, TResponse>(string apiUrl, HttpMethod httpMethod, TRequest request) where TResponse : BaseResponse
+        public async Task<HttpResponseMessage> CallWebAPI<TRequest>(string apiUrl, HttpMethod httpMethod, TRequest request)
         {
 
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = httpMethod;
-            httpRequestMessage.RequestUri = new Uri(Url + apiUrl);
-            //httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + apiUrl);
 
-            if (request != null)
+            if (httpMethod == HttpMethod.Get)
             {
-                string jsonContent = JsonConvert.SerializeObject(request);
-                var httpContent = new StringContent(jsonContent, encoding: Encoding.UTF8, "application/json"); ;
-                httpRequestMessage.Content = httpContent;
+                //httpRequestMessage.RequestUri = new Uri(Url + apiUrl+$"/{request}");
+                httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + apiUrl + $"/{request}");
             }
             else
             {
-                httpRequestMessage.Content = null;
+                //httpRequestMessage.RequestUri = new Uri(Url + apiUrl);
+                httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + apiUrl);
+                if (request != null)
+                {
+                    string jsonContent = JsonConvert.SerializeObject(request);
+                    var httpContent = new StringContent(jsonContent, encoding: Encoding.UTF8, "application/json"); ;
+                    httpRequestMessage.Content = httpContent;
+                }
+                else
+                {
+                    httpRequestMessage.Content = null;
+                }
             }
 
-            try
-            {
-                var response = await _devSslHelper.HttpClient.SendAsync(httpRequestMessage);
-                var responseContent = await response.Content.ReadAsStringAsync();
+            var response = await _devSslHelper.HttpClient.SendAsync(httpRequestMessage);
 
-                var result = JsonConvert.DeserializeObject<TResponse>(responseContent);
-                result.StatusCode = (int)response.StatusCode;
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                var result = Activator.CreateInstance<TResponse>();
-                result.StatusCode = 500;
-                result.StatusMessage = ex.Message;
-                return result;
-            }
+            return response;
         }
     }
 }
