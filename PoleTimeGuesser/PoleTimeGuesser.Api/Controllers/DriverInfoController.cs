@@ -1,11 +1,4 @@
-﻿using HtmlAgilityPack;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using PoleTimeGuesser.Api.Helpers;
-using PoleTimeGuesser.Library.Models;
-
-namespace PoleTimeGuesser.Api.Controllers
+﻿namespace PoleTimeGuesser.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]

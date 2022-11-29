@@ -1,11 +1,6 @@
-﻿using HtmlAgilityPack;
-using Microsoft.AspNetCore.Mvc;
-using PoleTimeGuesser.Api.Helpers;
-using PoleTimeGuesser.Library.Models;
-
-namespace PoleTimeGuesser.Api.Controllers
+﻿namespace PoleTimeGuesser.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class CircuitInfoController : ControllerBase
     {
