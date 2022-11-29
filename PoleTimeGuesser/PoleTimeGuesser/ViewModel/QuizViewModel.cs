@@ -52,6 +52,7 @@
         async Task GetQuestions()
         {
             var response = await _serviceManager.CallWebAPI<int?>("/Game/Questions", HttpMethod.Get, null);
+
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
@@ -59,6 +60,10 @@
                 var questions = JsonConvert.DeserializeObject<IEnumerable<QuestionModel>>(responseContent).ToList();
 
                 ListOfQuestions = questions;
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, "Ok");
             }
 
         }
@@ -104,7 +109,7 @@
                     Score = 1000
                 };
 
-                var response = _serviceManager.CallWebAPI<ScoreRequest>("/Game/UpdateScore", HttpMethod.Put, request);
+                var response = _serviceManager.CallWebAPI("/Game/UpdateScore", HttpMethod.Put, request);
 
                 IsEnabledToClick = false;
                 await Shell.Current.DisplayAlert("Üzenet", "Helyes!", "OK");

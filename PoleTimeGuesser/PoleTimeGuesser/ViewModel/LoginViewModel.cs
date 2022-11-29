@@ -1,7 +1,4 @@
-﻿using PoleTimeGuesser.Library.Models;
-using PoleTimeGuesser.Library.Requests;
-
-namespace PoleTimeGuesser.ViewModel
+﻿namespace PoleTimeGuesser.ViewModel
 {
     [QueryProperty("Username", "Username")]
     [QueryProperty("Password", "Password")]
@@ -46,6 +43,7 @@ namespace PoleTimeGuesser.ViewModel
                 };
 
                 var response = await _serviceManager.Authenticate(request);
+
                 if (response.IsSuccessStatusCode)
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();
@@ -56,17 +54,22 @@ namespace PoleTimeGuesser.ViewModel
                     _sharedData.Username = result.Username;
                     _sharedData.AvatarSourceName = result.AvatarSourceName;
                     _sharedData.Email = result.Email;
-                    _sharedData.Token= result.Token;
+                    _sharedData.Token = result.Token;
+
                     await Shell.Current.GoToAsync("///main");
                 }
-                else if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    await AppShell.Current.DisplayAlert("F1Guess", "Username or Password is wrong!", "OK");
+                    await Shell.Current.DisplayAlert("F1Guess", "Username or Password is wrong!", "Ok");
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, "Ok");
                 }
             }
             catch (Exception ex)
             {
-                await AppShell.Current.DisplayAlert("F1Guess", ex.Message, "OK");
+                await Shell.Current.DisplayAlert("F1Guess", ex.Message, "Ok");
             }
             finally
             {
@@ -77,7 +80,7 @@ namespace PoleTimeGuesser.ViewModel
         [RelayCommand]
         async Task GoToRegisterPage()
         {
-            await Shell.Current.GoToAsync("///RegisterPage",true);
+            await Shell.Current.GoToAsync("///RegisterPage", true);
         }
     }
 }

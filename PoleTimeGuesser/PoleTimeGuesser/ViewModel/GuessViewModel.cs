@@ -90,8 +90,8 @@
         }
         private async Task GetPreviousGuesses()
         {
-            var response = await _serviceManager.CallWebAPI<int>("/Game/GuessByUserId", HttpMethod.Post, _sharedData.Id);
-            if(response.IsSuccessStatusCode)
+            var response = await _serviceManager.CallWebAPI("/Game/GuessGetByUserId", HttpMethod.Get, _sharedData.Id);
+            if (response.IsSuccessStatusCode)
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
 
@@ -180,10 +180,17 @@
                 DriverId = SelectedDriver.Driver.code.ToUpper(),
                 Difference = "Soon"
             };
-            var response = await _serviceManager.CallWebAPI<GuessRequest>("/Game/InsertGuess", HttpMethod.Post, request);
+            var response = await _serviceManager.CallWebAPI("/Game/InsertGuess", HttpMethod.Post, request);
 
-            ResetGuess();
-            await GetPreviousGuesses();
+            if (response.IsSuccessStatusCode)
+            {
+                ResetGuess();
+                await GetPreviousGuesses();
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, "OK");
+            }
         }
 
         [RelayCommand]
@@ -219,11 +226,17 @@
                 UserId = userId,
                 Score = score
             };
-            var result = await _serviceManager.CallWebAPI<ScoreRequest>("/Game/UpdateScore", HttpMethod.Put, request);
+            var response = await _serviceManager.CallWebAPI("/Game/UpdateScore", HttpMethod.Put, request);
+
+            if(!response.IsSuccessStatusCode) 
+            {
+                await Shell.Current.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, "OK");
+            }
         }
 
         private async Task UpdateGuessDiff(int userId, string diff, string eventId)
         {
+            // TODO: Megcsinálni az api-t
             var request = new GuessRequest
             {
                 UserId = userId,
@@ -232,7 +245,12 @@
                 DriverId = "",
                 Guess = ""
             };
-            var result = await _serviceManager.CallWebAPI<GuessRequest>("/Game/UpdateGuessDiff", HttpMethod.Put, request);
+            var response = await _serviceManager.CallWebAPI("/Game/UpdateGuessDiff", HttpMethod.Put, request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                await Shell.Current.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, "OK");
+            }
         }
     }
 }

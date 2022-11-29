@@ -1,6 +1,4 @@
-﻿using PoleTimeGuesser.Library.Models;
-using PoleTimeGuesser.Library.Requests;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PoleTimeGuesser.ViewModel
 {
@@ -66,12 +64,12 @@ namespace PoleTimeGuesser.ViewModel
                     };
 
                     var response = await _serviceManager.Registration(request);
-                    var responseContent = await response.Content.ReadAsStringAsync();
-
-                    var user = JsonConvert.DeserializeObject<RegistrationModel>(responseContent);
 
                     if (response.IsSuccessStatusCode)
                     {
+                        var responseContent = await response.Content.ReadAsStringAsync();
+                        var user = JsonConvert.DeserializeObject<RegistrationModel>(responseContent);
+
 
                         await InsertScore(user.Id);
 
@@ -82,11 +80,16 @@ namespace PoleTimeGuesser.ViewModel
                                 { "Password" , Password },
                             });
                     }
+                    else
+                    {
+                        await Shell.Current.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, "OK");
+                    }
+
                 }
             }
             catch (Exception ex)
             {
-                await AppShell.Current.DisplayAlert("F1Guess", ex.Message, "OK");
+                await Shell.Current.DisplayAlert("F1Guess", ex.Message, "OK");
             }
             finally
             {
@@ -146,10 +149,16 @@ namespace PoleTimeGuesser.ViewModel
         [RelayCommand]
         private async Task VerifyUsername()
         {
-            var response = await _serviceManager.CallWebAPI<string>("/User/GetByUsername", HttpMethod.Get, Username);
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var isExist = false;
 
-            var isExist = JsonConvert.DeserializeObject<bool>(responseContent);
+            var response = await _serviceManager.CallWebAPI("/User/GetByUsername", HttpMethod.Get, Username);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                isExist = JsonConvert.DeserializeObject<bool>(responseContent);
+            }
 
             if (isExist)
             {
@@ -179,7 +188,12 @@ namespace PoleTimeGuesser.ViewModel
                 UserId = userId,
                 Score = 0
             };
-            var response = _serviceManager.CallWebAPI<ScoreRequest>("/Game/InsertScore", HttpMethod.Post, request);
+            var response = await _serviceManager.CallWebAPI("/Game/InsertScore", HttpMethod.Post, request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                await Shell.Current.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, "Ok");
+            }
         }
     }
 }
