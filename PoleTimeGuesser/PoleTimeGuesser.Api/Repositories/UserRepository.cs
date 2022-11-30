@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -10,11 +11,13 @@ namespace PoleTimeGuesser.Api.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly ISqlDataAccess _sql;
+        private readonly IConfiguration _config;
         private readonly string cnnString = "F1GuessDB";
 
-        public UserRepository(ISqlDataAccess sql)
+        public UserRepository(ISqlDataAccess sql, IConfiguration config)
         {
             _sql = sql;
+            _config = config;
         }
 
         public async Task<RegistrationModel> Registration(string username, string email, string password)
@@ -104,7 +107,7 @@ namespace PoleTimeGuesser.Api.Repositories
             else
                 return false;
         }
-            
+
         private string GeneratePawword(string enteredPassword, byte[] enteredSalt)
         {
             string output = Convert.ToBase64String(
@@ -137,17 +140,25 @@ namespace PoleTimeGuesser.Api.Repositories
         private string GenerateJwtToken(UserModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("1234567890123456");
-            var tokenDescriptor = new SecurityTokenDescriptor
+
+            var claims = new[]
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
-                Expires = DateTime.Now.AddDays(1),
-                SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(key),
-                    SecurityAlgorithms.HmacSha256Signature)
+                new Claim(ClaimTypes.NameIdentifier,user.Username),
+                new Claim(ClaimTypes.Email,user.Email),
             };
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var token = new JwtSecurityToken
+            (
+                issuer: _config["Jwt:Issuer"],
+                audience: _config["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddDays(1),
+                notBefore: DateTime.UtcNow,
+                signingCredentials: new SigningCredentials(
+                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"])),
+                    SecurityAlgorithms.HmacSha256)
+            );
+
             return tokenHandler.WriteToken(token);
         }
     }

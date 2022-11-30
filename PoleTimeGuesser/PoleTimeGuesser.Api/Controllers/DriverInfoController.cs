@@ -2,6 +2,7 @@
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class DriverInfoController : ControllerBase
     {
         HtmlDocument doc = new HtmlDocument();

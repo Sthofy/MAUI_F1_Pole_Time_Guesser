@@ -2,6 +2,7 @@
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CircuitInfoController : ControllerBase
     {
         private HtmlDocument doc = new HtmlDocument();

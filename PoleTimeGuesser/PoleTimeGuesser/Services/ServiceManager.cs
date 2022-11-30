@@ -6,11 +6,13 @@ namespace PoleTimeGuesser.Services
     {
         DevHttpsConnectionHelper _devSslHelper;
         string Url = "https://f1guessapi.azurewebsites.net";
+        private readonly ISharedData _sharedData;
 
-        public ServiceManager()
+        public ServiceManager(ISharedData sharedData)
         {
             //_devSslHelper = new DevHttpsConnectionHelper(sslPort: 7297);
             _devSslHelper = new DevHttpsConnectionHelper(sslPort: 7200);
+            _sharedData = sharedData;
         }
 
         public async Task<HttpResponseMessage> Registration(RegistrationRequest request)
@@ -50,6 +52,8 @@ namespace PoleTimeGuesser.Services
             httpRequestMessage.Method = HttpMethod.Put;
             httpRequestMessage.RequestUri = new Uri(Url + "/User/UpdateUser");
             //httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/UpdateUser");
+            httpRequestMessage.Headers.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _sharedData.Token);
 
             if (request is not null)
             {
@@ -68,10 +72,12 @@ namespace PoleTimeGuesser.Services
 
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = httpMethod;
+            httpRequestMessage.Headers.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _sharedData.Token);
 
             if (httpMethod == HttpMethod.Get)
             {
-                httpRequestMessage.RequestUri = new Uri(Url + apiUrl+$"/{request}");
+                httpRequestMessage.RequestUri = new Uri(Url + apiUrl + $"/{request}");
                 //httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + apiUrl + $"/{request}");
             }
             else

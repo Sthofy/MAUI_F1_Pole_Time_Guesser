@@ -4,19 +4,23 @@
     {
         private DateTime _date = DateTime.Now;
         readonly HttpClient _httpClient;
+        private readonly ISharedData _sharedData;
         List<DriverStandingsModel> driverStadingModel = new();
         List<ScheduleModel> scheduleModels = new();
         string Url = "https://f1guessapi.azurewebsites.net";
 
-        public F1DataGetterService()
+        public F1DataGetterService(ISharedData sharedData)
         {
             _httpClient = new HttpClient();
+            _sharedData = sharedData;
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _sharedData.Token);
         }
 
         public async Task<List<DriverStandingsModel>> GetDriverStandings()
         {
             try
             {
+
                 var response = await _httpClient.GetAsync("https://ergast.com/api/f1/current/driverStandings.json");
                 if (response.IsSuccessStatusCode)
                 {

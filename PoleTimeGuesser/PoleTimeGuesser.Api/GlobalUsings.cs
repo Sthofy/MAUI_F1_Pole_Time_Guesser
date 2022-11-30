@@ -1,5 +1,7 @@
 ﻿global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.Data.SqlClient;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.AspNetCore.Authorization;
 global using System.Data;
 global using Dapper;
 global using HtmlAgilityPack;

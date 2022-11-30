@@ -2,6 +2,7 @@
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -12,6 +13,7 @@
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("Registration")]
         public async Task<ActionResult<RegistrationModel>> Registration(RegistrationRequest request)
         {
@@ -34,6 +36,7 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("Authenticate/{username}/{password}")]
         public async Task<ActionResult<LoggedInUserModel>> Authenticate(string username, string password)
         {
