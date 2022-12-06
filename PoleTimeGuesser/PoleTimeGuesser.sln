@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoleTimeGuesser.Api", "Pole
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoleTimeGuesser.Library", "PoleTimeGuesser.Library\PoleTimeGuesser.Library.csproj", "{BE087A18-8DCF-47E1-A0F9-39813C52E451}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoleTimeGuesser.Web", "PoleTimeGuesser.Web\PoleTimeGuesser.Web.csproj", "{86ED53A3-EBC5-4B1C-89BD-528BC4215A73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{BE087A18-8DCF-47E1-A0F9-39813C52E451}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE087A18-8DCF-47E1-A0F9-39813C52E451}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE087A18-8DCF-47E1-A0F9-39813C52E451}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86ED53A3-EBC5-4B1C-89BD-528BC4215A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86ED53A3-EBC5-4B1C-89BD-528BC4215A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86ED53A3-EBC5-4B1C-89BD-528BC4215A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86ED53A3-EBC5-4B1C-89BD-528BC4215A73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

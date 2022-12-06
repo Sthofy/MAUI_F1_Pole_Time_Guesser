@@ -1,0 +1,22 @@
+﻿.card {
+    padding: 20px;
+    margin: 0 auto;
+    float: none;
+    margin-bottom: 10px;
+}
+
+img {
+    width: 250px;
+    height: 300px;
+    margin: 0 auto;
+    float none;
+    margin-bottom: 10px;
+}
+
+input {
+    margin-bottom: 30px;
+}
+
+button {
+    width:20rem;
+}
