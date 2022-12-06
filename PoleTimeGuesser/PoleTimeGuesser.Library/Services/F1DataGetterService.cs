@@ -1,4 +1,4 @@
-﻿namespace PoleTimeGuesser.Services
+﻿namespace PoleTimeGuesser.Library.Services
 {
     public class F1DataGetterService : IF1DataGetterService
     {
@@ -45,7 +45,6 @@
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
                 return null;
             }
         }
@@ -76,7 +75,6 @@
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
                 return null;
             }
         }
@@ -136,7 +134,6 @@
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
                 return null;
             }
         }
@@ -157,7 +154,6 @@
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
                 return null;
             }
         }
@@ -185,7 +181,6 @@
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
                 return null;
             }
         }

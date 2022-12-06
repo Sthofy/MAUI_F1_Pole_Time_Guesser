@@ -4,7 +4,7 @@
              x:Class="PoleTimeGuesser.View.QuizView"
              xmlns:viewModel="clr-namespace:PoleTimeGuesser.ViewModel"
              x:DataType="viewModel:QuizViewModel"
-             xmlns:model="clr-namespace:PoleTimeGuesser.Model"
+             xmlns:model="clr-namespace:PoleTimeGuesser.Library.Models;assembly=PoleTimeGuesser.Library"
              Title="QuizView"
              Shell.NavBarIsVisible="True">
     <ContentPage.ToolbarItems>

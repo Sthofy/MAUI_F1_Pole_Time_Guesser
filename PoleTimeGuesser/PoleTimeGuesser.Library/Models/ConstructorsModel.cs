@@ -1,4 +1,4 @@
-﻿namespace PoleTimeGuesser.Model
+﻿namespace PoleTimeGuesser.Library.Models
 {
     public class ConstructorsModel
     {

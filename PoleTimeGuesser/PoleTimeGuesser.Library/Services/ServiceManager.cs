@@ -1,6 +1,4 @@
-﻿using PoleTimeGuesser.Library.Requests;
-
-namespace PoleTimeGuesser.Services
+﻿namespace PoleTimeGuesser.Library.Services
 {
     public class ServiceManager : IServiceManager
     {
@@ -19,8 +17,8 @@ namespace PoleTimeGuesser.Services
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Post;
-            httpRequestMessage.RequestUri = new Uri(Url + "/User/Registration");
-            //httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/Registration");
+            //httpRequestMessage.RequestUri = new Uri(Url + "/User/Registration");
+            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/Registration");
 
             if (request is not null)
             {
@@ -38,8 +36,8 @@ namespace PoleTimeGuesser.Services
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Get;
-            httpRequestMessage.RequestUri = new Uri(Url + $"/User/Authenticate/{request.Username}/{request.Password}");
-            //httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + $"/User/Authenticate/{request.Username}/{request.Password}");
+            //httpRequestMessage.RequestUri = new Uri(Url + $"/User/Authenticate/{request.Username}/{request.Password}");
+            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + $"/User/Authenticate/{request.Username}/{request.Password}");
 
             var response = await _devSslHelper.HttpClient.SendAsync(httpRequestMessage);
 
@@ -50,8 +48,8 @@ namespace PoleTimeGuesser.Services
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Put;
-            httpRequestMessage.RequestUri = new Uri(Url + "/User/UpdateUser");
-            //httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/UpdateUser");
+            //httpRequestMessage.RequestUri = new Uri(Url + "/User/UpdateUser");
+            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + "/User/UpdateUser");
             httpRequestMessage.Headers.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _sharedData.Token);
 
@@ -77,13 +75,13 @@ namespace PoleTimeGuesser.Services
 
             if (httpMethod == HttpMethod.Get)
             {
-                httpRequestMessage.RequestUri = new Uri(Url + apiUrl + $"/{request}");
-                //httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + apiUrl + $"/{request}");
+                //httpRequestMessage.RequestUri = new Uri(Url + apiUrl + $"/{request}");
+                httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + apiUrl + $"/{request}");
             }
             else
             {
-                httpRequestMessage.RequestUri = new Uri(Url + apiUrl);
-                //httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + apiUrl);
+                //httpRequestMessage.RequestUri = new Uri(Url + apiUrl);
+                httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + apiUrl);
                 if (request != null)
                 {
                     string jsonContent = JsonConvert.SerializeObject(request);

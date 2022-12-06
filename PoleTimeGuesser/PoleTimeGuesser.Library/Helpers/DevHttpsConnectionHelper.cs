@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Security;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net.Security;
 
-namespace PoleTimeGuesser.Helpers
+namespace PoleTimeGuesser.Library.Helpers
 {
     public class DevHttpsConnectionHelper
     {
@@ -48,7 +43,7 @@ namespace PoleTimeGuesser.Helpers
             return handler;
 
 #else
-        throw new PlatformNotSupportedException("Only Windows and Android currently supported.");
+            throw new PlatformNotSupportedException("Only Windows and Android currently supported.");
 #endif
         }
 

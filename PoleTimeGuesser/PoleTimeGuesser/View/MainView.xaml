@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PoleTimeGuesser.View.MainView"
-             xmlns:model="clr-namespace:PoleTimeGuesser.Model"
-             xmlns:libraryModel="clr-namespace:PoleTimeGuesser.Library.Models;assembly=PoleTimeGuesser.Library"
+             xmlns:model="clr-namespace:PoleTimeGuesser.Library.Models;assembly=PoleTimeGuesser.Library"
              xmlns:viewModel="clr-namespace:PoleTimeGuesser.ViewModel"
              x:DataType="viewModel:MainViewModel"
              Title="{Binding SharedData.Username}"
@@ -65,7 +64,7 @@
                         <CollectionView ItemsSource="{Binding Scoreboard}"
                                         SelectionMode="None">
                             <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="libraryModel:ScoreboardModel">
+                                <DataTemplate x:DataType="model:ScoreboardModel">
                                     <Grid Margin="10">
                                         <HorizontalStackLayout Spacing="30">
                                             <Label Text="{Binding Username}"

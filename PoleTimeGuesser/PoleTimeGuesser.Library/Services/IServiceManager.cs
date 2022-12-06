@@ -1,4 +1,4 @@
-﻿namespace PoleTimeGuesser.Services
+﻿namespace PoleTimeGuesser.Library.Services
 {
     public interface IServiceManager
     {
