@@ -1,12 +1,15 @@
 ﻿global using System.Collections.ObjectModel;
 global using System.Diagnostics;
+global using System.Text;
 global using CommunityToolkit.Mvvm.ComponentModel;
 global using CommunityToolkit.Mvvm.Input;
 global using CommunityToolkit.Maui;
 global using CommunityToolkit.Maui.Views;
 global using Newtonsoft.Json;
+global using Newtonsoft.Json.Linq;
 global using PoleTimeGuesser.ViewModel;
 global using PoleTimeGuesser.View;
 global using PoleTimeGuesser.Library.Models;
 global using PoleTimeGuesser.Library.Requests;
-global using PoleTimeGuesser.Library.Services;
+global using PoleTimeGuesser.Services;
+global using PoleTimeGuesser.Helpers;

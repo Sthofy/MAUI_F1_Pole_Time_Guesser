@@ -1,4 +1,4 @@
-﻿namespace PoleTimeGuesser.Library.Services
+﻿namespace PoleTimeGuesser.Services
 {
     public class ServiceManager : IServiceManager
     {
@@ -35,9 +35,16 @@
         public async Task<HttpResponseMessage> Authenticate(AuthenticateRequest request)
         {
             var httpRequestMessage = new HttpRequestMessage();
-            httpRequestMessage.Method = HttpMethod.Get;
+            httpRequestMessage.Method = HttpMethod.Post;
             //httpRequestMessage.RequestUri = new Uri(Url + $"/User/Authenticate/{request.Username}/{request.Password}");
-            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + $"/User/Authenticate/{request.Username}/{request.Password}");
+            httpRequestMessage.RequestUri = new Uri(_devSslHelper.DevServerRootUrl + $"/User/Authenticate");
+
+            if (request is not null)
+            {
+                string jsonContent = JsonConvert.SerializeObject(request);
+                var httpContent = new StringContent(jsonContent, encoding: Encoding.UTF8, "application/json");
+                httpRequestMessage.Content = httpContent;
+            }
 
             var response = await _devSslHelper.HttpClient.SendAsync(httpRequestMessage);
 

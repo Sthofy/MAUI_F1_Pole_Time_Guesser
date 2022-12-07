@@ -1,6 +1,6 @@
 ﻿using System.Net.Security;
 
-namespace PoleTimeGuesser.Library.Helpers
+namespace PoleTimeGuesser.Helpers
 {
     public class DevHttpsConnectionHelper
     {

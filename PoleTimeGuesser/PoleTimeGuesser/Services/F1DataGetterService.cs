@@ -1,4 +1,4 @@
-﻿namespace PoleTimeGuesser.Library.Services
+﻿namespace PoleTimeGuesser.Services
 {
     public class F1DataGetterService : IF1DataGetterService
     {

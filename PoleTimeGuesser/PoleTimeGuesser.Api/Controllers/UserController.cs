@@ -35,14 +35,14 @@
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         [AllowAnonymous]
-        [Route("Authenticate/{username}/{password}")]
-        public async Task<ActionResult<LoggedInUserModel>> Authenticate(string username, string password)
+        [Route("Authenticate")]
+        public async Task<ActionResult<LoggedInUserModel>> Authenticate(AuthenticateRequest request)
         {
             try
             {
-                var loggedInUser = await _userRepository.Authenticate(username, password);
+                var loggedInUser = await _userRepository.Authenticate(request.Username, request.Password);
 
                 if (loggedInUser is null)
                 {
