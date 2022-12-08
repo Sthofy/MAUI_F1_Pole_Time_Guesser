@@ -18,11 +18,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Folder Include="Api\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	  <Compile Remove="Api\**" />
+	  <EmbeddedResource Remove="Api\**" />
+	  <MauiCss Remove="Api\**" />
+	  <MauiXaml Remove="Api\**" />
+	  <None Remove="Api\**" />
 	</ItemGroup>
 
 </Project>
