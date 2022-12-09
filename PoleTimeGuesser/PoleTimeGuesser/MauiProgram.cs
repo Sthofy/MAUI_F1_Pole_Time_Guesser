@@ -11,6 +11,7 @@ public static class MauiProgram
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("coolvetica rg.otf", "CoolveticaRegular");
             });
 
         builder.Services.AddSingleton<DriverStandingsViewModel>()

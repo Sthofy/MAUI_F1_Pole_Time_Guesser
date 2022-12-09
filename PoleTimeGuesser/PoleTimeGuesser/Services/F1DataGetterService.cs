@@ -34,7 +34,8 @@
                         item.Driver.Image = new DriverImageModel
                         {
                             Front = $"{item.Driver.driverId}_front.png",
-                            Side = $"{item.Driver.driverId}.png"
+                            Side = $"{item.Driver.driverId}.png",
+                            Full = $"{item.Driver.driverId}_full.png",
                         };
                     }
 

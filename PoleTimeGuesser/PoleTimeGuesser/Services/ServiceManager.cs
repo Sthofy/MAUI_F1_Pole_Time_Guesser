@@ -38,7 +38,7 @@
         {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.Method = HttpMethod.Post;
-            httpRequestMessage.RequestUri = new Uri(Url + $"/User/Authenticate/{request.Username}/{request.Password}");
+            httpRequestMessage.RequestUri = new Uri(Url + $"/User/Authenticate");
 
             if (request is not null)
             {
