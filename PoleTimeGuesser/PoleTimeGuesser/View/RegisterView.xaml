@@ -7,13 +7,20 @@
              android:Application.WindowSoftInputModeAdjust="Resize"
              xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
              xmlns:converter="clr-namespace:PoleTimeGuesser.Converters"
-             Title="RegisterView"
-             Background="#13232f">
+             Title="RegisterView">
     <ContentPage.Resources>
         <converter:StringToColor x:Key="StringToColor"/>
     </ContentPage.Resources>
 
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0,1">
+                <GradientStop Color="#E92121"
+                              Offset="0.1"/>
+                <GradientStop Color="#2D2B2B"
+                              Offset="0.7"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <VerticalStackLayout Margin="30"
                              VerticalOptions="Center">
             <Label FontSize="45"

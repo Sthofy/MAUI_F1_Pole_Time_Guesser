@@ -4,9 +4,16 @@
              x:Class="PoleTimeGuesser.View.SettingsView"
              xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
              Title="Settings"
-             Background="#13232f"
              Shell.NavBarIsVisible="True">
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0,1">
+                <GradientStop Color="#E92121"
+                              Offset="0.1"/>
+                <GradientStop Color="#2D2B2B"
+                              Offset="0.7"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <VerticalStackLayout Margin="20">
             <Grid RowDefinitions="auto,*">
                 <Frame>

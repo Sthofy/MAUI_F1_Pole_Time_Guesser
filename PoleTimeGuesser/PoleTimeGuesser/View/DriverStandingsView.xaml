@@ -23,8 +23,8 @@
                     <DataTemplate x:DataType="model:DriverStandingsModel">
                         <Grid Padding="5">
                             <Frame HeightRequest="80"
-                               Padding="10"
-                               Style="{StaticResource CardView}">
+                                   Padding="10"
+                                   Style="{StaticResource CardView}">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer CommandParameter="{Binding .}"
                                                           Command="{Binding Source={RelativeSource 
