@@ -1,7 +1,5 @@
 ﻿// TODO: Dátumra kattinva => egész napos esemény a naptárba 
 
-using System.IO;
-
 namespace PoleTimeGuesser.ViewModel
 {
     [QueryProperty("Circuit", "Circuit")]

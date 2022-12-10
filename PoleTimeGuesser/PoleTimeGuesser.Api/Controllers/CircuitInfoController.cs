@@ -35,7 +35,7 @@
                         Laps = data[1],
                         Length = data[2],
                         RaceDistance = data[3],
-                        Lapredcord = data[4],
+                        Lapredcord = data[4].Replace("\n",""),
                         Info = "",
                     };
 

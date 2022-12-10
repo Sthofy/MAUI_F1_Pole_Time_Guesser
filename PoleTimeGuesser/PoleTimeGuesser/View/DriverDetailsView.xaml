@@ -22,32 +22,52 @@
                                Style="{StaticResource LargeLabel}"/>
                     </HorizontalStackLayout>
                     <VerticalStackLayout Grid.Row="1"
-                                         Spacing="5"
+                                         Spacing="20"
                                          Margin="10,0,0,0">
-                        
-                        <Label Text="{Binding DriverInfo.WorldChamps}"
+
+                        <HorizontalStackLayout Spacing="5">
+                            <Line X1="0" X2="5"
+                                  BackgroundColor="Red"/>
+                            <VerticalStackLayout>
+                                <Label Text="{Binding DriverInfo.WorldChamps}"
+                                       Style="{StaticResource LargeLabel}"/>
+                                <Label Text="World Champinships"
+                                       Style="{StaticResource SmallLabel}"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="5">
+                            <Line X1="0" X2="5"
+                                  BackgroundColor="Red"/>
+                            <VerticalStackLayout>
+                                <Label Text="{Binding DriverInfo.RaceEnterded}"
+                                       Style="{StaticResource LargeLabel}"/>
+                                <Label Text="Grand Prix Entered"
+                                       Style="{StaticResource SmallLabel}"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="5">
+                            <Line X1="0" X2="5"
+                                  BackgroundColor="Red"/>
+                            <VerticalStackLayout>
+                                <Label Text="{Binding DriverInfo.Podiums}"
                                Style="{StaticResource LargeLabel}"/>
-                        <Label Text="World Champinships"
-                               Style="{StaticResource SmallLabel}"
-                               Margin="0,0,0,10"/>
-                        
-                        <Label Text="{Binding DriverInfo.RaceEnterded}"
-                               Style="{StaticResource LargeLabel}"/>
-                        <Label Text="Grand Prix Entered"
-                               Style="{StaticResource SmallLabel}"
-                               Margin="0,0,0,10"/>
-                        
-                        <Label Text="{Binding DriverInfo.Podiums}"
-                               Style="{StaticResource LargeLabel}"/>
-                        <Label Text="Podiums"
-                               Style="{StaticResource SmallLabel}"
-                               Margin="0,0,0,10"/>
-                               
-                        
-                        <Label Text="{Binding DriverInfo.Points}"
-                               Style="{StaticResource LargeLabel}"/>
-                        <Label Text="Points"
-                               Style="{StaticResource SmallLabel}"/>
+                                <Label Text="Podiums"
+                                       Style="{StaticResource SmallLabel}"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="5">
+                            <Line X1="0" X2="5"
+                                  BackgroundColor="Red"/>
+                            <VerticalStackLayout>
+                                <Label Text="{Binding DriverInfo.Points}"
+                                       Style="{StaticResource LargeLabel}"/>
+                                <Label Text="Points"
+                                       Style="{StaticResource SmallLabel}"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
                     </VerticalStackLayout>
 
                     <Image Source="{Binding Driver.Image.Full}"
@@ -56,9 +76,9 @@
                            WidthRequest="400">
                         <Image.Shadow>
                             <Shadow Brush="black"
-                                    Offset="-20,-20"
-                                    Radius="40"
-                                    Opacity="0.8"/>
+                                    Offset="-10,-10"
+                                    Radius="30"
+                                    Opacity="0.7"/>
                         </Image.Shadow>
                     </Image>
                 </Grid>
@@ -70,18 +90,21 @@
                     <Line HeightRequest="1"
                           BackgroundColor="Black"/>
                     <HorizontalStackLayout Padding="20,10,0,0" Spacing="10">
+                        <Line X1="0" X2="5" BackgroundColor="Red"/>
                         <Label Text="Nationality:"
                                Style="{StaticResource MediumLabel}"/>
                         <Label Text="{Binding Driver.nationality}"
                                Style="{StaticResource MediumLabel}"/>
                     </HorizontalStackLayout>
                     <HorizontalStackLayout Padding="20,10,0,0" Spacing="10">
+                        <Line X1="0" X2="5" BackgroundColor="Red"/>
                         <Label Text="Date of Birth:"
                                Style="{StaticResource MediumLabel}"/>
                         <Label Text="{Binding Driver.dateOfBirth}"
                                Style="{StaticResource MediumLabel}"/>
                     </HorizontalStackLayout>
                     <HorizontalStackLayout Padding="20,10,0,0" Spacing="10">
+                        <Line X1="0" X2="5" BackgroundColor="Red"/>
                         <Label Text="Place of Birth:"
                                Style="{StaticResource MediumLabel}"/>
                         <Label Text="{Binding DriverInfo.BirthPlace}"
@@ -93,7 +116,7 @@
                 <Frame Grid.Row="3"
                        Style="{StaticResource CardView}"
                        Padding="10"
-                       Margin="10,10,10,0">
+                       Margin="10,10,10,30">
                     <StackLayout>
                         <Label Text="Biography: "
                                Margin="0,0,0,5"
