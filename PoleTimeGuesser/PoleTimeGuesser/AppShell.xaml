@@ -51,7 +51,7 @@
 
     <TabBar Shell.NavBarIsVisible="False" Route="main">
         <Tab Title="Home" Icon="home_black.svg">
-            <ShellContent Shell.NavBarIsVisible="True" ContentTemplate="{DataTemplate view:MainView}" Route="MainView" />
+            <ShellContent ContentTemplate="{DataTemplate view:MainView}" Route="MainView" />
         </Tab>
         <Tab Title="Schedule" Icon="event_black.svg">
             <ShellContent ContentTemplate="{DataTemplate view:ScheduleView}" Route="ScheduleView"/>
@@ -61,6 +61,9 @@
         </Tab>
         <Tab Title="Games" Icon="game.png">
             <ShellContent ContentTemplate="{DataTemplate view:GamesView}" />
+        </Tab>
+        <Tab Title="Settings" Icon="Settings.png">
+            <ShellContent ContentTemplate="{DataTemplate view:SettingsView}"/>
         </Tab>
     </TabBar>
 </Shell>

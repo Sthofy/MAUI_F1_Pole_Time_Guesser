@@ -61,9 +61,9 @@
                         {
                             Image = "pin.jpg",
                             Country = "Season ended.",
-                            Locality = "See you"
+                            Locality = "See you next year!"
                         },
-                        CircuitName = "next year!"
+                        CircuitName = ""
                     },
                     Date = "N.A.",
                 };
