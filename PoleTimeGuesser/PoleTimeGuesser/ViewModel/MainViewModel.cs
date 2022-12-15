@@ -33,7 +33,8 @@
                 IsBusy = true;
                 await GetScoreboard();
                 GetLoggedInUserPoints();
-                UpcomingEvent = await _f1DataGetterService.GetUpComingEvent();
+                await GetUpcomingEvent();
+
                 var response = await _f1DataGetterService.GetTopDrivers();
                 response.ForEach(x => TopDrivers.Add(x));
             }
@@ -44,6 +45,28 @@
             finally
             {
                 IsBusy = false;
+            }
+        }
+
+        private async Task GetUpcomingEvent()
+        {
+            UpcomingEvent = await _f1DataGetterService.GetUpComingEvent();
+            if (UpcomingEvent is null)
+            {
+                UpcomingEvent = new ScheduleModel
+                {
+                    Circuit = new CircuitModel
+                    {
+                        Location = new LocationModel
+                        {
+                            Image = "pin.jpg",
+                            Country = "Season ended.",
+                            Locality = "See you"
+                        },
+                        CircuitName = "next year!"
+                    },
+                    Date = "N.A.",
+                };
             }
         }
 

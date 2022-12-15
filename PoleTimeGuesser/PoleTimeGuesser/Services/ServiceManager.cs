@@ -12,7 +12,7 @@
             _devSslHelper = new DevHttpsConnectionHelper(sslPort: 7200);
 
             // Need to uncomment if you are use emulator
-            //Url = _devSslHelper.DevServerRootUrl;
+            Url = _devSslHelper.DevServerRootUrl;
             _sharedData = sharedData;
         }
 
