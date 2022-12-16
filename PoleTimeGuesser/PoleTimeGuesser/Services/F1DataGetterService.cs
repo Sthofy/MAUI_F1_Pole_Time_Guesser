@@ -7,6 +7,7 @@
         private readonly ISharedData _sharedData;
         List<DriverStandingsModel> driverStadingModel = new();
         List<ScheduleModel> scheduleModels = new();
+        List<ConstructorStandingsModel> constructorStandingModels = new();
         string Url = "https://f1guessapi.azurewebsites.net";
 
         public F1DataGetterService(ISharedData sharedData)
@@ -40,6 +41,38 @@
                     }
 
                     return driverStadingModel;
+                }
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<ConstructorStandingsModel>> GetConstructorStandings()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("https://ergast.com/api/f1/current/constructorStandings.json");
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    var json = JObject.Parse(result);
+                    var res = json["MRData"]["StandingsTable"]["StandingsLists"].First["ConstructorStandings"].ToString();
+                    constructorStandingModels = JsonConvert.DeserializeObject<List<ConstructorStandingsModel>>(res);
+
+                    foreach (var item in constructorStandingModels)
+                    {
+                        item.Constructor.Images = new ConstructorImageModel
+                        {
+                            Logo = $"{item.Constructor.constructorId}_logo.png",
+                            Full = $"{item.Constructor.constructorId}.png",
+                        };
+                    }
+
+                    return constructorStandingModels;
                 }
                 else
                     return null;

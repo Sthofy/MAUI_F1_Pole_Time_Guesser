@@ -7,6 +7,6 @@
         public string points { get; set; }
         public string wins { get; set; }
         public DriverModel Driver { get; set; }
-        public List<ConstructorsModel> Constructors { get; set; }
+        public List<ConstructorModel> Constructors { get; set; }
     }
 }

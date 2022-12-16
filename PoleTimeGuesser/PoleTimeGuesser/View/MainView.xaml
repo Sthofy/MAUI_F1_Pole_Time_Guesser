@@ -8,7 +8,8 @@
              x:DataType="viewModel:MainViewModel">
 
     <Grid Padding="10">
-        <ScrollView>
+        <ScrollView VerticalScrollBarVisibility="Never"
+                    HorizontalScrollBarVisibility="Never">
             <Grid>
                 <VerticalStackLayout Spacing="5">
                     <!-- Logged in user info -->
@@ -89,7 +90,7 @@
                     <Line HeightRequest="5"
                           BackgroundColor="Red"/>
                     <ScrollView Orientation="Horizontal"
-                                    HorizontalScrollBarVisibility="Never">
+                                HorizontalScrollBarVisibility="Never">
                         <HorizontalStackLayout BindableLayout.ItemsSource="{Binding TopDrivers}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="model:DriverStandingsModel">
@@ -161,6 +162,69 @@
                            Style="{StaticResource MediumLabel}"/>
                     <Line HeightRequest="5"
                           BackgroundColor="Red"/>
+                    <ScrollView HeightRequest="300"
+                                Orientation="Vertical"
+                                VerticalScrollBarVisibility="Never"
+                                HorizontalScrollBarVisibility="Never"
+                                Margin="0,0,0,20">
+                        <CollectionView ItemsSource="{Binding Constructors}"
+                                        SelectionMode="None">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:ConstructorStandingsModel">
+                                    <Frame HeightRequest="90"
+                                           Padding="5"
+                                           Style="{StaticResource CardView}"
+                                           Margin="0,5,0,5">
+                                        <Grid ColumnDefinitions="35,65,*,75"
+                                              ColumnSpacing="10">
+                                            <Label Text="{Binding Position}"
+                                                   Style="{StaticResource LargeLabel}"
+                                                   VerticalOptions="Center"
+                                                   Margin="10,0,0,0"/>
+                                            <Frame HeightRequest="60"
+                                                   WidthRequest="60"
+                                                   CornerRadius="30"
+                                                   BorderColor="Transparent"
+                                                   Grid.Column="1">
+                                                <Image Source="{Binding Constructor.Images.Logo}"
+                                                       HeightRequest="60"
+                                                       WidthRequest="60"
+                                                       Aspect="AspectFill"/>
+                                            </Frame>
+                                            <VerticalStackLayout Grid.Column="2">
+                                                <Label Text="{Binding Constructor.name}"
+                                                       Style="{StaticResource MediumLabel}"/>
+                                                <Line HeightRequest="3" BackgroundColor="Red"
+                                                      Margin="0,0,0,5"/>
+                                                <HorizontalStackLayout Spacing="5"
+                                                                       Margin="5,0,0,0">
+                                                    <Line X1="0" X2="3" BackgroundColor="Red"/>
+                                                    <Label Text="Nationality: "/>
+                                                    <Label Text="{Binding Constructor.nationality}"/>
+                                                </HorizontalStackLayout>
+                                                <HorizontalStackLayout Spacing="5"
+                                                                       Margin="5,5,0,0">
+                                                    <Line X1="0" X2="3" BackgroundColor="Red"/>
+                                                    <Label Text="Wins: "/>
+                                                    <Label Text="{Binding Wins}"/>
+                                                </HorizontalStackLayout>
+                                            </VerticalStackLayout>
+                                            <HorizontalStackLayout Grid.Column="3"
+                                                                   VerticalOptions="Center"
+                                                                   HorizontalOptions="End"
+                                                                   Margin="0,0,5,0"
+                                                                   Spacing="5">
+                                                <Label Text="{Binding Points}"
+                                                       Style="{StaticResource LargeLabel}"/>
+                                                <Label Text="Pts"
+                                                       Margin="0,15,0,0"/>
+                                            </HorizontalStackLayout>
+                                        </Grid>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </ScrollView>
                 </VerticalStackLayout>
             </Grid>
         </ScrollView>

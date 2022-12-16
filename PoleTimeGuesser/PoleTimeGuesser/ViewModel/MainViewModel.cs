@@ -12,6 +12,7 @@
         string _ellapsedEvents = "22/22";
         public ObservableCollection<DriverStandingsModel> TopDrivers { get; } = new();
         public ObservableCollection<ScoreboardModel> Scoreboard { get; } = new();
+        public ObservableCollection<ConstructorStandingsModel> Constructors { get; } = new();
         public Task Init { get; }
         IF1DataGetterService _f1DataGetterService;
         IServiceManager _serviceManager;
@@ -35,8 +36,11 @@
                 GetLoggedInUserPoints();
                 await GetUpcomingEvent();
 
-                var response = await _f1DataGetterService.GetTopDrivers();
-                response.ForEach(x => TopDrivers.Add(x));
+                var drivers = await _f1DataGetterService.GetTopDrivers();
+                drivers.ForEach(x => TopDrivers.Add(x));
+
+                var constructors = await _f1DataGetterService.GetConstructorStandings();
+                constructors.ForEach(x => Constructors.Add(x));
             }
             catch (Exception ex)
             {
@@ -99,5 +103,7 @@
         {
             await Shell.Current.GoToAsync(nameof(SettingsView));
         }
+
+        // TODO: Megcsinálni a csapat táblázatot
     }
 }
