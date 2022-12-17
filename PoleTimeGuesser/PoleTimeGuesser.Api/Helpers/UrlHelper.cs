@@ -9,11 +9,12 @@
         {
             try
             {
+                _httpClient.Timeout = TimeSpan.FromMinutes(30);
                 string url = F1_SITE_URL + $"{urlEnd}";
                 var resopse = await _httpClient.GetStringAsync(url);
                 return resopse;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }
