@@ -4,41 +4,59 @@
     public partial class DriverDetailsViewModel : BaseViewModel
     {
         [ObservableProperty]
-        DriverModel driver;
+        DriverModel _driver;
 
         [ObservableProperty]
-        DriverInfoModel driverInfo;
+        DriverInfoModel _driverInfo;
 
-        IF1DataGetterService _f1DataGetterService;
+        readonly IF1DataGetterService _f1DataGetterService;
 
         public DriverDetailsViewModel(IF1DataGetterService f1DataGetterService)
         {
             _f1DataGetterService = f1DataGetterService;
+            IsBusy = true;
+            PageState = pStates.Loading.ToString();
         }
 
         public void Initailize()
         {
-            Task.Run(async () =>
+            try
             {
-                IsBusy = true;
-                await GetDriverInfo();
-            }).GetAwaiter().OnCompleted(() =>
+                Task.Run(async () =>
+                {
+                    await GetDriverInfo();
+                }).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                PageState = pStates.Error.ToString();
+            }
+            finally
             {
                 IsBusy = false;
-            });
+            }
         }
 
         [RelayCommand]
         private async Task GetDriverInfo()
         {
-            var result = await _f1DataGetterService.GetDriverInfo(Driver.driverId);
-            if (result is null)
+            try
             {
-                // TODO: Error képernyő/not found képernyő
+                var result = await _f1DataGetterService.GetDriverInfo(Driver.driverId);
+                if (result is null)
+                {
+                    // TODO: Error képernyő/not found képernyő
+                    PageState = pStates.Error.ToString();
+                }
+                else
+                {
+                    DriverInfo = result;
+                    PageState = pStates.Success.ToString();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                DriverInfo = result;
+                PageState = pStates.Error.ToString();
             }
         }
     }

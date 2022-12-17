@@ -9,11 +9,13 @@
         List<ScheduleModel> scheduleModels = new();
         List<ConstructorStandingsModel> constructorStandingModels = new();
         string Url = "https://f1guessapi.azurewebsites.net";
+        //string Url = "https://10.0.2.2:7200";
 
         public F1DataGetterService(ISharedData sharedData)
         {
-            _httpClient = new HttpClient();
             _sharedData = sharedData;
+            _httpClient = new HttpClient();
+            _httpClient.Timeout = TimeSpan.FromMinutes(30);
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _sharedData.Token);
         }
 
@@ -53,34 +55,28 @@
 
         public async Task<List<ConstructorStandingsModel>> GetConstructorStandings()
         {
-            try
+
+            var response = await _httpClient.GetAsync("https://ergast.com/api/f1/current/constructorStandings.json");
+            if (response.IsSuccessStatusCode)
             {
-                var response = await _httpClient.GetAsync("https://ergast.com/api/f1/current/constructorStandings.json");
-                if (response.IsSuccessStatusCode)
+                var result = await response.Content.ReadAsStringAsync();
+                var json = JObject.Parse(result);
+                var res = json["MRData"]["StandingsTable"]["StandingsLists"].First["ConstructorStandings"].ToString();
+                constructorStandingModels = JsonConvert.DeserializeObject<List<ConstructorStandingsModel>>(res);
+
+                foreach (var item in constructorStandingModels)
                 {
-                    var result = await response.Content.ReadAsStringAsync();
-                    var json = JObject.Parse(result);
-                    var res = json["MRData"]["StandingsTable"]["StandingsLists"].First["ConstructorStandings"].ToString();
-                    constructorStandingModels = JsonConvert.DeserializeObject<List<ConstructorStandingsModel>>(res);
-
-                    foreach (var item in constructorStandingModels)
+                    item.Constructor.Images = new ConstructorImageModel
                     {
-                        item.Constructor.Images = new ConstructorImageModel
-                        {
-                            Logo = $"{item.Constructor.constructorId}_logo.png",
-                            Full = $"{item.Constructor.constructorId}.png",
-                        };
-                    }
-
-                    return constructorStandingModels;
+                        Logo = $"{item.Constructor.constructorId}_logo.png",
+                        Full = $"{item.Constructor.constructorId}.png",
+                    };
                 }
-                else
-                    return null;
+
+                return constructorStandingModels;
             }
-            catch (Exception ex)
-            {
+            else
                 return null;
-            }
         }
 
         public async Task<List<ScheduleModel>> GetSchedule()
@@ -115,18 +111,26 @@
 
         public async Task<DriverInfoModel> GetDriverInfo(string id)
         {
-            var response = await _httpClient.GetAsync($"{Url}/DriverInfo/{id}");
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var responseContent = await response.Content.ReadAsStringAsync();
+                var response = await _httpClient.GetAsync($"{Url}/DriverInfo/{id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
 
-                var result = JsonConvert.DeserializeObject<DriverInfoModel>(responseContent);
-                return result;
+                    var result = JsonConvert.DeserializeObject<DriverInfoModel>(responseContent);
+                    return result;
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    return null;
+                else
+                    return null;
             }
-            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return null;
-            else
-                return null;
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         public async Task<CircuitInfoModel> GetCicuitInfoAsync(string id)

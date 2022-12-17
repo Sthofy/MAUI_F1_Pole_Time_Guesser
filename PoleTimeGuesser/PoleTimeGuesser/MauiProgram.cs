@@ -15,9 +15,9 @@ public static class MauiProgram
             });
 
         builder.Services.AddSingleton<DriverStandingsViewModel>()
-            .AddSingleton<DriverDetailsViewModel>()
-            .AddSingleton<ScheduleViewModel>()
-            .AddSingleton<CircuitDetailsViewModel>()
+            .AddTransient<DriverDetailsViewModel>()
+            .AddScoped<ScheduleViewModel>()
+            .AddTransient<CircuitDetailsViewModel>()
             .AddSingleton<LoginViewModel>()
             .AddSingleton<RegisterViewModel>()
             .AddTransient<MainViewModel>()
@@ -31,7 +31,7 @@ public static class MauiProgram
             .AddTransient<DriverStandingsView>()
             .AddTransient<ScheduleView>()
             .AddTransient<DriverDetailsView>()
-            .AddSingleton<CircuitDetailsView>()
+            .AddTransient<CircuitDetailsView>()
             .AddSingleton<LoginView>()
             .AddTransient<RegisterView>()
             .AddSingleton<SettingsView>()

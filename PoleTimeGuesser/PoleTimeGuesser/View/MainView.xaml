@@ -6,12 +6,30 @@
              xmlns:model="clr-namespace:PoleTimeGuesser.Library.Models;assembly=PoleTimeGuesser.Library"
              xmlns:viewModel="clr-namespace:PoleTimeGuesser.ViewModel"
              x:DataType="viewModel:MainViewModel">
+    <ScrollView VerticalScrollBarVisibility="Never"
+                HorizontalScrollBarVisibility="Never">
+        <Grid toolkit:StateContainer.CurrentState="{Binding PageState}"
+              Padding="10">
 
-    <Grid Padding="10">
-        <ScrollView VerticalScrollBarVisibility="Never"
-                    HorizontalScrollBarVisibility="Never">
-            <Grid>
-                <VerticalStackLayout Spacing="5">
+            <toolkit:StateContainer.StateViews>
+                <VerticalStackLayout toolkit:StateView.StateKey="Loading"
+                                     VerticalOptions="CenterAndExpand"
+                                     HorizontalOptions="FillAndExpand">
+                    <ActivityIndicator IsVisible="{Binding IsBusy}"
+                                       IsRunning="{Binding IsBusy}"/>
+                </VerticalStackLayout>
+                
+                <VerticalStackLayout toolkit:StateView.StateKey="Error"
+                                     VerticalOptions="CenterAndExpand"
+                                     HorizontalOptions="FillAndExpand">
+                    <Image Source="error.png"
+                           HeightRequest="200"
+                           WidthRequest="200"/>
+                </VerticalStackLayout>
+
+
+                <VerticalStackLayout toolkit:StateView.StateKey="Success"
+                                         Spacing="5">
                     <!-- Logged in user info -->
                     <Frame Style="{StaticResource CardView}"
                                Margin="5"
@@ -226,12 +244,7 @@
                         </CollectionView>
                     </ScrollView>
                 </VerticalStackLayout>
-            </Grid>
-        </ScrollView>
-
-        <ActivityIndicator IsVisible="{Binding IsBusy}"
-                           IsRunning="{Binding IsBusy}"
-                           HorizontalOptions="FillAndExpand"
-                           VerticalOptions="CenterAndExpand"/>
-    </Grid>
+            </toolkit:StateContainer.StateViews>
+        </Grid>
+    </ScrollView>
 </ContentPage>

@@ -10,9 +10,11 @@
         string _userPoints = "0";
         [ObservableProperty]
         string _ellapsedEvents = "22/22";
+
         public ObservableCollection<DriverStandingsModel> TopDrivers { get; } = new();
         public ObservableCollection<ScoreboardModel> Scoreboard { get; } = new();
         public ObservableCollection<ConstructorStandingsModel> Constructors { get; } = new();
+
         public Task Init { get; }
         IF1DataGetterService _f1DataGetterService;
         IServiceManager _serviceManager;
@@ -32,6 +34,8 @@
             try
             {
                 IsBusy = true;
+                PageState = pStates.Loading.ToString();
+
                 await GetScoreboard();
                 GetLoggedInUserPoints();
                 await GetUpcomingEvent();
@@ -41,9 +45,12 @@
 
                 var constructors = await _f1DataGetterService.GetConstructorStandings();
                 constructors.ForEach(x => Constructors.Add(x));
+
+                PageState = pStates.Success.ToString();
             }
             catch (Exception ex)
             {
+                PageState = pStates.Error.ToString();
                 Debug.WriteLine(ex);
             }
             finally

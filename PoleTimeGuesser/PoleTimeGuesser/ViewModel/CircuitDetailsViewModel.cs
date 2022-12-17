@@ -6,45 +6,63 @@ namespace PoleTimeGuesser.ViewModel
     public partial class CircuitDetailsViewModel : BaseViewModel
     {
         [ObservableProperty]
-        bool isRefreshing;
+        bool _isRefreshing;
 
         [ObservableProperty]
-        ScheduleModel circuit;
+        ScheduleModel _circuit;
 
         [ObservableProperty]
-        CircuitInfoModel circuitInfo;
+        CircuitInfoModel _circuitInfo;
 
-        IF1DataGetterService _f1DataGetterService;
+        readonly IF1DataGetterService _f1DataGetterService;
 
         public CircuitDetailsViewModel(IF1DataGetterService f1DataGetterService)
         {
             _f1DataGetterService = f1DataGetterService;
+            IsBusy = true;
+            PageState = pStates.Loading.ToString();
         }
 
         public void Initailize()
         {
-            Task.Run(async () =>
+            try
             {
-                IsBusy = true;
-                await GetCircuitInfo();
-            }).GetAwaiter().OnCompleted(() =>
+                Task.Run(async () =>
+                {
+                    await GetCircuitInfo();
+                }).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
             {
-                IsBusy = false;
-            });
+                PageState = pStates.Error.ToString();
+            }
+            finally
+            {
+                IsBusy= false;
+            }
         }
 
         [RelayCommand]
         private async Task GetCircuitInfo()
         {
-            var result = await _f1DataGetterService.GetCicuitInfoAsync(Circuit.Circuit.CircuitId);
+            try
+            {
+                var result = await _f1DataGetterService.GetCicuitInfoAsync(Circuit.Circuit.CircuitId);
 
-            if (result is null)
-            {
-                // TODO: Error képernyő/not found képernyő
+                if (result is null)
+                {
+                    // TODO: Error képernyő/not found képernyő
+                    PageState= pStates.Error.ToString();
+                }
+                else
+                {
+                    CircuitInfo = result;
+                    PageState = pStates.Success.ToString();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                CircuitInfo = result;
+                throw;
             }
         }
     }

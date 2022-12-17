@@ -1,141 +1,156 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="PoleTimeGuesser.View.DriverDetailsView"
              xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
              x:DataType="viewmodel:DriverDetailsViewModel"
              Shell.NavBarIsVisible="True">
 
-    <Grid>
-        <ScrollView >
-            <Grid RowDefinitions="Auto,Auto,Auto"
-                  RowSpacing="10">
-                <Grid ColumnDefinitions="3*,*"
-                      RowDefinitions="*,*,*,*,*,*"
-                      Margin="30,20,0,0">
-                    <HorizontalStackLayout Grid.Row="0"
-                                           Grid.Column="0"
-                                           Spacing="10">
-                        <Label Text="{Binding Driver.givenName}"
-                               Style="{StaticResource LargeLabel}"/>
-                        <Label Text="{Binding Driver.familyName}"
-                               Style="{StaticResource LargeLabel}"/>
-                    </HorizontalStackLayout>
-                    <VerticalStackLayout Grid.Row="1"
-                                         Spacing="20"
-                                         Margin="10,0,0,0">
+    <ScrollView>
+        <Grid toolkit:StateContainer.CurrentState="{Binding PageState}">
+            <toolkit:StateContainer.StateViews>
+                <!-- Loading -->
+                <ActivityIndicator IsVisible="{Binding IsBusy}"
+                                   IsRunning="{Binding IsBusy}"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   toolkit:StateView.StateKey="Loading"/>
+                
+                <!-- Error -->
+                <VerticalStackLayout toolkit:StateView.StateKey="Error"
+                                     VerticalOptions="CenterAndExpand"
+                                     HorizontalOptions="FillAndExpand">
+                    <Image Source="error.png"
+                           HeightRequest="200"
+                           WidthRequest="200"/>
+                </VerticalStackLayout>
 
-                        <HorizontalStackLayout Spacing="5">
-                            <Line X1="0" X2="5"
-                                  BackgroundColor="Red"/>
-                            <VerticalStackLayout>
-                                <Label Text="{Binding DriverInfo.WorldChamps}"
-                                       Style="{StaticResource LargeLabel}"/>
-                                <Label Text="World Champinships"
-                                       Style="{StaticResource SmallLabel}"/>
-                            </VerticalStackLayout>
+                <!-- Success -->
+                <Grid RowDefinitions="Auto,Auto,Auto"
+                      RowSpacing="10"
+                      toolkit:StateView.StateKey="Success">
+                    <Grid ColumnDefinitions="3*,*"
+                          RowDefinitions="*,*,*,*,*,*"
+                          Margin="30,20,0,0">
+                        <HorizontalStackLayout Grid.Row="0"
+                                               Grid.Column="0"
+                                               Spacing="10">
+                            <Label Text="{Binding Driver.givenName}"
+                                   Style="{StaticResource LargeLabel}"/>
+                            <Label Text="{Binding Driver.familyName}"
+                                   Style="{StaticResource LargeLabel}"/>
                         </HorizontalStackLayout>
+                        <VerticalStackLayout Grid.Row="1"
+                                             Spacing="20"
+                                             Margin="10,0,0,0">
 
-                        <HorizontalStackLayout Spacing="5">
-                            <Line X1="0" X2="5"
-                                  BackgroundColor="Red"/>
-                            <VerticalStackLayout>
-                                <Label Text="{Binding DriverInfo.RaceEnterded}"
-                                       Style="{StaticResource LargeLabel}"/>
-                                <Label Text="Grand Prix Entered"
-                                       Style="{StaticResource SmallLabel}"/>
-                            </VerticalStackLayout>
-                        </HorizontalStackLayout>
+                            <HorizontalStackLayout Spacing="5">
+                                <Line X1="0" X2="5"
+                                      BackgroundColor="Red"/>
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding DriverInfo.WorldChamps}"
+                                           Style="{StaticResource LargeLabel}"/>
+                                    <Label Text="World Champinships"
+                                           Style="{StaticResource SmallLabel}"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
 
-                        <HorizontalStackLayout Spacing="5">
-                            <Line X1="0" X2="5"
-                                  BackgroundColor="Red"/>
-                            <VerticalStackLayout>
-                                <Label Text="{Binding DriverInfo.Podiums}"
+                            <HorizontalStackLayout Spacing="5">
+                                <Line X1="0" X2="5"
+                                      BackgroundColor="Red"/>
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding DriverInfo.RaceEnterded}"
+                                           Style="{StaticResource LargeLabel}"/>
+                                    <Label Text="Grand Prix Entered"
+                                           Style="{StaticResource SmallLabel}"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Spacing="5">
+                                <Line X1="0" X2="5"
+                                      BackgroundColor="Red"/>
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding DriverInfo.Podiums}"
+                                           Style="{StaticResource LargeLabel}"/>
+                                    <Label Text="Podiums"
+                                           Style="{StaticResource SmallLabel}"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Spacing="5">
+                                <Line X1="0" X2="5"
+                                      BackgroundColor="Red"/>
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding DriverInfo.Points}"
+                                           Style="{StaticResource LargeLabel}"/>
+                                    <Label Text="Points"
+                                           Style="{StaticResource SmallLabel}"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+
+                        <Image Source="{Binding Driver.Image.Full}"
+                               Grid.Column="1"
+                               Grid.RowSpan="6"
+                               WidthRequest="400">
+                            <Image.Shadow>
+                                <Shadow Brush="black"
+                                        Offset="-10,-10"
+                                        Radius="30"
+                                        Opacity="0.7"/>
+                            </Image.Shadow>
+                        </Image>
+                    </Grid>
+
+                    <StackLayout Margin="10,20,10,0"
+                                 Grid.Row="1">
+                        <Label Text="Basic Informations: "
                                Style="{StaticResource LargeLabel}"/>
-                                <Label Text="Podiums"
-                                       Style="{StaticResource SmallLabel}"/>
-                            </VerticalStackLayout>
+                        <Line HeightRequest="1"
+                              BackgroundColor="Black"/>
+                        <HorizontalStackLayout Padding="20,10,0,0" Spacing="10">
+                            <Line X1="0" X2="5" BackgroundColor="Red"/>
+                            <Label Text="Nationality:"
+                                   Style="{StaticResource MediumLabel}"/>
+                            <Label Text="{Binding Driver.nationality}"
+                                   Style="{StaticResource MediumLabel}"/>
                         </HorizontalStackLayout>
-
-                        <HorizontalStackLayout Spacing="5">
-                            <Line X1="0" X2="5"
-                                  BackgroundColor="Red"/>
-                            <VerticalStackLayout>
-                                <Label Text="{Binding DriverInfo.Points}"
-                                       Style="{StaticResource LargeLabel}"/>
-                                <Label Text="Points"
-                                       Style="{StaticResource SmallLabel}"/>
-                            </VerticalStackLayout>
+                        <HorizontalStackLayout Padding="20,10,0,0" Spacing="10">
+                            <Line X1="0" X2="5" BackgroundColor="Red"/>
+                            <Label Text="Date of Birth:"
+                                   Style="{StaticResource MediumLabel}"/>
+                            <Label Text="{Binding Driver.dateOfBirth}"
+                                   Style="{StaticResource MediumLabel}"/>
                         </HorizontalStackLayout>
-                    </VerticalStackLayout>
-
-                    <Image Source="{Binding Driver.Image.Full}"
-                           Grid.Column="1"
-                           Grid.RowSpan="6"
-                           WidthRequest="400">
-                        <Image.Shadow>
-                            <Shadow Brush="black"
-                                    Offset="-10,-10"
-                                    Radius="30"
-                                    Opacity="0.7"/>
-                        </Image.Shadow>
-                    </Image>
-                </Grid>
-
-                <StackLayout Margin="10,20,10,0"
-                             Grid.Row="1">
-                    <Label Text="Basic Informations: "
-                           Style="{StaticResource LargeLabel}"/>
-                    <Line HeightRequest="1"
-                          BackgroundColor="Black"/>
-                    <HorizontalStackLayout Padding="20,10,0,0" Spacing="10">
-                        <Line X1="0" X2="5" BackgroundColor="Red"/>
-                        <Label Text="Nationality:"
-                               Style="{StaticResource MediumLabel}"/>
-                        <Label Text="{Binding Driver.nationality}"
-                               Style="{StaticResource MediumLabel}"/>
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout Padding="20,10,0,0" Spacing="10">
-                        <Line X1="0" X2="5" BackgroundColor="Red"/>
-                        <Label Text="Date of Birth:"
-                               Style="{StaticResource MediumLabel}"/>
-                        <Label Text="{Binding Driver.dateOfBirth}"
-                               Style="{StaticResource MediumLabel}"/>
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout Padding="20,10,0,0" Spacing="10">
-                        <Line X1="0" X2="5" BackgroundColor="Red"/>
-                        <Label Text="Place of Birth:"
-                               Style="{StaticResource MediumLabel}"/>
-                        <Label Text="{Binding DriverInfo.BirthPlace}"
-                               Style="{StaticResource MediumLabel}"/>
-                    </HorizontalStackLayout>
-                </StackLayout>
-
-
-                <Frame Grid.Row="3"
-                       Style="{StaticResource CardView}"
-                       Padding="10"
-                       Margin="10,10,10,30">
-                    <StackLayout>
-                        <Label Text="Biography: "
-                               Margin="0,0,0,5"
-                               Style="{StaticResource LargeLabel}"/>
-                        <Line BackgroundColor="Black"
-                              HeightRequest="1"
-                              Margin="0,0,0,10"/>
-                        <Label Text="{Binding DriverInfo.Bio}"
-                               Style="{StaticResource SmallLabel}"/>
+                        <HorizontalStackLayout Padding="20,10,0,0" Spacing="10">
+                            <Line X1="0" X2="5" BackgroundColor="Red"/>
+                            <Label Text="Place of Birth:"
+                                   Style="{StaticResource MediumLabel}"/>
+                            <Label Text="{Binding DriverInfo.BirthPlace}"
+                                   Style="{StaticResource MediumLabel}"/>
+                        </HorizontalStackLayout>
                     </StackLayout>
-                </Frame>
 
-            </Grid>
-        </ScrollView>
 
-        <ActivityIndicator IsVisible="{Binding IsBusy}"
-                           IsRunning="{Binding IsBusy}"
-                           HorizontalOptions="FillAndExpand"
-                           VerticalOptions="CenterAndExpand"/>
-    </Grid>
+                    <Frame Grid.Row="3"
+                           Style="{StaticResource CardView}"
+                           Padding="10"
+                           Margin="10,10,10,30">
+                        <StackLayout>
+                            <Label Text="Biography: "
+                                   Margin="0,0,0,5"
+                                   Style="{StaticResource LargeLabel}"/>
+                            <Line BackgroundColor="Black"
+                                  HeightRequest="1"
+                                  Margin="0,0,0,10"/>
+                            <Label Text="{Binding DriverInfo.Bio}"
+                                   Style="{StaticResource SmallLabel}"/>
+                        </StackLayout>
+                    </Frame>
 
+                </Grid>
+            </toolkit:StateContainer.StateViews>
+        </Grid>
+    </ScrollView>
 </ContentPage>
