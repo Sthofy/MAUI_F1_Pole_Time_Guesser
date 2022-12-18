@@ -36,25 +36,25 @@
             _sharedData = sharedData;
             _serviceManager = serviceManager;
 
+            IsBusy = true;
+            PageState = pStates.Loading.ToString();
             Init = Initialize();
         }
 
         private async Task Initialize()
         {
-            if (IsBusy)
-                return;
-
             try
             {
-                IsBusy = true;
-
+                await GetPreviousGuesses();
                 await GetDrivers();
                 await GetEvents();
-                await GetPreviousGuesses();
                 await VerifyGuess();
+
+                PageState = pStates.Success.ToString();
             }
             catch (Exception ex)
             {
+                PageState = pStates.Error.ToString();
                 Debug.Write(ex.Message);
             }
             finally
@@ -84,7 +84,8 @@
             {
                 //if (DateTime.Parse(item.Date).CompareTo(_sharedData.Date) == 1)
                 //{
-                Events.Add(item);
+                if (!PreviousGuesses.Any(x => x.EventId.Equals(item.Circuit.CircuitId.ToUpper())))
+                    Events.Add(item);
                 //}
             }
         }
@@ -130,7 +131,6 @@
                         if (score > 0)
                             await UpdateScore(_sharedData.Id, score);
                     }
-
                 }
             }
 
@@ -185,7 +185,15 @@
             if (response.IsSuccessStatusCode)
             {
                 ResetGuess();
-                await GetPreviousGuesses();
+                PreviousGuesses.Add(new GuessModel
+                {
+                    UserId = request.UserId,
+                    Guess = request.Guess,
+                    EventId = request.EventId,
+                    DriverId = request.DriverId,
+                    Difference = "Soon"
+                });
+                Events.Remove(Events.Where(x => x.Circuit.CircuitId.Equals(request.EventId.ToLower())).First());
             }
             else
             {
@@ -228,7 +236,7 @@
             };
             var response = await _serviceManager.CallWebAPI("/Game/UpdateScore", HttpMethod.Put, request);
 
-            if(!response.IsSuccessStatusCode) 
+            if (!response.IsSuccessStatusCode)
             {
                 await Shell.Current.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, "OK");
             }
