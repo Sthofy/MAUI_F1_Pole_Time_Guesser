@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:model="clr-namespace:PoleTimeGuesser.Library.Models;assembly=PoleTimeGuesser.Library"
+             x:Class="PoleTimeGuesser.View.ConstructorStandingsView"
+             Title="ConstructorStandingsView">
+    <Grid toolkit:StateContainer.CurrentState="{Binding PageState}">
+        <toolkit:StateContainer.StateViews>
+            <!-- Loading -->
+            <VerticalStackLayout toolkit:StateView.StateKey="Loading"
+                                 VerticalOptions="CenterAndExpand"
+                                 HorizontalOptions="FillAndExpand">
+                <ActivityIndicator IsVisible="{Binding IsBusy}"
+                                   IsRunning="{Binding IsBusy}"/>
+            </VerticalStackLayout>
+
+            <!-- Error -->
+            <VerticalStackLayout toolkit:StateView.StateKey="Error"
+                                 VerticalOptions="CenterAndExpand"
+                                 HorizontalOptions="FillAndExpand">
+                <Image Source="error.png"
+                       HeightRequest="200"
+                       WidthRequest="200"/>
+            </VerticalStackLayout>
+
+
+            <Grid toolkit:StateView.StateKey="Success">
+
+                <ScrollView Orientation="Vertical"
+                            VerticalScrollBarVisibility="Never"
+                            HorizontalScrollBarVisibility="Never"
+                            Margin="0,0,0,20">
+                    <CollectionView ItemsSource="{Binding Constructors}"
+                                    SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:ConstructorStandingsModel">
+                                <Frame HeightRequest="90"
+                                           Padding="5"
+                                           Style="{StaticResource CardView}"
+                                           Margin="0,5,0,5">
+                                    <Grid ColumnDefinitions="35,65,*,75"
+                                              ColumnSpacing="10">
+                                        <Label Text="{Binding Position}"
+                                                   Style="{StaticResource LargeLabel}"
+                                                   VerticalOptions="Center"
+                                                   Margin="10,0,0,0"/>
+                                        <Frame HeightRequest="60"
+                                                   WidthRequest="60"
+                                                   CornerRadius="30"
+                                                   BorderColor="Transparent"
+                                                   Grid.Column="1">
+                                            <Image Source="{Binding Constructor.Images.Logo}"
+                                                       HeightRequest="60"
+                                                       WidthRequest="60"
+                                                       Aspect="AspectFill"/>
+                                        </Frame>
+                                        <VerticalStackLayout Grid.Column="2">
+                                            <Label Text="{Binding Constructor.name}"
+                                                       Style="{StaticResource MediumLabel}"/>
+                                            <Line HeightRequest="3" BackgroundColor="Red"
+                                                      Margin="0,0,0,5"/>
+                                            <HorizontalStackLayout Spacing="5"
+                                                                       Margin="5,0,0,0">
+                                                <Line X1="0" X2="3" BackgroundColor="Red"/>
+                                                <Label Text="Nationality: "/>
+                                                <Label Text="{Binding Constructor.nationality}"/>
+                                            </HorizontalStackLayout>
+                                            <HorizontalStackLayout Spacing="5"
+                                                                       Margin="5,5,0,0">
+                                                <Line X1="0" X2="3" BackgroundColor="Red"/>
+                                                <Label Text="Wins: "/>
+                                                <Label Text="{Binding Wins}"/>
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                        <HorizontalStackLayout Grid.Column="3"
+                                                                   VerticalOptions="Center"
+                                                                   HorizontalOptions="End"
+                                                                   Margin="0,0,5,0"
+                                                                   Spacing="5">
+                                            <Label Text="{Binding Points}"
+                                                       Style="{StaticResource LargeLabel}"/>
+                                            <Label Text="Pts"
+                                                       Margin="0,15,0,0"/>
+                                        </HorizontalStackLayout>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </ScrollView>
+            </Grid>
+        </toolkit:StateContainer.StateViews>
+    </Grid>
+</ContentPage>

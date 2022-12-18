@@ -12,6 +12,7 @@
               Padding="10">
 
             <toolkit:StateContainer.StateViews>
+                <!-- Loading -->
                 <VerticalStackLayout toolkit:StateView.StateKey="Loading"
                                      VerticalOptions="CenterAndExpand"
                                      HorizontalOptions="FillAndExpand">
@@ -19,6 +20,7 @@
                                        IsRunning="{Binding IsBusy}"/>
                 </VerticalStackLayout>
                 
+                <!-- Error -->
                 <VerticalStackLayout toolkit:StateView.StateKey="Error"
                                      VerticalOptions="CenterAndExpand"
                                      HorizontalOptions="FillAndExpand">

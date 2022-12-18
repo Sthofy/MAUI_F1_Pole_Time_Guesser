@@ -59,6 +59,9 @@
         <Tab Title="Drivers" Icon="helmet_black.svg">
             <ShellContent ContentTemplate="{DataTemplate view:DriverStandingsView}" Route="DriverStandingsView"/>
         </Tab>
+        <Tab Title="Constructors" Icon="contrutor.png">
+            <ShellContent ContentTemplate="{DataTemplate view:ConstructorStandingsView}" Route="ConstructorStandingsView"/>
+        </Tab>
         <Tab Title="Games" Icon="game.png">
             <ShellContent ContentTemplate="{DataTemplate view:GamesView}" />
         </Tab>

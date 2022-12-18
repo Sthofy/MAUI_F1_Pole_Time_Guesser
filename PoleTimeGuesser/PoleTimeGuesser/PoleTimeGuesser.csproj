@@ -51,6 +51,7 @@
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\coolvetica rg.otf" />
 	  <None Remove="Resources\Images\apple_logo.png" />
+	  <None Remove="Resources\Images\contrutor.png" />
 	  <None Remove="Resources\Images\driver2.png" />
 	  <None Remove="Resources\Images\error.png" />
 	  <None Remove="Resources\Images\game.png" />
@@ -87,6 +88,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="View\CircuitDetailsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\ConstructorStandingsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\DriverDetailsView.xaml">
