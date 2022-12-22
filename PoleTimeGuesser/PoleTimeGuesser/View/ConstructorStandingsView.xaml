@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:model="clr-namespace:PoleTimeGuesser.Library.Models;assembly=PoleTimeGuesser.Library"
+             xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
              x:Class="PoleTimeGuesser.View.ConstructorStandingsView"
              Title="ConstructorStandingsView">
     <Grid toolkit:StateContainer.CurrentState="{Binding PageState}">
@@ -39,6 +40,12 @@
                                            Padding="5"
                                            Style="{StaticResource CardView}"
                                            Margin="0,5,0,5">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                              Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ConstructorStandingsViewModel}}
+                                            ,Path=GoToConstructorDetailsCommand}"/>
+                                    </Frame.GestureRecognizers>
+                                    
                                     <Grid ColumnDefinitions="35,65,*,75"
                                               ColumnSpacing="10">
                                         <Label Text="{Binding Position}"

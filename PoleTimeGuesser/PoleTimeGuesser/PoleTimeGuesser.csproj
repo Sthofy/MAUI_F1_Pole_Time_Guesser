@@ -90,6 +90,9 @@
 	  <MauiXaml Update="View\CircuitDetailsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\ConstructorDetailsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\ConstructorStandingsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

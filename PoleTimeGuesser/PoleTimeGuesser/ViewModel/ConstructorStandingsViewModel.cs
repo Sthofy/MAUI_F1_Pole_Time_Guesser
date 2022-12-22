@@ -45,5 +45,18 @@
                 IsBusy = false;
             }
         }
+
+        [RelayCommand]
+        async Task GoToConstructorDetailsAsync(ConstructorStandingsModel model)
+        {
+            if (model is null)
+                return;
+
+            await Shell.Current.GoToAsync($"{nameof(ConstructorDetailsView)}", true,
+                new Dictionary<string, object>
+                {
+                    { "Constructor" , model },
+                });
+        }
     }
 }
