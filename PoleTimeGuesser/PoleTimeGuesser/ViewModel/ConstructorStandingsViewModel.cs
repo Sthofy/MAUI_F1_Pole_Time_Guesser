@@ -11,9 +11,6 @@
         public ConstructorStandingsViewModel(IF1DataGetterService f1DataGetterService, IServiceManager serviceManager)
         {
             _f1DataGetterService = f1DataGetterService;
-            _serviceManager = serviceManager;
-            IsBusy = true;
-            PageState = pStates.Loading.ToString();
             Init = Initailize();
         }
 
@@ -25,19 +22,22 @@
         [RelayCommand]
         async Task GetConstructorStandingsAsync()
         {
+            if (IsBusy) return;
+
             try
             {
+                IsBusy = true;
                 var constructors = await _f1DataGetterService.GetConstructorStandings();
                 if (Constructors.Count != 0)
                     Constructors.Clear();
 
-                constructors.ForEach(x => Constructors.Add(x));
-
-                PageState = pStates.Success.ToString();
+                foreach (var item in constructors)
+                {
+                    Constructors.Add(item);
+                }
             }
             catch (Exception ex)
             {
-                PageState = pStates.Error.ToString();
                 Debug.WriteLine(ex);
             }
             finally

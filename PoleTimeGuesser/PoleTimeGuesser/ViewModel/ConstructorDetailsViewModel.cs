@@ -5,7 +5,9 @@
     {
         private readonly IF1DataGetterService _f1DataGetterService;
         [ObservableProperty]
-        ConstructorModel _constructor;
+        ConstructorStandingsModel _constructor;
+        [ObservableProperty]
+        ConstructorInfoModel _constructorInfo;
 
         public ConstructorDetailsViewModel(IF1DataGetterService f1DataGetterService)
         {
@@ -20,7 +22,7 @@
             {
                 Task.Run(async () =>
                 {
-                    //await GetCircuitInfo();
+                    await GetConstructorInfo();
                 }).GetAwaiter().GetResult();
             }
             catch (Exception ex)
@@ -30,6 +32,21 @@
             finally
             {
                 IsBusy = false;
+            }
+        }
+
+        private async Task GetConstructorInfo()
+        {
+            var result = await _f1DataGetterService.GetConstructorInfoAsync(Constructor.Constructor.constructorId);
+
+            if(result is null)
+            {
+                PageState=pStates.Error.ToString();
+            }
+            else
+            {
+                ConstructorInfo = result;
+                PageState=pStates.Success.ToString();
             }
         }
     }

@@ -7,25 +7,25 @@
             switch (team)
             {
                 case "alfa":
-                    return "Alfa-Romeo-Racing";
+                    return "/teams/Alfa-Romeo-Racing.html";
                 case "alphatauri":
-                    return "AlphaTauri";
+                    return "/teams/AlphaTauri.html";
                 case "alpine":
-                    return "Alpine";
+                    return "/teams/Alpine.html";
                 case "aston_martin":
-                    return "Aston-Martin";
+                    return "/teams/Aston-Martin.html";
                 case "ferrari":
-                    return "Ferrari";
+                    return "/teams/Ferrari.html";
                 case "haas":
-                    return "Haas-F1-Team";
+                    return "/teams/Haas-F1-Team.html";
                 case "mclaren":
-                    return "McLaren";
+                    return "/teams/McLaren.html";
                 case "mercedes":
-                    return "Mercedes";
+                    return "/teams/Mercedes.html";
                 case "red_bull":
-                    return "Red-Bull-Racing";
+                    return "/teams/Red-Bull-Racing.html";
                 case "williams":
-                    return "Williams";
+                    return "/teams/Williams.html";
                 default:
                     return null;
             }

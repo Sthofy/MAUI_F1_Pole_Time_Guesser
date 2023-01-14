@@ -14,7 +14,7 @@ public static class MauiProgram
                 fonts.AddFont("coolvetica rg.otf", "CoolveticaRegular");
             });
 
-        builder.Services.AddSingleton<DriverStandingsViewModel>()
+        builder.Services.AddScoped<DriverStandingsViewModel>()
             .AddTransient<DriverDetailsViewModel>()
             .AddScoped<ScheduleViewModel>()
             .AddTransient<CircuitDetailsViewModel>()
@@ -46,7 +46,7 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<IServiceManager, ServiceManager>()
             .AddSingleton<ISharedData, SharedData>()
-            .AddSingleton<IF1DataGetterService, F1DataGetterService>();
+            .AddScoped<IF1DataGetterService, F1DataGetterService>();
 
         return builder.Build();
     }

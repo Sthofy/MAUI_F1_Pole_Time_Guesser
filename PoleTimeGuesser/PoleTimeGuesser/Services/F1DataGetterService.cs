@@ -16,7 +16,7 @@
             _sharedData = sharedData;
             _httpClient = new HttpClient();
             _httpClient.Timeout = TimeSpan.FromMinutes(30);
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _sharedData.Token);
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + _sharedData.Token);
         }
 
         public async Task<List<DriverStandingsModel>> GetDriverStandings()
@@ -70,6 +70,7 @@
                     {
                         Logo = $"{item.Constructor.constructorId}_logo.png",
                         Full = $"{item.Constructor.constructorId}.png",
+                        Car = "f1car.png",
                     };
                 }
 
@@ -144,6 +145,23 @@
                 var circuitInfoModel = JsonConvert.DeserializeObject<CircuitInfoModel>(result);
 
                 return circuitInfoModel;
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                return null;
+            else
+                return null;
+        }
+
+        public async Task<ConstructorInfoModel> GetConstructorInfoAsync(string id)
+        {
+            var response = await _httpClient.GetAsync($"{Url}/ConstructorInfo/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+
+                var constructorInfoModel = JsonConvert.DeserializeObject<ConstructorInfoModel>(result);
+
+                return constructorInfoModel;
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 return null;

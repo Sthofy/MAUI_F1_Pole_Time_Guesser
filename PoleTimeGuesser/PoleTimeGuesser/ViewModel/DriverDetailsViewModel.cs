@@ -40,23 +40,16 @@
         [RelayCommand]
         private async Task GetDriverInfo()
         {
-            try
+            var result = await _f1DataGetterService.GetDriverInfo(Driver.driverId);
+            if (result is null)
             {
-                var result = await _f1DataGetterService.GetDriverInfo(Driver.driverId);
-                if (result is null)
-                {
-                    // TODO: Error képernyő/not found képernyő
-                    PageState = pStates.Error.ToString();
-                }
-                else
-                {
-                    DriverInfo = result;
-                    PageState = pStates.Success.ToString();
-                }
-            }
-            catch (Exception ex)
-            {
+                // TODO: Error képernyő/not found képernyő
                 PageState = pStates.Error.ToString();
+            }
+            else
+            {
+                DriverInfo = result;
+                PageState = pStates.Success.ToString();
             }
         }
     }

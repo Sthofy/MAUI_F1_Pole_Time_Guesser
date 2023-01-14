@@ -5,11 +5,176 @@
              xmlns:model="clr-namespace:PoleTimeGuesser.Library.Models;assembly=PoleTimeGuesser.Library"
              xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
              x:Class="PoleTimeGuesser.View.ConstructorDetailsView"
-             Title="ConstructorDetailsView">
-    <VerticalStackLayout>
-        <Label 
-            Text="{Binding Constructor.name}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Shell.NavBarIsVisible="True">
+    <ScrollView>
+        <Grid toolkit:StateContainer.CurrentState="{Binding PageState}">
+            <toolkit:StateContainer.StateViews>
+                <!-- Loading -->
+                <ActivityIndicator IsVisible="{Binding IsBusy}"
+                                   IsRunning="{Binding IsBusy}"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="FillAndExpand"
+                                   toolkit:StateView.StateKey="Loading"/>
+
+                <!-- Error -->
+                <VerticalStackLayout toolkit:StateView.StateKey="Error"
+                                     VerticalOptions="CenterAndExpand"
+                                     HorizontalOptions="FillAndExpand">
+                    <Image Source="error.png"
+                           HeightRequest="200"
+                           WidthRequest="200"/>
+                </VerticalStackLayout>
+
+                <!-- Success -->
+                <Grid RowDefinitions="Auto,Auto,Auto"
+                      RowSpacing="10"
+                      toolkit:StateView.StateKey="Success">
+                    <Grid ColumnDefinitions="3*,*"
+                          RowDefinitions="Auto,*"
+                          Margin="30,20,0,0">
+                        <Label Text="{Binding Constructor.Constructor.name}"
+                               Style="{StaticResource LargeLabel}"/>
+
+                        <VerticalStackLayout Grid.Row="1"
+                                             Grid.Column="0"
+                                             Margin="10,0,0,0"
+                                             Spacing="20">
+                            <HorizontalStackLayout Spacing="5">
+                                <Line X1="0" X2="5" BackgroundColor="Red"/>
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding ConstructorInfo.WorldChamps}"
+                                           Style="{StaticResource LargeLabel}"/>
+                                    <Label Text="World Champinships"
+                                           Style="{StaticResource SmallLabel}"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Spacing="5">
+                                <Line X1="0" X2="5" BackgroundColor="Red"/>
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding ConstructorInfo.FirstTeamEntry}"
+                                           Style="{StaticResource LargeLabel}"/>
+                                    <Label Text="First Team Entry"
+                                           Style="{StaticResource SmallLabel}"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Spacing="5">
+                                <Line X1="0" X2="5" BackgroundColor="Red"/>
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding ConstructorInfo.HighestRaceFinish }"
+                                           Style="{StaticResource LargeLabel}"/>
+                                    <Label Text="Highest Race Finish"
+                                           Style="{StaticResource SmallLabel}"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Spacing="5">
+                                <Line X1="0" X2="5" BackgroundColor="Red"/>
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding ConstructorInfo.Poles }"
+                                           Style="{StaticResource LargeLabel}"/>
+                                    <Label Text="Poles"
+                                           Style="{StaticResource SmallLabel}"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Spacing="5">
+                                <Line X1="0" X2="5" BackgroundColor="Red"/>
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding ConstructorInfo.FastestLaps }"
+                                           Style="{StaticResource LargeLabel}"/>
+                                    <Label Text="Fastest Laps"
+                                           Style="{StaticResource SmallLabel}"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+
+                        <Image Source="{Binding Constructor.Constructor.Images.Car}"
+                               Grid.Column="1"
+                               Grid.RowSpan="6"
+                               WidthRequest="450"
+                               Margin="40,0,0,0">
+                            <Image.Shadow>
+                                <Shadow Brush="black"
+                                        Offset="-10,-10"
+                                        Radius="30"
+                                        Opacity="0.7"/>
+                            </Image.Shadow>
+                        </Image>
+
+                    </Grid>
+                    
+                    <VerticalStackLayout Grid.Row="1"
+                                         Margin="10,20,10,0">
+                        <Label Text="Basic Informations: "
+                               Style="{StaticResource LargeLabel}"/>
+                        <Line HeightRequest="1"
+                              Background="black"/>
+                        <HorizontalStackLayout Padding="20,10,0,0"
+                                               Spacing="5">
+                            <Line X1="0" X2="5" BackgroundColor="red"/>
+                            <Label Text="Full Name: "
+                                   Style="{StaticResource MediumLabel}"/>
+                            <Label Style="{StaticResource MediumLabel}"
+                                   Text="{Binding ConstructorInfo.FullName}"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Padding="20,10,0,0"
+                                               Spacing="5">
+                            <Line X1="0" X2="5" BackgroundColor="red"/>
+                            <Label Text="Base: "
+                                   Style="{StaticResource MediumLabel}"/>
+                            <Label Style="{StaticResource MediumLabel}"
+                                   Text="{Binding ConstructorInfo.Base}"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Padding="20,10,0,0"
+                                               Spacing="5">
+                            <Line X1="0" X2="5" BackgroundColor="red"/>
+                            <Label Text="Team Chief: "
+                                   Style="{StaticResource MediumLabel}"/>
+                            <Label Style="{StaticResource MediumLabel}"
+                                   Text="{Binding ConstructorInfo.TeamChief}"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Padding="20,10,0,0"
+                                               Spacing="5">
+                            <Line X1="0" X2="5" BackgroundColor="red"/>
+                            <Label Text="Technical Chief: "
+                                   Style="{StaticResource MediumLabel}"/>
+                            <Label Style="{StaticResource MediumLabel}"
+                                   Text="{Binding ConstructorInfo.TechnicalChief}"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Padding="20,10,0,0"
+                                               Spacing="5">
+                            <Line X1="0" X2="5" BackgroundColor="red"/>
+                            <Label Text="Power Unit: "
+                                   Style="{StaticResource MediumLabel}"/>
+                            <Label Style="{StaticResource MediumLabel}"
+                                   Text="{Binding ConstructorInfo.PowerUnit}"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <Frame Grid.Row="2"
+                           Style="{StaticResource CardView}"
+                           Padding="10"
+                           Margin="10,10,10,30">
+
+                        <StackLayout>
+                            <Label Text="Info: "
+                                   Margin="0,0,0,5"
+                                   Style="{StaticResource LargeLabel}"/>
+                            <Line BackgroundColor="black"
+                                  HeightRequest="1"
+                                  Margin="0,0,0,10"/>
+                            <Label Text="{Binding ConstructorInfo.Info}"
+                                   Style="{StaticResource SmallLabel}"/>
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+            </toolkit:StateContainer.StateViews>
+        </Grid>
+    </ScrollView>
 </ContentPage>

@@ -10,6 +10,6 @@ public partial class ConstructorDetailsView : ContentPage
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
-        (this.BindingContext as CircuitDetailsViewModel).Initailize();
+        (this.BindingContext as ConstructorDetailsViewModel).Initailize();
     }
 }

@@ -38,31 +38,25 @@ namespace PoleTimeGuesser.ViewModel
             }
             finally
             {
-                IsBusy= false;
+                IsBusy = false;
             }
         }
 
         [RelayCommand]
         private async Task GetCircuitInfo()
         {
-            try
-            {
-                var result = await _f1DataGetterService.GetCicuitInfoAsync(Circuit.Circuit.CircuitId);
 
-                if (result is null)
-                {
-                    // TODO: Error képernyő/not found képernyő
-                    PageState= pStates.Error.ToString();
-                }
-                else
-                {
-                    CircuitInfo = result;
-                    PageState = pStates.Success.ToString();
-                }
-            }
-            catch (Exception ex)
+            var result = await _f1DataGetterService.GetCicuitInfoAsync(Circuit.Circuit.CircuitId);
+
+            if (result is null)
             {
-                throw;
+                // TODO: Error képernyő/not found képernyő
+                PageState = pStates.Error.ToString();
+            }
+            else
+            {
+                CircuitInfo = result;
+                PageState = pStates.Success.ToString();
             }
         }
     }
