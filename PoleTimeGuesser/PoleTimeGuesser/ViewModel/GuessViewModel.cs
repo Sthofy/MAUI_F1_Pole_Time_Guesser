@@ -3,6 +3,11 @@
     public partial class GuessViewModel : BaseViewModel
     {
         [ObservableProperty]
+        private bool _isToggled = false;
+        [ObservableProperty]
+        ScheduleModel _upcomingEvent;
+
+        [ObservableProperty]
         private string _selectedDriverImage = "default_avatar.png";
         [ObservableProperty]
         private DriverStandingsModel _selectedDriver = null;
@@ -46,6 +51,7 @@
             try
             {
                 await GetPreviousGuesses();
+                await GetUpcomingEvent();
                 await GetDrivers();
                 await GetEvents();
                 await VerifyGuess();
@@ -258,6 +264,34 @@
             if (!response.IsSuccessStatusCode)
             {
                 await Shell.Current.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, "OK");
+            }
+        }
+
+        [RelayCommand]
+        private void OnToggled()
+        {
+            IsToggled = !IsToggled;
+        }
+
+        private async Task GetUpcomingEvent()
+        {
+            UpcomingEvent = await _f1DataGetterService.GetUpComingEvent();
+            if (UpcomingEvent is null)
+            {
+                UpcomingEvent = new ScheduleModel
+                {
+                    Circuit = new CircuitModel
+                    {
+                        Location = new LocationModel
+                        {
+                            Image = "pin.jpg",
+                            Country = "Season ended.",
+                            Locality = "See you next year!"
+                        },
+                        CircuitName = ""
+                    },
+                    Date = "N.A.",
+                };
             }
         }
     }
