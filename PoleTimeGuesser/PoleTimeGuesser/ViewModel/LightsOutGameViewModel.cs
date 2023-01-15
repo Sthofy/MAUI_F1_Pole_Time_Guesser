@@ -1,13 +1,18 @@
-﻿namespace PoleTimeGuesser.ViewModel
+﻿using Microsoft.Maui.Graphics.Text;
+using System.Globalization;
+
+namespace PoleTimeGuesser.ViewModel
 {
     public partial class LightsOutGameViewModel : BaseViewModel
     {
         [ObservableProperty]
         private string _eTime = "Best";
         [ObservableProperty]
+        private string _pTime = "Best";
+        [ObservableProperty]
         private string _hText;
         [ObservableProperty]
-        private string btnText = "Start";
+        private string _btnText = "Start";
         [ObservableProperty]
         private string _lightFirst;
         [ObservableProperty]
@@ -17,7 +22,8 @@
         [ObservableProperty]
         private bool _isClickable = true;
         private bool _isStarted = false;
-        Stopwatch stopwatch = new Stopwatch();
+        public ObservableCollection<string> PreviousTimes { get; } = new();
+        readonly Stopwatch _stopwatch = new Stopwatch();
 
         public LightsOutGameViewModel()
         {
@@ -46,15 +52,29 @@
 
                 IsClickable = true;
 
-                stopwatch.Start();
+                _stopwatch.Start();
             }
             else if (_isStarted)
             {
                 BtnText = "Start";
                 _isStarted = false;
-                stopwatch.Stop();
-                ETime = stopwatch.Elapsed.ToString(@"mm\:ss\:fff");
-                stopwatch.Reset();
+                _stopwatch.Stop();
+
+                if (!ETime.Equals("Best"))
+                {
+                    var time = TimeSpan.ParseExact(ETime, "mm\\:ss\\:fff", CultureInfo.CurrentCulture).TotalMilliseconds;
+
+                    if (time > _stopwatch.ElapsedMilliseconds)
+                        ETime = _stopwatch.Elapsed.ToString(@"mm\:ss\:fff");
+                }
+                else
+                {
+                    ETime = _stopwatch.Elapsed.ToString(@"mm\:ss\:fff");
+                }
+
+                PTime = _stopwatch.Elapsed.ToString(@"mm\:ss\:fff");
+                PreviousTimes.Add(PTime);
+                _stopwatch.Reset();
             }
         }
     }

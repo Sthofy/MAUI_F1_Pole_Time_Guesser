@@ -4,14 +4,14 @@
              x:Class="PoleTimeGuesser.View.LightsOutGameView"
              xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
              xmlns:converter="clr-namespace:PoleTimeGuesser.Converters"
-             Title="LightsOutGameView"
+             Title="Reaction Game"
              BackgroundColor="LightGray"
              Shell.NavBarIsVisible="True">
     <ContentPage.Resources>
         <converter:StringToColor x:Key="StringToColor"/>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="100,auto,auto,auto"
+    <Grid RowDefinitions="auto,auto,auto,auto,150"
           RowSpacing="20"
           Padding="10">
         <Label Text="{Binding HText}"
@@ -19,42 +19,88 @@
                Style="{StaticResource LargeLabel}"/>
         <Frame Grid.Row="1"
                BackgroundColor="Black"
-               HeightRequest="200">
+               HeightRequest="120">
             <Grid ColumnDefinitions="*,*,*">
                 <Frame BackgroundColor="{Binding LightFirst,Converter={StaticResource StringToColor}}"
-                       HeightRequest="100"
-                       WidthRequest="100"
-                       CornerRadius="50"
+                       HeightRequest="80"
+                       WidthRequest="80"
+                       CornerRadius="40"
                        BorderColor="Transparent"/>
                 <Frame BackgroundColor="{Binding LightSecond,Converter={StaticResource StringToColor}}"
-                       HeightRequest="100"
-                       WidthRequest="100"
-                       CornerRadius="50"
+                       HeightRequest="80"
+                       WidthRequest="80"
+                       CornerRadius="40"
                        BorderColor="Transparent"
                        Grid.Column="1"/>
                 <Frame BackgroundColor="{Binding LightThird,Converter={StaticResource StringToColor}}"
-                       HeightRequest="100"
-                       WidthRequest="100"
-                       CornerRadius="50"
+                       HeightRequest="80"
+                       WidthRequest="80"
+                       CornerRadius="40"
                        BorderColor="Transparent"
                        Grid.Column="2"/>
             </Grid>
         </Frame>
+
         <Button Text="{Binding BtnText}"
                 Grid.Row="2"
                 HeightRequest="100"
                 Command="{Binding GameCommand}"
-                IsEnabled="{Binding IsClickable}"/>
-        <VerticalStackLayout Grid.Row="3">
-            <Label Text="Best:"
-                   Style="{StaticResource LargeLabel}"/>
-            <Line HeightRequest="5"
-                  BackgroundColor="Black"/>
-            <Frame Margin="0,10,0,0">
-                <Label Text="{Binding ETime}"
-                       HorizontalTextAlignment="Center"
+                IsEnabled="{Binding IsClickable}"
+                BackgroundColor="Red"/>
+
+        <HorizontalStackLayout Grid.Row="3"
+                               Spacing="30"
+                               HorizontalOptions="CenterAndExpand">
+
+            <VerticalStackLayout>
+                <Label Text="Best:"
                        Style="{StaticResource LargeLabel}"/>
-            </Frame>
-        </VerticalStackLayout>
+                <Line HeightRequest="5"
+                      BackgroundColor="Black"/>
+                <Frame Margin="0,10,0,0">
+                    <Label Text="{Binding ETime}"
+                           HorizontalTextAlignment="Center"
+                           Style="{StaticResource LargeLabel}"/>
+                </Frame>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout>
+                <Label Text="Previous:"
+                       Style="{StaticResource LargeLabel}"/>
+                <Line HeightRequest="2"
+                      BackgroundColor="Black"/>
+                <Frame Margin="0,10,0,0">
+                    <Label Text="{Binding PTime}"
+                           HorizontalTextAlignment="Center"
+                           Style="{StaticResource LargeLabel}"/>
+                </Frame>
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+        <Grid Grid.Row="4"
+              RowDefinitions="auto,*">
+            <VerticalStackLayout>
+                <Label Text="All Prevoius Times"
+                       Style="{StaticResource MediumLabel}"/>
+                <Line Background="black"
+                      HeightRequest="2"/>
+            </VerticalStackLayout>
+
+            <CollectionView ItemsSource="{Binding PreviousTimes}"
+                            SelectionMode="None"
+                            Grid.Row="1">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid BackgroundColor="White"
+                              Margin="0,10,0,0">
+                            <Label Text="{Binding .}"
+                                   HorizontalTextAlignment="Center"
+                                   Style="{StaticResource MediumLabel}"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </Grid>
     </Grid>
 </ContentPage>

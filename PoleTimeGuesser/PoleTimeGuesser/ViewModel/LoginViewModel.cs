@@ -12,8 +12,8 @@
         [ObservableProperty]
         bool _isProcessing;
 
-        IServiceManager _serviceManager;
-        ISharedData _sharedData;
+        readonly IServiceManager _serviceManager;
+        readonly ISharedData _sharedData;
 
         public LoginViewModel(IServiceManager serviceManager, ISharedData sharedData)
         {
@@ -78,7 +78,7 @@
         }
 
         [RelayCommand]
-        async Task GoToRegisterPage()
+        static async Task GoToRegisterPage()
         {
             await Shell.Current.GoToAsync("///RegisterPage", true);
         }

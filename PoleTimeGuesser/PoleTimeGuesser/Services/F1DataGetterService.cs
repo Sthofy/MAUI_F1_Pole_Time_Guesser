@@ -2,20 +2,22 @@
 {
     public class F1DataGetterService : IF1DataGetterService
     {
-        private DateTime _date = DateTime.Now;
+        private readonly DateTime _date = DateTime.Now;
         readonly HttpClient _httpClient;
         private readonly ISharedData _sharedData;
-        List<DriverStandingsModel> driverStadingModel = new();
-        List<ScheduleModel> scheduleModels = new();
-        List<ConstructorStandingsModel> constructorStandingModels = new();
-        string Url = "https://f1guessapi.azurewebsites.net";
+        List<DriverStandingsModel> _driverStadingModel = new();
+        List<ScheduleModel> _scheduleModels = new();
+        List<ConstructorStandingsModel> _constructorStandingModels = new();
+        const string URL = "https://f1guessapi.azurewebsites.net";
         //string Url = "https://10.0.2.2:7200";
 
         public F1DataGetterService(ISharedData sharedData)
         {
             _sharedData = sharedData;
-            _httpClient = new HttpClient();
-            _httpClient.Timeout = TimeSpan.FromMinutes(30);
+            _httpClient = new HttpClient
+            {
+                Timeout = TimeSpan.FromMinutes(30)
+            };
             _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + _sharedData.Token);
         }
 
@@ -30,9 +32,9 @@
                     var result = await response.Content.ReadAsStringAsync();
                     var json = JObject.Parse(result);
                     var res = json["MRData"]["StandingsTable"]["StandingsLists"].First["DriverStandings"].ToString();
-                    driverStadingModel = JsonConvert.DeserializeObject<List<DriverStandingsModel>>(res);
+                    _driverStadingModel = JsonConvert.DeserializeObject<List<DriverStandingsModel>>(res);
 
-                    foreach (var item in driverStadingModel)
+                    foreach (var item in _driverStadingModel)
                     {
                         item.Driver.Image = new DriverImageModel
                         {
@@ -42,7 +44,7 @@
                         };
                     }
 
-                    return driverStadingModel;
+                    return _driverStadingModel;
                 }
                 else
                     return null;
@@ -62,9 +64,9 @@
                 var result = await response.Content.ReadAsStringAsync();
                 var json = JObject.Parse(result);
                 var res = json["MRData"]["StandingsTable"]["StandingsLists"].First["ConstructorStandings"].ToString();
-                constructorStandingModels = JsonConvert.DeserializeObject<List<ConstructorStandingsModel>>(res);
+                _constructorStandingModels = JsonConvert.DeserializeObject<List<ConstructorStandingsModel>>(res);
 
-                foreach (var item in constructorStandingModels)
+                foreach (var item in _constructorStandingModels)
                 {
                     item.Constructor.Images = new ConstructorImageModel
                     {
@@ -74,7 +76,7 @@
                     };
                 }
 
-                return constructorStandingModels;
+                return _constructorStandingModels;
             }
             else
                 return null;
@@ -90,16 +92,16 @@
                     var result = await response.Content.ReadAsStringAsync();
                     var json = JObject.Parse(result);
                     var res = json["MRData"]["RaceTable"]["Races"].ToString();
-                    scheduleModels = JsonConvert.DeserializeObject<List<ScheduleModel>>(res);
+                    _scheduleModels = JsonConvert.DeserializeObject<List<ScheduleModel>>(res);
 
-                    foreach (var item in scheduleModels)
+                    foreach (var item in _scheduleModels)
                     {
                         string country = item.Circuit.Location.Country.Equals("Saudi Arabia") ? "saudi_arabia" : item.Circuit.Location.Country.ToLower();
                         item.Circuit.Location.Image = $"{country}.png";
                         item.Circuit.Image = $"{item.Circuit.CircuitId}_circuit.png";
                     }
 
-                    return scheduleModels;
+                    return _scheduleModels;
                 }
                 else
                     return null;
@@ -114,7 +116,7 @@
         {
             try
             {
-                var response = await _httpClient.GetAsync($"{Url}/DriverInfo/{id}");
+                var response = await _httpClient.GetAsync($"{URL}/DriverInfo/{id}");
                 if (response.IsSuccessStatusCode)
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();
@@ -137,7 +139,7 @@
         public async Task<CircuitInfoModel> GetCicuitInfoAsync(string id)
         {
 
-            var response = await _httpClient.GetAsync($"{Url}/CircuitInfo/{id}");
+            var response = await _httpClient.GetAsync($"{URL}/CircuitInfo/{id}");
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStringAsync();
@@ -154,7 +156,7 @@
 
         public async Task<ConstructorInfoModel> GetConstructorInfoAsync(string id)
         {
-            var response = await _httpClient.GetAsync($"{Url}/ConstructorInfo/{id}");
+            var response = await _httpClient.GetAsync($"{URL}/ConstructorInfo/{id}");
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStringAsync();

@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             android:Application.WindowSoftInputModeAdjust="Resize"
              x:Class="PoleTimeGuesser.View.LoginView"
              xmlns:viewmodel="clr-namespace:PoleTimeGuesser.ViewModel"
              Title="Login">
@@ -24,7 +26,7 @@
                    Padding="10,0,10,0"
                    BorderColor="Transparent">
                 <Entry Placeholder="Username"
-                       ReturnType="Go"
+                       android:Entry.ImeOptions="Done"
                        Text="{Binding Username}"
                        TextColor="Black"/>
             </Frame>
@@ -34,7 +36,7 @@
                    BorderColor="Transparent">
                 <Entry Placeholder="Password"
                        IsPassword="True"
-                       ReturnType="Go"
+                       android:Entry.ImeOptions="Done"
                        Text="{Binding Password}"
                        TextColor="Black"/>
             </Frame>
