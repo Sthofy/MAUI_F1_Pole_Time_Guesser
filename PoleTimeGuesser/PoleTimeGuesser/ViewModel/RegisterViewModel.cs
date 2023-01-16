@@ -177,7 +177,7 @@ namespace PoleTimeGuesser.ViewModel
         [RelayCommand]
         private async Task BackToLoginPage()
         {
-            await Shell.Current.GoToAsync($"{nameof(LoginView)}", true);
+            await Shell.Current.GoToAsync("///LoginView",true);
         }
 
         private async Task InsertScore(int userId)

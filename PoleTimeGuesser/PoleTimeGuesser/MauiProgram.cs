@@ -20,13 +20,13 @@ public static class MauiProgram
            .AddScoped<ScheduleViewModel>()
            .AddTransient<CircuitDetailsViewModel>()
            .AddScoped<LoginViewModel>()
-           .AddSingleton<RegisterViewModel>()
+           .AddTransient<RegisterViewModel>()
            .AddTransient<MainViewModel>()
            .AddScoped<SettingsViewModel>()
            .AddScoped<GamesViewModel>()
            .AddTransient<GuessViewModel>()
            .AddTransient<QuizViewModel>()
-           .AddSingleton<LightsOutGameViewModel>()
+           .AddScoped<LightsOutGameViewModel>()
            .AddTransient<ConstructorStandingsViewModel>()
            .AddTransient<ConstructorDetailsViewModel>();
         #endregion
@@ -37,20 +37,20 @@ public static class MauiProgram
             .AddTransient<ScheduleView>()
             .AddTransient<DriverDetailsView>()
             .AddTransient<CircuitDetailsView>()
-            .AddSingleton<LoginView>()
+            .AddScoped<LoginView>()
             .AddTransient<RegisterView>()
-            .AddSingleton<SettingsView>()
-            .AddSingleton<GamesView>()
+            .AddScoped<SettingsView>()
+            .AddScoped<GamesView>()
             .AddTransient<GuessView>()
             .AddTransient<QuizView>()
-            .AddSingleton<LightsOutGameView>()
+            .AddScoped<LightsOutGameView>()
             .AddTransient<ConstructorStandingsView>()
             .AddTransient<ConstructorDetailsView>();
         #endregion
 
         #region Services
-        builder.Services.AddSingleton<IServiceManager, ServiceManager>()
-            .AddSingleton<ISharedData, SharedData>()
+        builder.Services.AddScoped<IServiceManager, ServiceManager>()
+            .AddScoped<ISharedData, SharedData>()
             .AddScoped<IF1DataGetterService, F1DataGetterService>();
         #endregion
 

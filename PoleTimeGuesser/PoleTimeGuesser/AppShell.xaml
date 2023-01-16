@@ -27,46 +27,49 @@
                 <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
                 <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Dark=#95FFFFFF, Light=#95000000}" />
                 <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource Black}}" />
-                <Setter Property="Shell.TabBarForegroundColor" Value="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource White}}"/>
-                <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource White}}"/>
-                <Setter Property="Shell.TabBarTitleColor" Value="{AppThemeBinding Dark={StaticResource BaseColor}, Light={StaticResource BaseColor}}"/>
+                <Setter Property="Shell.TabBarForegroundColor" Value="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource White}}" />
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource White}}" />
+                <Setter Property="Shell.TabBarTitleColor" Value="{AppThemeBinding Dark={StaticResource BaseColor}, Light={StaticResource BaseColor}}" />
             </Style>
 
-            <Style BasedOn="{StaticResource BaseStyle}" TargetType="ShellItem" ApplyToDerivedTypes="True" />
-            <Style TargetType="TabBar" BasedOn="{StaticResource TabStyle}"/>
+            <Style
+                ApplyToDerivedTypes="True"
+                BasedOn="{StaticResource BaseStyle}"
+                TargetType="ShellItem" />
+            <Style BasedOn="{StaticResource TabStyle}" TargetType="TabBar" />
         </ResourceDictionary>
     </Shell.Resources>
 
     <ShellContent
-        Shell.NavBarIsVisible="False"
         Title="Login"
         ContentTemplate="{DataTemplate view:LoginView}"
-        Route="LoginView" />
+        Route="LoginView"
+        Shell.NavBarIsVisible="False" />
 
     <ShellContent
-        Shell.NavBarIsVisible="False"
         Title="Registration"
         ContentTemplate="{DataTemplate view:RegisterView}"
-        Route="RegisterPage"/>
+        Route="RegisterPage"
+        Shell.NavBarIsVisible="False" />
 
-    <TabBar Shell.NavBarIsVisible="False" Route="main">
+    <TabBar Route="main" Shell.NavBarIsVisible="False">
         <Tab Title="Home" Icon="home_black.svg">
             <ShellContent ContentTemplate="{DataTemplate view:MainView}" Route="MainView" />
         </Tab>
         <Tab Title="Schedule" Icon="event_black.svg">
-            <ShellContent ContentTemplate="{DataTemplate view:ScheduleView}" Route="ScheduleView"/>
+            <ShellContent ContentTemplate="{DataTemplate view:ScheduleView}" Route="ScheduleView" />
         </Tab>
         <Tab Title="Drivers" Icon="helmet_black.svg">
-            <ShellContent ContentTemplate="{DataTemplate view:DriverStandingsView}" Route="DriverStandingsView"/>
+            <ShellContent ContentTemplate="{DataTemplate view:DriverStandingsView}" Route="DriverStandingsView" />
         </Tab>
         <Tab Title="Constructors" Icon="contrutor.png">
-            <ShellContent ContentTemplate="{DataTemplate view:ConstructorStandingsView}" Route="ConstructorStandingsView"/>
+            <ShellContent ContentTemplate="{DataTemplate view:ConstructorStandingsView}" Route="ConstructorStandingsView" />
         </Tab>
         <Tab Title="Games" Icon="game.png">
-            <ShellContent ContentTemplate="{DataTemplate view:GamesView}" />
+            <ShellContent ContentTemplate="{DataTemplate view:GamesView}" Route="GamesView" />
         </Tab>
         <Tab Title="Settings" Icon="Settings.png">
-            <ShellContent ContentTemplate="{DataTemplate view:SettingsView}"/>
+            <ShellContent ContentTemplate="{DataTemplate view:SettingsView}" Route="SettingsView" />
         </Tab>
     </TabBar>
 </Shell>

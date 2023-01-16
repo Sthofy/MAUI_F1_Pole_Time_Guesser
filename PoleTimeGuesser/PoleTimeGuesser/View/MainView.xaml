@@ -1,173 +1,154 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage x:Class="PoleTimeGuesser.View.MainView"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="PoleTimeGuesser.View.MainView"
              xmlns:model="clr-namespace:PoleTimeGuesser.Library.Models;assembly=PoleTimeGuesser.Library"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewModel="clr-namespace:PoleTimeGuesser.ViewModel"
              x:DataType="viewModel:MainViewModel">
-    <ScrollView VerticalScrollBarVisibility="Never"
-                HorizontalScrollBarVisibility="Never">
-        <Grid toolkit:StateContainer.CurrentState="{Binding PageState}"
-              Padding="10">
+    <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
+        <Grid Padding="10" toolkit:StateContainer.CurrentState="{Binding PageState}">
 
             <toolkit:StateContainer.StateViews>
-                <!-- Loading -->
+                <!--  Loading  -->
                 <VerticalStackLayout toolkit:StateView.StateKey="Loading"
-                                     VerticalOptions="CenterAndExpand"
-                                     HorizontalOptions="FillAndExpand">
-                    <ActivityIndicator IsVisible="{Binding IsBusy}"
-                                       IsRunning="{Binding IsBusy}"/>
+                                     HorizontalOptions="FillAndExpand"
+                                     VerticalOptions="CenterAndExpand">
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
                 </VerticalStackLayout>
-                
-                <!-- Error -->
+
+                <!--  Error  -->
                 <VerticalStackLayout toolkit:StateView.StateKey="Error"
-                                     VerticalOptions="CenterAndExpand"
-                                     HorizontalOptions="FillAndExpand">
-                    <Image Source="error.png"
-                           HeightRequest="200"
-                           WidthRequest="200"/>
+                                     HorizontalOptions="FillAndExpand"
+                                     VerticalOptions="CenterAndExpand">
+                    <Image HeightRequest="200"
+                           Source="error.png"
+                           WidthRequest="200" />
                 </VerticalStackLayout>
 
 
-                <VerticalStackLayout toolkit:StateView.StateKey="Success"
-                                         Spacing="5">
-                    <!-- Logged in user info -->
-                    <Frame Style="{StaticResource CardView}"
-                               Margin="5"
-                               HeightRequest="200">
-                        <Grid ColumnDefinitions="150,*"
-                              RowDefinitions="150,*">
-                            <Frame WidthRequest="128"
-                                   HeightRequest="128"
-                                   CornerRadius="32"
+                <VerticalStackLayout toolkit:StateView.StateKey="Success" Spacing="5">
+                    <!--  Logged in user info  -->
+                    <Frame Margin="5"
+                           HeightRequest="200"
+                           Style="{StaticResource CardView}">
+                        <Grid ColumnDefinitions="150,*" RowDefinitions="150,*">
+                            <Frame BackgroundColor="Aqua"
                                    BorderColor="Transparent"
-                                   BackgroundColor="Aqua">
-                                <Image WidthRequest="128"
+                                   CornerRadius="32"
+                                   HeightRequest="128"
+                                   WidthRequest="128">
+                                <Image Aspect="AspectFill"
                                        HeightRequest="128"
                                        Source="{Binding SharedData.AvatarSourceName}"
-                                       Aspect="AspectFill"/>
+                                       WidthRequest="128" />
                             </Frame>
                             <Label Grid.Row="1"
-                                   Text="{Binding SharedData.Username}"
+                                   FontSize="30"
                                    HorizontalOptions="Center"
-                                   FontSize="30"/>
-                            <VerticalStackLayout Grid.Column="1"
-                                                 Grid.RowSpan="2"
-                                                 HorizontalOptions="Center"
-                                                 Margin="10">
-                                <Label Text="Your Points: "
-                                       Style="{StaticResource LargeLabel}"/>
-                                <Label Text="{Binding UserPoints}"/>
-                                <Label Text="Season Events:"
-                                       Style="{StaticResource LargeLabel}"/>
-                                <Label Text="{Binding EllapsedEvents}"/>
+                                   Text="{Binding SharedData.Username}" />
+                            <VerticalStackLayout Grid.RowSpan="2"
+                                                 Grid.Column="1"
+                                                 Margin="10"
+                                                 HorizontalOptions="Center">
+                                <Label Style="{StaticResource LargeLabel}" Text="Your Points: " />
+                                <Label Text="{Binding UserPoints}" />
+                                <Label Style="{StaticResource LargeLabel}" Text="Season Events:" />
+                                <Label Text="{Binding EllapsedEvents}" />
 
                             </VerticalStackLayout>
                         </Grid>
                     </Frame>
 
-                    <!-- Upcomint Envet -->
-                    <Label Text="Upcoming Event"
-                           HorizontalTextAlignment="Start"
-                           Style="{StaticResource MediumLabel}"/>
-                    <Line HeightRequest="5"
-                          BackgroundColor="Red"/>
-                    <Frame Style="{StaticResource CardView}"
-                           Margin="5"
+                    <!--  Upcomint Envet  -->
+                    <Label HorizontalTextAlignment="Start"
+                           Style="{StaticResource MediumLabel}"
+                           Text="Upcoming Event" />
+                    <Line BackgroundColor="Red" HeightRequest="5" />
+                    <Frame Margin="5"
+                           Padding="5"
                            HeightRequest="100"
-                           Padding="5">
-                        <Grid ColumnDefinitions="65,2*,*"
-                              ColumnSpacing="10">
-                            <Frame HeightRequest="64"
-                                   WidthRequest="64"
+                           Style="{StaticResource CardView}">
+                        <Grid ColumnDefinitions="65,2*,*" ColumnSpacing="10">
+                            <Frame BorderColor="Transparent"
                                    CornerRadius="32"
-                                   BorderColor="Transparent">
-                                <Image Source="{Binding UpcomingEvent.Circuit.Location.Image}"
-                                       WidthRequest="100"
+                                   HeightRequest="64"
+                                   WidthRequest="64">
+                                <Image Aspect="AspectFill"
                                        HeightRequest="100"
-                                       Aspect="AspectFill"/>
+                                       Source="{Binding UpcomingEvent.Circuit.Location.Image}"
+                                       WidthRequest="100" />
                             </Frame>
-                            <VerticalStackLayout Grid.Column="1"
-                                                 VerticalOptions="Center">
-                                <Label Text="{Binding UpcomingEvent.Circuit.Location.Country}"
-                                       Style="{StaticResource MediumLabel}"/>
-                                <Label Text="{Binding UpcomingEvent.Circuit.Location.Locality}"
-                                       Style="{StaticResource SmallLabel}"/>
-                                <Label Text="{Binding UpcomingEvent.Circuit.CircuitName}"
-                                       Style="{StaticResource SmallLabel}"/>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                <Label Style="{StaticResource MediumLabel}" Text="{Binding UpcomingEvent.Circuit.Location.Country}" />
+                                <Label Style="{StaticResource SmallLabel}" Text="{Binding UpcomingEvent.Circuit.Location.Locality}" />
+                                <Label Style="{StaticResource SmallLabel}" Text="{Binding UpcomingEvent.Circuit.CircuitName}" />
                             </VerticalStackLayout>
-                            <Label Text="{Binding UpcomingEvent.Date}"
-                                   Grid.Column="2"
-                                   VerticalTextAlignment="Center"/>
+                            <Label Grid.Column="2"
+                                   Text="{Binding UpcomingEvent.Date}"
+                                   VerticalTextAlignment="Center" />
                         </Grid>
                     </Frame>
 
-                    <!-- Top3 Driver -->
-                    <Label Text="Top 3 Driver"
-                           HorizontalTextAlignment="Start"
-                           Style="{StaticResource MediumLabel}"/>
-                    <Line HeightRequest="5"
-                          BackgroundColor="Red"/>
-                    <ScrollView Orientation="Horizontal"
-                                HorizontalScrollBarVisibility="Never">
+                    <!--  Top3 Driver  -->
+                    <Label HorizontalTextAlignment="Start"
+                           Style="{StaticResource MediumLabel}"
+                           Text="Top 3 Driver" />
+                    <Line BackgroundColor="Red" HeightRequest="5" />
+                    <ScrollView HorizontalScrollBarVisibility="Never" Orientation="Horizontal">
                         <HorizontalStackLayout BindableLayout.ItemsSource="{Binding TopDrivers}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="model:DriverStandingsModel">
-                                    <Frame Style="{StaticResource CardView}"
-                                           Margin="5"
+                                    <Frame Margin="5"
                                            Padding="10,10,0,0"
-                                           WidthRequest="200"
-                                           HeightRequest="200">
-                                        <Grid RowDefinitions="40,*,*"
-                                              ColumnDefinitions="*,50"
-                                              ColumnSpacing="10">
-                                            <!-- Position -->
-                                            <Label Text="{Binding position}"
-                                                    Style="{StaticResource LargeLabel}"
-                                                    VerticalOptions="Start"
-                                                    HorizontalOptions="Start"/>
+                                           HeightRequest="200"
+                                           Style="{StaticResource CardView}"
+                                           WidthRequest="200">
+                                        <Grid ColumnDefinitions="*,50"
+                                              ColumnSpacing="10"
+                                              RowDefinitions="40,*,*">
+                                            <!--  Position  -->
+                                            <Label HorizontalOptions="Start"
+                                                   Style="{StaticResource LargeLabel}"
+                                                   Text="{Binding position}"
+                                                   VerticalOptions="Start" />
 
-                                            <!-- Image -->
-                                            <Image Source="{Binding Driver.Image.Full}"
+                                            <!--  Image  -->
+                                            <Image Grid.RowSpan="3"
                                                    Grid.Column="1"
-                                                   Grid.RowSpan="3"
+                                                   Aspect="AspectFill"
                                                    HeightRequest="180"
-                                                   WidthRequest="150"
-                                                   Aspect="AspectFill">
+                                                   Source="{Binding Driver.Image.Full}"
+                                                   WidthRequest="150">
                                                 <Image.Shadow>
                                                     <Shadow Brush="black"
-                                                            Offset="-10,-10"
+                                                            Opacity="0.7"
                                                             Radius="30"
-                                                            Opacity="0.7"/>
+                                                            Offset="-10,-10" />
                                                 </Image.Shadow>
                                             </Image>
 
-                                            <!-- Name -->
-                                            <VerticalStackLayout VerticalOptions="Start"
-                                                                 Grid.Row="1">
+                                            <!--  Name  -->
+                                            <VerticalStackLayout Grid.Row="1" VerticalOptions="Start">
                                                 <HorizontalStackLayout Spacing="5">
-                                                    <Label Text="{Binding Driver.givenName}"
-                                                               Style="{StaticResource MediumLabel}"/>
-                                                    <Label Text="{Binding Driver.familyName}"
-                                                               Style="{StaticResource MediumLabel}"/>
+                                                    <Label Style="{StaticResource MediumLabel}" Text="{Binding Driver.givenName}" />
+                                                    <Label Style="{StaticResource MediumLabel}" Text="{Binding Driver.familyName}" />
                                                 </HorizontalStackLayout>
 
-                                                <Label Text="{Binding Constructors[0].name}"
-                                                           Style="{StaticResource SmallLabel}"/>
+                                                <Label Style="{StaticResource SmallLabel}" Text="{Binding Constructors[0].name}" />
 
                                             </VerticalStackLayout>
 
-                                            <!-- Points -->
-                                            <HorizontalStackLayout VerticalOptions="Start"
+                                            <!--  Points  -->
+                                            <HorizontalStackLayout Grid.Row="2"
                                                                    HorizontalOptions="Start"
                                                                    Spacing="5"
-                                                                   Grid.Row="2">
-                                                <Line X1="0" X2="5" BackgroundColor="Red"/>
-                                                <Label Text="{Binding points}"
-                                                           Style="{StaticResource MediumLabel}"/>
-                                                <Label Text="Pts"
-                                                           Style="{StaticResource MediumLabel}"/>
+                                                                   VerticalOptions="Start">
+                                                <Line BackgroundColor="Red"
+                                                      X1="0"
+                                                      X2="5" />
+                                                <Label Style="{StaticResource MediumLabel}" Text="{Binding points}" />
+                                                <Label Style="{StaticResource MediumLabel}" Text="Pts" />
                                             </HorizontalStackLayout>
                                         </Grid>
                                     </Frame>
@@ -176,68 +157,65 @@
                         </HorizontalStackLayout>
                     </ScrollView>
 
-                    <!-- Team stadings -->
-                    <Label Text="Team Standings"
-                           HorizontalTextAlignment="Start"
-                           Style="{StaticResource MediumLabel}"/>
-                    <Line HeightRequest="5"
-                          BackgroundColor="Red"/>
-                    <ScrollView HeightRequest="300"
-                                Orientation="Vertical"
-                                VerticalScrollBarVisibility="Never"
+                    <!--  Team stadings  -->
+                    <Label HorizontalTextAlignment="Start"
+                           Style="{StaticResource MediumLabel}"
+                           Text="Team Standings" />
+                    <Line BackgroundColor="Red" HeightRequest="5" />
+                    <ScrollView Margin="0,0,0,20"
+                                HeightRequest="300"
                                 HorizontalScrollBarVisibility="Never"
-                                Margin="0,0,0,20">
-                        <CollectionView ItemsSource="{Binding Constructors}"
-                                        SelectionMode="None">
+                                Orientation="Vertical"
+                                VerticalScrollBarVisibility="Never">
+                        <CollectionView ItemsSource="{Binding Constructors}" SelectionMode="None">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="model:ConstructorStandingsModel">
-                                    <Frame HeightRequest="90"
+                                    <Frame Margin="0,5,0,5"
                                            Padding="5"
-                                           Style="{StaticResource CardView}"
-                                           Margin="0,5,0,5">
-                                        <Grid ColumnDefinitions="35,65,*,75"
-                                              ColumnSpacing="10">
-                                            <Label Text="{Binding Position}"
+                                           HeightRequest="90"
+                                           Style="{StaticResource CardView}">
+                                        <Grid ColumnDefinitions="35,65,*,75" ColumnSpacing="10">
+                                            <Label Margin="10,0,0,0"
                                                    Style="{StaticResource LargeLabel}"
-                                                   VerticalOptions="Center"
-                                                   Margin="10,0,0,0"/>
-                                            <Frame HeightRequest="60"
-                                                   WidthRequest="60"
-                                                   CornerRadius="30"
+                                                   Text="{Binding Position}"
+                                                   VerticalOptions="Center" />
+                                            <Frame Grid.Column="1"
                                                    BorderColor="Transparent"
-                                                   Grid.Column="1">
-                                                <Image Source="{Binding Constructor.Images.Logo}"
+                                                   CornerRadius="30"
+                                                   HeightRequest="60"
+                                                   WidthRequest="60">
+                                                <Image Aspect="AspectFill"
                                                        HeightRequest="60"
-                                                       WidthRequest="60"
-                                                       Aspect="AspectFill"/>
+                                                       Source="{Binding Constructor.Images.Logo}"
+                                                       WidthRequest="60" />
                                             </Frame>
                                             <VerticalStackLayout Grid.Column="2">
-                                                <Label Text="{Binding Constructor.name}"
-                                                       Style="{StaticResource MediumLabel}"/>
-                                                <Line HeightRequest="3" BackgroundColor="Red"
-                                                      Margin="0,0,0,5"/>
-                                                <HorizontalStackLayout Spacing="5"
-                                                                       Margin="5,0,0,0">
-                                                    <Line X1="0" X2="3" BackgroundColor="Red"/>
-                                                    <Label Text="Nationality: "/>
-                                                    <Label Text="{Binding Constructor.nationality}"/>
+                                                <Label Style="{StaticResource MediumLabel}" Text="{Binding Constructor.name}" />
+                                                <Line Margin="0,0,0,5"
+                                                      BackgroundColor="Red"
+                                                      HeightRequest="3" />
+                                                <HorizontalStackLayout Margin="5,0,0,0" Spacing="5">
+                                                    <Line BackgroundColor="Red"
+                                                          X1="0"
+                                                          X2="3" />
+                                                    <Label Text="Nationality: " />
+                                                    <Label Text="{Binding Constructor.nationality}" />
                                                 </HorizontalStackLayout>
-                                                <HorizontalStackLayout Spacing="5"
-                                                                       Margin="5,5,0,0">
-                                                    <Line X1="0" X2="3" BackgroundColor="Red"/>
-                                                    <Label Text="Wins: "/>
-                                                    <Label Text="{Binding Wins}"/>
+                                                <HorizontalStackLayout Margin="5,5,0,0" Spacing="5">
+                                                    <Line BackgroundColor="Red"
+                                                          X1="0"
+                                                          X2="3" />
+                                                    <Label Text="Wins: " />
+                                                    <Label Text="{Binding Wins}" />
                                                 </HorizontalStackLayout>
                                             </VerticalStackLayout>
                                             <HorizontalStackLayout Grid.Column="3"
-                                                                   VerticalOptions="Center"
-                                                                   HorizontalOptions="End"
                                                                    Margin="0,0,5,0"
-                                                                   Spacing="5">
-                                                <Label Text="{Binding Points}"
-                                                       Style="{StaticResource LargeLabel}"/>
-                                                <Label Text="Pts"
-                                                       Margin="0,15,0,0"/>
+                                                                   HorizontalOptions="End"
+                                                                   Spacing="5"
+                                                                   VerticalOptions="Center">
+                                                <Label Style="{StaticResource LargeLabel}" Text="{Binding Points}" />
+                                                <Label Margin="0,15,0,0" Text="Pts" />
                                             </HorizontalStackLayout>
                                         </Grid>
                                     </Frame>
